@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Da & Jay Wallet Pro ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+      :root {
+        --bg-main: #18181B;
+        --bg-card: #27272A;
+        --border-color: #3F3F46;
+        --primary-gold: #F59E0B;
+        --gold-hover: #D97706;
+        --text-main: #F4F4F5;
+        --text-muted: #A1A1AA;
+        --income-color: #10B981;
+        --expense-color: #EF4444;
+      }
+
+      body {
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        font-family: "Anuphan", sans-serif;
+        min-height: 100vh;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .glass-card-ultra {
+        background: rgba(39, 39, 42, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1.5px solid rgba(63, 63, 70, 0.8);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+        border-radius: 2.2rem;
+      }
+
+      .custom-select-wrapper { position: relative; }
+
+      .custom-select-btn {
+        background: linear-gradient(145deg, #27272A, #1F1F22);
+        border: 1.5px solid var(--border-color);
+        border-radius: 1.5rem;
+        padding: 1rem 1.25rem;
+        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05), 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .custom-select-options {
+        position: absolute;
+        top: 115%;
+        left: 0;
+        right: 0;
+        background: rgba(39, 39, 42, 0.95);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1.5px solid var(--border-color);
+        border-radius: 1.8rem;
+        padding: 0.5rem;
+        box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.6);
+        z-index: 50;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px) scale(0.95);
+        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+      .custom-select-options.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+      }
+
+      .custom-option {
+        padding: 0.85rem 1.25rem;
+        border-radius: 1.25rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--text-main);
+      }
+
+      .custom-option:hover {
+        background: rgba(245, 158, 11, 0.15);
+        color: var(--primary-gold);
+      }
+
+      .rounded-input {
+        background: linear-gradient(145deg, #27272A, #1F1F22);
+        border: 1.5px solid var(--border-color);
+        border-radius: 1.5rem;
+        color: var(--text-main);
+        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .rounded-input:focus {
+        border-color: var(--primary-gold);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+      }
+
+      .mode-btn {
+        border-radius: 1.25rem;
+        padding: 0.75rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        border: 1.5px solid transparent;
+      }
+
+      .mode-btn.active-normal {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: #18181B;
+        box-shadow: 0 8px 18px rgba(245, 158, 11, 0.25);
+      }
+
+      .mode-btn.active-debt {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        color: white;
+        box-shadow: 0 8px 18px rgba(239, 68, 68, 0.25);
+      }
+
+      .mode-btn.inactive {
+        background: rgba(24, 24, 27, 0.6);
+        color: var(--text-muted);
+      }
+
+      .custom-select-options::-webkit-scrollbar { width: 6px; }
+      .custom-select-options::-webkit-scrollbar-track { background: transparent; }
+      .custom-select-options::-webkit-scrollbar-thumb {
+        background: #3F3F46;
+        border-radius: 10px;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.35rem;
+        text-align: center;
+      }
+
+      .cal-day-head {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        padding-bottom: 0.25rem;
+      }
+
+      .cal-day-btn {
+        aspect-ratio: 1;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+        background: rgba(24, 24, 27, 0.5);
+        color: var(--text-main);
+      }
+
+      .cal-day-btn:hover { background: #3F3F46; }
+
+      .cal-day-btn.selected {
+        background: var(--primary-gold) !important;
+        color: #18181B !important;
+        box-shadow: 0 6px 15px rgba(245, 158, 11, 0.3);
+      }
+
+      .has-record-dot {
+        width: 5px;
+        height: 5px;
+        background-color: var(--expense-color);
+        border-radius: 50%;
+        position: absolute;
+        bottom: 4px;
+      }
+
+      .cal-day-btn.selected .has-record-dot { background-color: #18181B; }
+
+      .scrollbar-none::-webkit-scrollbar { display: none; }
+      .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+      .bottom-nav {
+        position: fixed;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 2rem);
+        max-width: 400px;
+        background: rgba(39, 39, 42, 0.9);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1.5px solid rgba(63, 63, 70, 0.8);
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
+        border-radius: 2rem;
+        padding: 0.4rem 0.6rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 100;
+      }
+
+      .nav-item {
+        flex: 1;
+        text-align: center;
+        padding: 0.6rem 0;
+        border-radius: 1.25rem;
+        color: var(--text-muted);
+        font-weight: 700;
+        font-size: 0.75rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .nav-item i {
+        display: block;
+        font-size: 1.25rem;
+        margin-bottom: 0.15rem;
+      }
+
+      .nav-item.active {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: #18181B;
+        box-shadow: 0 8px 15px rgba(245, 158, 11, 0.3);
+      }
+
+      .floating-add-btn {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: #18181B;
+        width: 48px;
+        height: 48px;
+        border-radius: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.35);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .floating-add-btn:active { transform: scale(0.9); }
+      .hidden { display: none !important; }
+    </style>
+  </head>
+
+  <body class="p-4 flex justify-center items-start pb-28">
+    <div class="max-w-md w-full">
+      
+      <!-- Header -->
+      <header class="text-center mb-6 pt-2">
+        <div class="inline-block p-4 glass-card-ultra rounded-full mb-3 border border-amber-500/25">
+          <i class="fa-solid fa-coins text-amber-500 text-3xl"></i>
+        </div>
+        <h1 class="text-2xl font-black text-amber-500 tracking-tight flex items-center justify-center gap-2">
+          Da & Jay Wallet Pro <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">GOLD</span>
+        </h1>
+      </header>
+
+      <!-- TAB 1: หน้าบันทึกรายการ + ประวัติย้อนหลัง -->
+      <main id="tab-form" class="glass-card-ultra p-6 space-y-5">
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-zinc-400 ml-3 uppercase tracking-wider">📅 วันที่บันทึก</label>
+          <input type="date" id="wallet-date" class="rounded-input w-full p-4 text-base font-bold outline-none" onchange="syncRecentDateTab(this.value)" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 p-1.5 bg-zinc-900/80 rounded-[1.5rem] border border-zinc-700/50">
+          <button type="button" onclick="switchMode('normal')" id="btn-mode-normal" class="mode-btn active-normal">
+            <i class="fa-solid fa-receipt mr-1"></i> ใช้จ่ายปกติ
+          </button>
+          <button type="button" onclick="switchMode('debt')" id="btn-mode-debt" class="mode-btn inactive">
+            <i class="fa-solid fa-credit-card mr-1"></i> จ่ายหนี้
+          </button>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-zinc-400 ml-3 uppercase tracking-wider" id="category-label">📝 รายการใช้จ่ายปกติ</label>
+          <div class="custom-select-wrapper">
+            <div class="custom-select-btn" onclick="toggleDropdown('form')">
+              <span id="selected-val" class="font-bold text-zinc-200">เลือกรายการ...</span>
+              <i class="fa-solid fa-chevron-down text-zinc-400 text-sm transition-transform duration-300" id="dropdown-arrow"></i>
+            </div>
+            <div class="custom-select-options" id="dropdown-options"></div>
+          </div>
+        </div>
+
+        <div class="space-y-1.5 hidden" id="custom-note-container">
+          <label class="text-xs font-bold text-amber-500 ml-3 uppercase tracking-wider">✏️ ระบุรายละเอียดเพิ่มเติม</label>
+          <input type="text" id="custom-note" class="rounded-input w-full p-4 text-base font-bold outline-none border-amber-500/50" placeholder="พิมพ์รายการของคุณที่นี่..." />
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-amber-500 ml-3 uppercase tracking-wider flex justify-between">
+            <span>💰 จำนวนเงิน</span>
+            <span id="expense-mood-tip" class="text-zinc-500 font-normal text-[11px]"></span>
+          </label>
+          <input type="number" id="amount" class="rounded-input w-full p-4 text-2xl font-black text-center text-amber-400 outline-none" placeholder="0.00" inputmode="decimal" oninput="checkExpenseMood(this.value)" />
+        </div>
+
+        <div class="pt-1">
+          <button type="button" onclick="saveData()" id="btnSave" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-zinc-950 py-4 rounded-[1.8rem] font-black text-lg shadow-lg shadow-amber-500/20 hover:brightness-110 active:scale-95 transition-all">
+            <i class="fa-solid fa-paper-plane mr-2"></i> บันทึกรายการ
+          </button>
+        </div>
+
+        <!-- ประวัติรายการย้อนหลัง 7 วัน -->
+        <div class="pt-5 border-t border-zinc-700/60 space-y-3">
+          <div class="flex items-center justify-between px-1">
+            <label class="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-clock-rotate-left text-amber-500"></i> ประวัติรายการย้อนหลัง
+            </label>
+            <span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-full" id="recent-count">0 รายการ</span>
+          </div>
+
+          <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none text-xs font-bold" id="date-tabs-container"></div>
+          <div id="recent-history-list" class="space-y-2"></div>
+        </div>
+      </main>
+
+      <!-- TAB 2: หน้าดูย้อนหลังปฏิทิน + สรุปภาพรวม -->
+      <section id="tab-history" class="glass-card-ultra p-6 space-y-5 hidden">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-bold text-zinc-200 flex items-center gap-2">
+            <i class="fa-solid fa-calendar-days text-amber-500"></i> ประวัติรายการย้อนหลัง
+          </h2>
+          
+          <div class="flex items-center gap-1 bg-zinc-900/80 px-3 py-1.5 rounded-2xl border border-zinc-700/60">
+            <button onclick="changeMonth(-1)" class="text-zinc-400 hover:text-amber-500 px-1 font-bold text-sm"><i class="fa-solid fa-chevron-left"></i></button>
+            <span id="thai-month-year-label" class="text-xs font-bold text-zinc-200 px-1 min-w-[110px] text-center">มกราคม 2569</span>
+            <button onclick="changeMonth(1)" class="text-zinc-400 hover:text-amber-500 px-1 font-bold text-sm"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Mini Calendar -->
+        <div class="bg-zinc-900/60 p-4 rounded-3xl border border-zinc-700/50 shadow-inner space-y-3">
+          <div class="calendar-grid">
+            <div class="cal-day-head">อา</div>
+            <div class="cal-day-head">จ</div>
+            <div class="cal-day-head">อ</div>
+            <div class="cal-day-head">พ</div>
+            <div class="cal-day-head">พฤ</div>
+            <div class="cal-day-head">ศ</div>
+            <div class="cal-day-head">ส</div>
+          </div>
+          <div class="calendar-grid" id="calendar-days"></div>
+        </div>
+
+        <!-- รายการ ณ วันที่เลือก -->
+        <div class="space-y-3">
+          <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-2" id="selected-date-label">📌 รายการประจำวันที่</p>
+          <div id="history-list" class="space-y-2"></div>
+        </div>
+
+        <!-- สรุปภาพรวมประจำเดือน -->
+        <div class="pt-2 border-t border-zinc-700/60 space-y-3">
+          <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-2">📊 สรุปภาพรวมประจำเดือนนี้</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-4 bg-amber-500/10 rounded-2xl border border-amber-500/20">
+              <p class="text-xs font-bold text-amber-400">ใช้จ่ายปกติ</p>
+              <p class="text-xl font-black text-amber-500 mt-1" id="sum-normal">฿0.00</p>
+            </div>
+            <div class="p-4 bg-rose-500/10 rounded-2xl border border-rose-500/20">
+              <p class="text-xs font-bold text-rose-400">ยอดชำระหนี้</p>
+              <p class="text-xl font-black text-rose-500 mt-1" id="sum-debt">฿0.00</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: หน้าสรุปผลตามช่วงเวลา & ฟีเจอร์สนุก -->
+      <section id="tab-summary" class="glass-card-ultra p-6 space-y-5 hidden">
+        <h2 class="text-lg font-bold text-zinc-200 flex items-center gap-2">
+          <i class="fa-solid fa-chart-pie text-amber-500"></i> สรุปผลตามช่วงเวลา
+        </h2>
+        
+        <div class="space-y-3">
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-zinc-400 ml-3">เลือกวันที่เริ่มต้น - สิ้นสุด</label>
+            <div class="grid grid-cols-2 gap-2">
+              <input type="date" id="summary-start-date" class="rounded-input w-full p-3 text-xs font-bold outline-none" onchange="preloadSummaryDetails()" />
+              <input type="date" id="summary-end-date" class="rounded-input w-full p-3 text-xs font-bold outline-none" onchange="preloadSummaryDetails()" />
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-zinc-400 ml-3">🎯 เลือกรายการที่ต้องการดู</label>
+            <div class="custom-select-wrapper">
+              <div class="custom-select-btn" onclick="toggleDropdown('summary')">
+                <span id="summary-selected-val" class="font-bold text-zinc-200 text-xs truncate">-- แสดงทุกรายการ (รวมทั้งหมด) --</span>
+                <i class="fa-solid fa-chevron-down text-zinc-400 text-sm transition-transform duration-300" id="summary-dropdown-arrow"></i>
+              </div>
+              <div class="custom-select-options" id="summary-dropdown-options"></div>
+            </div>
+          </div>
+
+          <button onclick="filterSummaryData()" id="btn-filter" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-zinc-950 py-3.5 rounded-2xl font-black text-sm shadow-md active:scale-95 transition-all mt-2">
+            <i class="fa-solid fa-filter mr-1"></i> คำนวณยอดสรุป
+          </button>
+        </div>
+
+        <div class="p-5 bg-amber-500/10 rounded-3xl border border-amber-500/20 text-center space-y-1">
+          <p class="text-xs font-bold text-amber-400" id="filter-label-title">ยอดรวมทั้งสิ้นช่วงที่เลือก</p>
+          <p class="text-3xl font-black text-amber-500" id="filter-total">฿0.00</p>
+        </div>
+
+        <!-- ฟีเจอร์สนุก: สุ่มคนจ่ายค่าข้าว Da & Jay -->
+        <div class="pt-4 border-t border-zinc-700/60 space-y-3">
+          <p class="text-xs font-bold text-amber-400 uppercase tracking-wider ml-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-dice text-amber-500"></i> สุ่มมื้อนี้ใครจ่าย? (Da & Jay)
+          </p>
+          <div class="p-4 bg-zinc-900/60 rounded-3xl border border-zinc-700/50 text-center space-y-3">
+            <div id="roulette-result" class="text-lg font-black text-zinc-300 py-2">
+              กดปุ่มเพื่อเสี่ยงทายคนจ่ายค่าข้าว! 🎲
+            </div>
+            <button onclick="spinRoulette()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-amber-400 border border-amber-500/30 py-3 rounded-2xl font-bold text-xs transition-all active:scale-95 shadow">
+              <i class="fa-solid fa-rotate-right mr-1"></i> สุ่มชื่อเลย!
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <div class="floating-add-btn" onclick="focusFormAndScroll()">
+        <i class="fa-solid fa-plus"></i>
+      </div>
+      <div class="nav-item active" onclick="switchTab('form', this)">
+        <i class="fa-solid fa-pen-to-square"></i> บันทึก
+      </div>
+      <div class="nav-item" onclick="switchTab('history', this)">
+        <i class="fa-solid fa-list-check"></i> ย้อนหลัง
+      </div>
+      <div class="nav-item" onclick="switchTab('summary', this)">
+        <i class="fa-solid fa-chart-line"></i> สรุปผล
+      </div>
+    </nav>
+
+    <script>
+      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzLa7tqHyjhGymM2Jfo-PyaPDeH25vAI5JKIaj0ZNLYL1-CKku3nth0he8edqtZkZFOSA/exec";
+      
+      let currentMode = "normal";
+      let selectedCategory = "";
+      let selectedSummaryCategory = "ALL";
+      let monthlyRecords = [];
+      let selectedDateStr = "";
+      let customSummaryItems = [];
+
+      const thaiMonths = [
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+      ];
+
+      const today = new Date();
+      let currentYear = today.getFullYear();
+      let currentMonth = today.getMonth() + 1;
+      
+      const todayStr = today.toISOString().split("T")[0];
+      let activeRecentDate = todayStr;
+
+      const normalCategories = ["ค่าห้องพัก", "ค่าอาหาร / ข้าว", "ค่าน้ำ / ค่าไฟ", "ของใช้ในบ้าน", "เดินทาง / น้ำมัน", "เงินเดือนเข้า (รายรับ)", "อื่นๆ..."];
+      const debtCategories = ["พรอมิส", "ฟินนิกซ์", "Shopee ผ่อนของ", "Shopee สินเชื่อเงินสด", "TikTok ผ่อนของ", "TikTok เงินสด", "ยูเมะพลัส", "ทรูมันนี่ (Pay Next)", "PayPayar", "อื่นๆ..."];
+
+      document.getElementById("wallet-date").value = todayStr;
+      document.getElementById("summary-start-date").value = todayStr;
+      document.getElementById("summary-end-date").value = todayStr;
+
+      // ซาวด์เอฟเฟกต์เหรียญทอง (Web Audio API)
+      function playCoinSound() {
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(987.77, audioCtx.currentTime); // โน้ต B5
+          osc.frequency.setValueAtTime(1318.51, audioCtx.currentTime + 0.08); // โน้ต E6
+          
+          gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+          
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.4);
+        } catch (e) {
+          // Fallback ถ้าเบราว์เซอร์ไม่อนุญาตให้อัดเสียงอัตโนมัติ
+        }
+      }
+
+      // เช็คคำแซวตามยอดเงิน
+      function checkExpenseMood(val) {
+        const tip = document.getElementById("expense-mood-tip");
+        const num = Number(val);
+        if (!val || num === 0) {
+          tip.innerText = "";
+        } else if (num > 1000) {
+          tip.innerText = "💸 กระเป๋าตังค์สั่นสะเทือน!";
+        } else if (num > 500) {
+          tip.innerText = "✨ อื้อหือ จัดหนักจัดเต็ม";
+        } else {
+          tip.innerText = "☕ รายการเบาๆ กรุบกริบ";
+        }
+      }
+
+      // สุ่มคนจ่ายค่าข้าว
+      function spinRoulette() {
+        const resultEl = document.getElementById("roulette-result");
+        const names = ["✨ ตา Da เป็นคนจ่ายมื้อนี้!", "✨ ตา Jay เป็นคนจ่ายมื้อนี้!"];
+        let counter = 0;
+        resultEl.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-amber-500"></i> กำลังเสี่ยงทาย...`;
+        
+        const interval = setInterval(() => {
+          const randomName = names[Math.floor(Math.random() * names.length)];
+          resultEl.innerText = randomName.replace("✨ ", "");
+          counter++;
+          if (counter > 10) {
+            clearInterval(interval);
+            const finalWinner = names[Math.floor(Math.random() * names.length)];
+            resultEl.innerHTML = `<span class="text-amber-400 text-xl font-black">${finalWinner}</span> 🎉`;
+            confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+          }
+        }, 100);
+      }
+
+      function focusFormAndScroll() {
+        switchTab('form', document.querySelectorAll('.bottom-nav .nav-item')[0]);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById("amount").focus();
+      }
+
+      function switchTab(tabName, el) {
+        document.querySelectorAll(".bottom-nav .nav-item").forEach(item => item.classList.remove("active"));
+        if(el) el.classList.add("active");
+
+        document.getElementById("tab-form").classList.add("hidden");
+        document.getElementById("tab-history").classList.add("hidden");
+        document.getElementById("tab-summary").classList.add("hidden");
+
+        if (tabName === 'form') {
+          document.getElementById("tab-form").classList.remove("hidden");
+          renderDateTabs();
+        }
+        if (tabName === 'history') {
+          document.getElementById("tab-history").classList.remove("hidden");
+          updateThaiMonthLabel();
+          loadMonthData();
+        }
+        if (tabName === 'summary') {
+          document.getElementById("tab-summary").classList.remove("hidden");
+          preloadSummaryDetails();
+          filterSummaryData();
+        }
+      }
+
+      function updateThaiMonthLabel() {
+        const thaiYear = currentYear + 543;
+        document.getElementById("thai-month-year-label").innerText = `${thaiMonths[currentMonth - 1]} ${thaiYear}`;
+      }
+
+      function changeMonth(offset) {
+        currentMonth += offset;
+        if (currentMonth > 12) {
+          currentMonth = 1;
+          currentYear++;
+        } else if (currentMonth < 1) {
+          currentMonth = 12;
+          currentYear--;
+        }
+        updateThaiMonthLabel();
+        loadMonthData();
+      }
+
+      function renderDateTabs() {
+        const container = document.getElementById("date-tabs-container");
+        let html = "";
+        
+        for (let i = 0; i < 7; i++) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const dateStr = d.toISOString().split("T")[0];
+          
+          let label = "";
+          if (i === 0) label = "วันนี้";
+          else if (i === 1) label = "เมื่อวาน";
+          else label = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+
+          const isActive = dateStr === activeRecentDate;
+          
+          html += `
+            <button type="button" onclick="selectRecentDate('${dateStr}')" 
+              class="px-3.5 py-2 rounded-2xl whitespace-nowrap transition-all duration-200 ${
+                isActive 
+                  ? 'bg-amber-500 text-zinc-950 font-bold shadow-md shadow-amber-500/20 scale-105' 
+                  : 'bg-zinc-800/80 text-zinc-400 hover:bg-zinc-700/70'
+              }">
+              ${label}
+            </button>
+          `;
+        }
+        
+        container.innerHTML = html;
+        loadRecentHistory(activeRecentDate);
+      }
+
+      function selectRecentDate(dateStr) {
+        activeRecentDate = dateStr;
+        document.getElementById("wallet-date").value = dateStr;
+        renderDateTabs();
+      }
+
+      function syncRecentDateTab(dateVal) {
+        if (dateVal) {
+          activeRecentDate = dateVal;
+          renderDateTabs();
+        }
+      }
+
+      async function loadRecentHistory(dateStr) {
+        const listContainer = document.getElementById("recent-history-list");
+        const countBadge = document.getElementById("recent-count");
+        
+        listContainer.innerHTML = `
+          <div class="text-center py-4 text-xs text-zinc-500">
+            <i class="fa-solid fa-spinner animate-spin mr-1"></i> กำลังดึงรายการ...
+          </div>
+        `;
+
+        try {
+          const monthStr = dateStr.substring(0, 7);
+          const res = await fetch(`${WEB_APP_URL}?action=getData&month=${monthStr}`);
+          const data = await res.json();
+          
+          const dayRecords = (data.records || []).filter(r => r.date === dateStr);
+          countBadge.innerText = `${dayRecords.length} รายการ`;
+
+          if (dayRecords.length === 0) {
+            listContainer.innerHTML = `
+              <div class="text-center py-5 text-zinc-500 font-bold text-xs bg-zinc-900/40 rounded-2xl border border-zinc-800">
+                ไม่มีรายการในวันที่เลือก
+              </div>
+            `;
+            return;
+          }
+
+          listContainer.innerHTML = dayRecords.map((r) => `
+            <div class="p-3.5 bg-zinc-800/80 rounded-2xl flex justify-between items-center border border-zinc-700/60 shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-2xl flex items-center justify-center text-xs ${
+                  r.type === 'ชำระหนี้' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                }">
+                  <i class="${r.type === 'ชำระหนี้' ? 'fa-solid fa-credit-card' : 'fa-solid fa-bag-shopping'}"></i>
+                </div>
+                <div>
+                  <p class="font-bold text-zinc-200 text-sm leading-snug">${r.detail}</p>
+                  <p class="text-[10px] font-semibold text-zinc-400">${r.type}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-black text-sm ${r.type === 'ชำระหนี้' ? 'text-rose-400' : 'text-amber-400'}">
+                  ${r.type === 'ชำระหนี้' ? '-' : ''}฿${Number(r.amount).toLocaleString('th-TH', {minimumFractionDigits: 2})}
+                </span>
+                <button onclick="editItem('${r.date}', '${r.detail}', '${r.amount}', '${r.type}')" class="w-7 h-7 bg-zinc-700 text-amber-400 rounded-xl flex items-center justify-center text-xs hover:bg-zinc-600">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+              </div>
+            </div>
+          `).join("");
+
+        } catch (err) {
+          listContainer.innerHTML = `<div class="text-center py-3 text-xs text-rose-400">โหลดข้อมูลไม่สำเร็จ</div>`;
+        }
+      }
+
+      function editItem(date, detail, amount, type) {
+        document.getElementById("wallet-date").value = date;
+        document.getElementById("amount").value = amount;
+        checkExpenseMood(amount);
+        
+        if (type === "ชำระหนี้") switchMode("debt");
+        else switchMode("normal");
+
+        const list = currentMode === "normal" ? normalCategories : debtCategories;
+        if (list.includes(detail)) {
+          selectItem(detail);
+        } else {
+          selectItem("อื่นๆ...");
+          document.getElementById("custom-note").value = detail;
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      async function loadMonthData() {
+        const monthFormatted = String(currentMonth).padStart(2, '0');
+        const selectedMonthStr = `${currentYear}-${monthFormatted}`;
+        const calContainer = document.getElementById("calendar-days");
+        calContainer.innerHTML = `<div class="col-span-7 text-center text-xs text-zinc-500 py-4"><i class="fa-solid fa-spinner animate-spin"></i> โหลดข้อมูล...</div>`;
+
+        try {
+          const res = await fetch(`${WEB_APP_URL}?action=getData&month=${selectedMonthStr}`);
+          const data = await res.json();
+          monthlyRecords = data.records || [];
+          renderCalendarUI(selectedMonthStr);
+          calculateMonthlySummary();
+        } catch (err) {
+          calContainer.innerHTML = `<div class="col-span-7 text-center text-xs text-rose-400 py-4">โหลดข้อมูลไม่สำเร็จ</div>`;
+        }
+      }
+
+      function renderCalendarUI(monthVal) {
+        const [year, month] = monthVal.split("-").map(Number);
+        const firstDayIndex = new Date(year, month - 1, 1).getDay();
+        const totalDays = new Date(year, month, 0).getDate();
+        const calContainer = document.getElementById("calendar-days");
+        
+        calContainer.innerHTML = "";
+
+        for (let i = 0; i < firstDayIndex; i++) {
+          calContainer.innerHTML += `<div></div>`;
+        }
+
+        const datesWithData = new Set(monthlyRecords.map(r => r.date));
+
+        for (let day = 1; day <= totalDays; day++) {
+          const dayFormatted = String(day).padStart(2, '0');
+          const fullDateStr = `${monthVal}-${dayFormatted}`;
+          const hasRecord = datesWithData.has(fullDateStr);
+          const isSelected = selectedDateStr ? (fullDateStr === selectedDateStr) : (fullDateStr === todayStr);
+
+          calContainer.innerHTML += `
+            <div class="cal-day-btn ${isSelected ? 'selected' : ''}" onclick="selectCalendarDate('${fullDateStr}', this)">
+              ${day}
+              ${hasRecord ? '<span class="has-record-dot"></span>' : ''}
+            </div>
+          `;
+        }
+
+        if (!selectedDateStr) selectCalendarDate(todayStr);
+        else renderHistoryListForDate(selectedDateStr);
+      }
+
+      function selectCalendarDate(dateStr, el) {
+        if (el) {
+          document.querySelectorAll(".cal-day-btn").forEach(btn => btn.classList.remove("selected"));
+          el.classList.add("selected");
+        }
+        selectedDateStr = dateStr;
+        document.getElementById("selected-date-label").innerText = `📌 รายการประจำวันที่ ${dateStr}`;
+        renderHistoryListForDate(dateStr);
+      }
+
+      function renderHistoryListForDate(dateStr) {
+        const historyContainer = document.getElementById("history-list");
+        const list = monthlyRecords.filter(r => r.date === dateStr);
+
+        if (list.length === 0) {
+          historyContainer.innerHTML = `<div class="text-center py-6 text-zinc-500 font-bold text-xs bg-zinc-900/40 rounded-2xl border border-zinc-800">ไม่มีรายการบันทึกในวันนี้</div>`;
+          return;
+        }
+
+        historyContainer.innerHTML = list.map(item => `
+          <div class="p-4 bg-zinc-800/80 rounded-2xl flex justify-between items-center border border-zinc-700/60 shadow-sm">
+            <div>
+              <p class="font-bold text-zinc-200 text-sm">${item.detail}</p>
+              <p class="text-xs text-zinc-400">${item.type}</p>
+            </div>
+            <span class="font-black ${item.type === 'ชำระหนี้' ? 'text-rose-400' : 'text-amber-400'}">
+              ${item.type === 'ชำระหนี้' ? '-' : ''}฿${Number(item.amount).toLocaleString('th-TH', {minimumFractionDigits: 2})}
+            </span>
+          </div>
+        `).join("");
+      }
+
+      function calculateMonthlySummary() {
+        let sumNormal = 0;
+        let sumDebt = 0;
+
+        monthlyRecords.forEach(r => {
+          const amt = Number(r.amount) || 0;
+          if (r.type === "ชำระหนี้") sumDebt += amt;
+          else sumNormal += amt;
+        });
+
+        document.getElementById("sum-normal").innerText = `฿${sumNormal.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+        document.getElementById("sum-debt").innerText = `฿${sumDebt.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+      }
+
+      async function preloadSummaryDetails() {
+        const start = document.getElementById("summary-start-date").value;
+        const end = document.getElementById("summary-end-date").value;
+        
+        try {
+          const res = await fetch(`${WEB_APP_URL}?action=getData&start=${start}&end=${end}`);
+          const data = await res.json();
+          const records = data.records || [];
+          
+          const standardList = [...normalCategories, ...debtCategories];
+          const customSet = new Set();
+          
+          records.forEach(r => {
+            if (r.detail && !standardList.includes(r.detail)) {
+              customSet.add(r.detail);
+            }
+          });
+          
+          customSummaryItems = Array.from(customSet);
+        } catch (e) {
+          customSummaryItems = [];
+        }
+        renderSummaryDropdownOptions();
+      }
+
+      function renderSummaryDropdownOptions() {
+        const container = document.getElementById("summary-dropdown-options");
+        let html = `
+          <div class="custom-option text-amber-400 font-bold text-xs" onclick="selectSummaryItem('ALL', '-- แสดงทุกรายการ (รวมทั้งหมด) --')">
+            -- แสดงทุกรายการ (รวมทั้งหมด) --
+          </div>
+          <div class="px-3 py-1.5 text-[10px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-800/60 rounded-lg my-1">💳 รายการชำระหนี้</div>
+        `;
+
+        debtCategories.filter(c => c !== "อื่นๆ...").forEach(cat => {
+          html += `<div class="custom-option text-xs pl-5 font-bold" onclick="selectSummaryItem('${cat}', '${cat}')">${cat}</div>`;
+        });
+
+        html += `<div class="px-3 py-1.5 text-[10px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-800/60 rounded-lg my-1">📝 รายการใช้จ่ายปกติ</div>`;
+
+        normalCategories.filter(c => c !== "อื่นๆ...").forEach(cat => {
+          html += `<div class="custom-option text-xs pl-5 font-bold" onclick="selectSummaryItem('${cat}', '${cat}')">${cat}</div>`;
+        });
+
+        if (customSummaryItems.length > 0) {
+          html += `<div class="px-3 py-1.5 text-[10px] font-bold text-amber-400 uppercase tracking-wider bg-zinc-800/60 rounded-lg my-1">✏️ รายการอื่นๆ ที่พิมพ์เอง</div>`;
+          customSummaryItems.forEach(item => {
+            html += `<div class="custom-option text-xs pl-5 font-bold text-amber-300" onclick="selectSummaryItem('${item}', '${item}')">${item}</div>`;
+          });
+        }
+
+        container.innerHTML = html;
+      }
+
+      function selectSummaryItem(val, label) {
+        selectedSummaryCategory = val;
+        document.getElementById("summary-selected-val").innerText = label;
+        toggleDropdown('summary');
+      }
+
+      async function filterSummaryData() {
+        const start = document.getElementById("summary-start-date").value;
+        const end = document.getElementById("summary-end-date").value;
+        const category = selectedSummaryCategory;
+        const btn = document.getElementById("btn-filter");
+        
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> กำลังคำนวณ...`;
+
+        try {
+          const res = await fetch(`${WEB_APP_URL}?action=getSummary&start=${start}&end=${end}&category=${encodeURIComponent(category)}`);
+          const data = await res.json();
+          const total = Number(data.total) || 0;
+          
+          document.getElementById("filter-label-title").innerText = category === "ALL" 
+            ? "ยอดใช้จ่ายรวมทั้งสิ้นช่วงที่เลือก" 
+            : `ยอดรวมเฉพาะรายการ "${category}"`;
+
+          document.getElementById("filter-total").innerText = `฿${total.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+        } catch (err) {
+          document.getElementById("filter-total").innerText = `฿0.00`;
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-filter mr-1"></i> คำนวณยอดสรุป`;
+        }
+      }
+
+      function switchMode(mode) {
+        currentMode = mode;
+        const btnNormal = document.getElementById("btn-mode-normal");
+        const btnDebt = document.getElementById("btn-mode-debt");
+        const label = document.getElementById("category-label");
+
+        if (mode === "normal") {
+          btnNormal.className = "mode-btn active-normal";
+          btnDebt.className = "mode-btn inactive";
+          label.innerText = "📝 รายการใช้จ่ายปกติ";
+        } else {
+          btnNormal.className = "mode-btn inactive";
+          btnDebt.className = "mode-btn active-debt";
+          label.innerText = "💳 รายการชำระหนี้";
+        }
+        renderDropdownOptions();
+      }
+
+      function renderDropdownOptions() {
+        const list = currentMode === "normal" ? normalCategories : debtCategories;
+        const optionsContainer = document.getElementById("dropdown-options");
+        selectedCategory = list[0];
+        document.getElementById("selected-val").innerText = selectedCategory;
+        checkCustomInputVisibility();
+
+        optionsContainer.innerHTML = list.map(item => `
+          <div class="custom-option text-xs" onclick="selectItem('${item}')">${item}</div>
+        `).join("");
+      }
+
+      function toggleDropdown(type) {
+        const idOptions = type === 'form' ? 'dropdown-options' : 'summary-dropdown-options';
+        const idArrow = type === 'form' ? 'dropdown-arrow' : 'summary-dropdown-arrow';
+        
+        const dropdown = document.getElementById(idOptions);
+        const arrow = document.getElementById(idArrow);
+        
+        dropdown.classList.toggle("active");
+        arrow.style.transform = dropdown.classList.contains("active") ? "rotate(180deg)" : "rotate(0deg)";
+      }
+
+      function selectItem(val) {
+        selectedCategory = val;
+        document.getElementById("selected-val").innerText = val;
+        toggleDropdown('form');
+        checkCustomInputVisibility();
+      }
+
+      function checkCustomInputVisibility() {
+        const customContainer = document.getElementById("custom-note-container");
+        if (selectedCategory === "อื่นๆ...") {
+          customContainer.classList.remove("hidden");
+        } else {
+          customContainer.classList.add("hidden");
+          document.getElementById("custom-note").value = "";
+        }
+      }
+
+      async function saveData() {
+        const amt = document.getElementById("amount").value;
+        let finalDetail = selectedCategory;
+
+        if (selectedCategory === "อื่นๆ...") {
+          finalDetail = document.getElementById("custom-note").value.trim();
+          if (!finalDetail) return alert("กรุณาระบุรายละเอียดในช่องอื่นๆ");
+        }
+
+        if (!amt) return alert("กรุณากรอกจำนวนเงิน");
+
+        const btn = document.getElementById("btnSave");
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-2"></i> กำลังบันทึก...`;
+
+        const recordDate = document.getElementById("wallet-date").value;
+
+        const payload = {
+          action: "add",
+          datetime: recordDate,
+          type: currentMode === "normal" ? "ใช้จ่ายปกติ" : "ชำระหนี้",
+          detail: finalDetail,
+          amount: amt
+        };
+
+        try {
+          await fetch(WEB_APP_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          
+          playCoinSound(); // เล่นเสียงเหรียญทอง
+          confetti({ particleCount: 100, spread: 70, origin: { y: 0.7 } });
+          
+          document.getElementById("amount").value = "";
+          document.getElementById("expense-mood-tip").innerText = "";
+          
+          activeRecentDate = recordDate;
+          renderDateTabs();
+        } catch (err) {
+          alert("เกิดข้อผิดพลาดในการบันทึก");
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-paper-plane mr-2"></i> บันทึกรายการ`;
+        }
+      }
+
+      renderDropdownOptions();
+      preloadSummaryDetails();
+      renderDateTabs();
+
+      window.addEventListener("click", function(e) {
+        if (!e.target.closest("#tab-form .custom-select-wrapper")) {
+          const options = document.getElementById("dropdown-options");
+          if (options) {
+            options.classList.remove("active");
+            document.getElementById("dropdown-arrow").style.transform = "rotate(0deg)";
+          }
+        }
+        if (!e.target.closest("#tab-summary .custom-select-wrapper")) {
+          const summaryOptions = document.getElementById("summary-dropdown-options");
+          if (summaryOptions) {
+            summaryOptions.classList.remove("active");
+            document.getElementById("summary-dropdown-arrow").style.transform = "rotate(0deg)";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
