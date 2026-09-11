@@ -700,7 +700,27 @@
                 หมวดหมู่
               </label>
 
-              <select id="category" class="input mt-2"></select>
+              <div class="relative mt-2" id="categoryDropdownWrap">
+                <select id="category" class="hidden"></select>
+
+                <button
+                  type="button"
+                  id="categoryDropdownBtn"
+                  onclick="toggleCategoryDropdown()"
+                  class="input flex items-center justify-between text-left"
+                >
+                  <span id="categoryDropdownLabel">เลือกหมวดหมู่</span>
+                  <i
+                    id="categoryDropdownChevron"
+                    class="fa-solid fa-chevron-down text-slate-400 text-sm transition-transform duration-200"
+                  ></i>
+                </button>
+
+                <div
+                  id="categoryDropdownList"
+                  class="hidden absolute z-30 mt-2 w-full max-h-64 overflow-y-auto rounded-2xl border border-slate-100 bg-white shadow-xl p-2 space-y-1"
+                ></div>
+              </div>
             </div>
 
             <!-- DETAIL -->
@@ -1324,6 +1344,75 @@
         monthSelect.addEventListener("change", syncMonthPicker);
         yearSelect.addEventListener("change", syncMonthPicker);
       }
+
+      /* =====================================================
+   CUSTOM CATEGORY DROPDOWN
+====================================================== */
+
+      function renderCategoryDropdownList() {
+        const select = document.getElementById("category");
+        const list = document.getElementById("categoryDropdownList");
+
+        list.innerHTML = "";
+
+        Array.from(select.options).forEach(function (opt) {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.textContent = opt.value;
+          item.className =
+            "w-full text-left px-3 py-2.5 rounded-xl text-sm transition " +
+            (opt.value === select.value
+              ? "bg-indigo-50 text-indigo-600 font-semibold"
+              : "text-slate-600 hover:bg-slate-50");
+          item.onclick = function () {
+            selectCategoryOption(opt.value);
+          };
+          list.appendChild(item);
+        });
+
+        updateCategoryDropdownLabel();
+      }
+
+      function updateCategoryDropdownLabel() {
+        const select = document.getElementById("category");
+        document.getElementById("categoryDropdownLabel").textContent =
+          select.value || "เลือกหมวดหมู่";
+      }
+
+      function selectCategoryOption(value) {
+        const select = document.getElementById("category");
+        select.value = value;
+        renderCategoryDropdownList();
+        closeCategoryDropdown();
+      }
+
+      function toggleCategoryDropdown() {
+        const list = document.getElementById("categoryDropdownList");
+        const chevron = document.getElementById("categoryDropdownChevron");
+        const isOpen = !list.classList.contains("hidden");
+
+        if (isOpen) {
+          closeCategoryDropdown();
+        } else {
+          list.classList.remove("hidden");
+          chevron.classList.add("rotate-180");
+        }
+      }
+
+      function closeCategoryDropdown() {
+        document.getElementById("categoryDropdownList").classList.add("hidden");
+        document
+          .getElementById("categoryDropdownChevron")
+          .classList.remove("rotate-180");
+      }
+
+      document.addEventListener("click", function (e) {
+        const wrap = document.getElementById("categoryDropdownWrap");
+        if (wrap && !wrap.contains(e.target)) {
+          closeCategoryDropdown();
+        }
+      });
+
       document.addEventListener("DOMContentLoaded", function () {
         const now = new Date();
 
@@ -1469,6 +1558,8 @@
           record.date || formatDateInput(new Date());
 
         document.getElementById("category").value = record.category || "";
+
+        renderCategoryDropdownList();
       }
 
       function clearForm() {
@@ -1542,6 +1633,8 @@
             select.value = record.category || "";
           }
         }
+
+        renderCategoryDropdownList();
       }
 
       /* =====================================================
