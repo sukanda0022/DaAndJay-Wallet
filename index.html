@@ -1145,12 +1145,12 @@
           </div>
 
           <div class="glass rounded-[28px] p-5 md:p-7">
-            <!-- TYPE -->
+            <!-- TYPE (เรื่องกระปุกทำจากหน้ากระปุกเท่านั้น จึงไม่มีปุ่มหยอด/ถอนตรงนี้) -->
 
-            <div>
+            <div id="typeBlock">
               <label class="text-sm font-semibold"> ประเภทรายการ </label>
 
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-3">
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
                 <button
                   type="button"
                   data-type="income"
@@ -1193,28 +1193,6 @@
                   <i class="fa-solid fa-rotate mr-1"></i>
 
                   หมุนหนี้
-                </button>
-
-                <button
-                  type="button"
-                  data-type="save"
-                  onclick="setFormType('save')"
-                  class="type-btn rounded-2xl p-3 text-sm font-medium"
-                >
-                  <i class="fa-solid fa-piggy-bank mr-1"></i>
-
-                  หยอดกระปุก
-                </button>
-
-                <button
-                  type="button"
-                  data-type="unsave"
-                  onclick="setFormType('unsave')"
-                  class="type-btn rounded-2xl p-3 text-sm font-medium"
-                >
-                  <i class="fa-solid fa-arrow-up-from-bracket mr-1"></i>
-
-                  ถอนกระปุก
                 </button>
               </div>
             </div>
@@ -1887,7 +1865,7 @@
 ====================================================== */
 
       const API_URL =
-        "https://script.google.com/macros/s/AKfycbzdKBIynOMnDkSCCK9DgH7PCfYt3J1Bk4Igu_uLZb4Z3FazJKzAM8wp-MxdMHjq5g-lLA/exec";
+        "https://script.google.com/macros/s/AKfycbwdgeRmpMkaDpS3MMclS90z-FD0f-iBR3_485jUjqoSLT9joNlaCWdM_Xit0a0O1t2Mzw/exec";
 
       /* =====================================================
    VAULT NAME  ←← เปลี่ยนชื่อกระปุกตรงนี้ได้เลย
@@ -2448,6 +2426,25 @@
 
       function setFormType(type) {
         currentType = type || "expense";
+
+        /* เรื่องกระปุกทำจากหน้ากระปุกเท่านั้น:
+           ซ่อนตัวเลือกประเภท และตั้งชื่อหน้าให้ตรงกับสิ่งที่กำลังทำ */
+
+        const isVault = currentType === "save" || currentType === "unsave";
+
+        const typeBlock = document.getElementById("typeBlock");
+
+        if (typeBlock) {
+          typeBlock.style.display = isVault ? "none" : "";
+        }
+
+        if (!editingId) {
+          document.getElementById("formTitle").textContent = isVault
+            ? currentType === "save"
+              ? "หยอดกระปุก"
+              : "ถอนจากกระปุก"
+            : "บันทึกรายการ";
+        }
 
         document.querySelectorAll(".type-btn").forEach(function (btn) {
           btn.classList.toggle("active", btn.dataset.type === currentType);
