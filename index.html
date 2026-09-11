@@ -1,2777 +1,1782 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8">
+    <title>Da & Jay Wallet Pro ✨</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <title>Da & Jay Wallet Pro ✨</title>
+    <!-- Anuphan -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
 
-  <!-- Anuphan -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-  <!-- Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+      html {
+        scroll-behavior: smooth;
+      }
 
+      body {
+        margin: 0;
+        font-family: "Anuphan", sans-serif;
+        color: #1e293b;
+        background:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(99, 102, 241, 0.1),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 100% 10%,
+            rgba(168, 85, 247, 0.08),
+            transparent 25%
+          ),
+          #f8fafc;
+      }
 
-  <style>
+      button,
+      input,
+      select {
+        font-family: inherit;
+      }
 
-    * {
-      box-sizing: border-box;
-    }
+      button {
+        cursor: pointer;
+      }
 
-    html {
-      scroll-behavior: smooth;
-    }
+      .app-shell {
+        width: min(1180px, 100%);
+        margin: auto;
+        padding: 0 16px 120px;
+      }
 
-    body {
-      margin: 0;
-      font-family: 'Anuphan', sans-serif;
-      color: #1e293b;
-      background:
-        radial-gradient(
-          circle at 0% 0%,
-          rgba(99, 102, 241, 0.10),
-          transparent 28%
-        ),
-        radial-gradient(
-          circle at 100% 10%,
-          rgba(168, 85, 247, 0.08),
-          transparent 25%
-        ),
-        #f8fafc;
-    }
+      .glass {
+        background: rgba(255, 255, 255, 0.86);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 14px 40px rgba(15, 23, 42, 0.06);
+      }
 
-    button,
-    input,
-    select {
-      font-family: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app-shell {
-      width: min(1180px, 100%);
-      margin: auto;
-      padding: 0 16px 120px;
-    }
-
-    .glass {
-      background: rgba(255, 255, 255, 0.86);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow:
-        0 14px 40px rgba(15, 23, 42, 0.06);
-    }
-
-    .balance-card {
-      position: relative;
-      overflow: hidden;
-      background:
-        linear-gradient(
+      .balance-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
           135deg,
           #111827 0%,
           #312e81 52%,
           #4f46e5 100%
         );
-      box-shadow:
-        0 24px 55px rgba(49, 46, 129, 0.25);
-    }
-
-    .balance-card::before {
-      content: "";
-      position: absolute;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      right: -100px;
-      top: -110px;
-      background: rgba(255,255,255,.08);
-    }
-
-    .balance-card::after {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      left: -90px;
-      bottom: -100px;
-      background: rgba(255,255,255,.05);
-    }
-
-    .balance-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .tab-page {
-      display: none;
-    }
-
-    .tab-page.active {
-      display: block;
-      animation: pageIn .22s ease;
-    }
-
-    @keyframes pageIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
+        box-shadow: 0 24px 55px rgba(49, 46, 129, 0.25);
       }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .nav-btn {
-      transition: all .2s ease;
-      color: #64748b;
-    }
-
-    .nav-btn:hover {
-      color: #4f46e5;
-      background: #f8fafc;
-    }
-
-    .nav-btn.active {
-      color: #4f46e5;
-      background: #eef2ff;
-    }
-
-    .type-btn {
-      border: 1px solid #e2e8f0;
-      background: white;
-      color: #64748b;
-      transition: all .2s ease;
-    }
-
-    .type-btn:hover {
-      border-color: #c7d2fe;
-      transform: translateY(-1px);
-    }
-
-    .type-btn.active {
-      color: #4f46e5;
-      border-color: #818cf8;
-      background: #eef2ff;
-      box-shadow:
-        0 7px 18px rgba(99, 102, 241, .10);
-    }
-
-    .input {
-      width: 100%;
-      border: 1px solid #e2e8f0;
-      border-radius: 15px;
-      padding: 12px 14px;
-      outline: none;
-      background: white;
-      color: #1e293b;
-      transition: all .2s ease;
-    }
-
-    .input:focus {
-      border-color: #818cf8;
-      box-shadow:
-        0 0 0 4px rgba(99, 102, 241, .08);
-    }
-
-    .money {
-      font-variant-numeric: tabular-nums;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      z-index: 50;
-      left: 50%;
-      bottom: 14px;
-      transform: translateX(-50%);
-      width: min(720px, calc(100% - 24px));
-    }
-
-    .modal {
-      display: none;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .provider-card {
-      transition: all .2s ease;
-    }
-
-    .provider-card:hover {
-      transform: translateY(-1px);
-      box-shadow:
-        0 10px 28px rgba(15, 23, 42, .06);
-    }
-
-    .loading-overlay {
-      display: none;
-      position: fixed;
-      z-index: 200;
-      inset: 0;
-      background: rgba(15, 23, 42, .18);
-      backdrop-filter: blur(4px);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .loading-overlay.show {
-      display: flex;
-    }
-
-    .spinner {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      border: 3px solid #e2e8f0;
-      border-top-color: #6366f1;
-      animation: spin .7s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .empty-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 20px;
-      background: #f1f5f9;
-      color: #94a3b8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: auto;
-    }
-
-    .scroll-x {
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .scroll-x::-webkit-scrollbar {
-      display: none;
-    }
-
-    @media (max-width: 640px) {
-
-      .app-shell {
-        padding-left: 12px;
-        padding-right: 12px;
+      .balance-card::before {
+        content: "";
+        position: absolute;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        right: -100px;
+        top: -110px;
+        background: rgba(255, 255, 255, 0.08);
       }
 
-      .balance-number {
-        font-size: 2.15rem;
+      .balance-card::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        left: -90px;
+        bottom: -100px;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .balance-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .tab-page {
+        display: none;
+      }
+
+      .tab-page.active {
+        display: block;
+        animation: pageIn 0.22s ease;
+      }
+
+      @keyframes pageIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .nav-btn {
+        transition: all 0.2s ease;
+        color: #64748b;
+      }
+
+      .nav-btn:hover {
+        color: #4f46e5;
+        background: #f8fafc;
+      }
+
+      .nav-btn.active {
+        color: #4f46e5;
+        background: #eef2ff;
+      }
+
+      .type-btn {
+        border: 1px solid #e2e8f0;
+        background: white;
+        color: #64748b;
+        transition: all 0.2s ease;
+      }
+
+      .type-btn:hover {
+        border-color: #c7d2fe;
+        transform: translateY(-1px);
+      }
+
+      .type-btn.active {
+        color: #4f46e5;
+        border-color: #818cf8;
+        background: #eef2ff;
+        box-shadow: 0 7px 18px rgba(99, 102, 241, 0.1);
+      }
+
+      .input {
+        width: 100%;
+        border: 1px solid #e2e8f0;
+        border-radius: 15px;
+        padding: 12px 14px;
+        outline: none;
+        background: white;
+        color: #1e293b;
+        transition: all 0.2s ease;
+      }
+
+      .input:focus {
+        border-color: #818cf8;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+      }
+
+      .money {
+        font-variant-numeric: tabular-nums;
       }
 
       .bottom-nav {
-        bottom: 10px;
+        position: fixed;
+        z-index: 50;
+        left: 50%;
+        bottom: 14px;
+        transform: translateX(-50%);
+        width: min(720px, calc(100% - 24px));
       }
 
-    }
+      .modal {
+        display: none;
+      }
 
-  </style>
+      .modal.show {
+        display: flex;
+      }
 
-</head>
+      .provider-card {
+        transition: all 0.2s ease;
+      }
 
+      .provider-card:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+      }
 
-<body>
+      .loading-overlay {
+        display: none;
+        position: fixed;
+        z-index: 200;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.18);
+        backdrop-filter: blur(4px);
+        align-items: center;
+        justify-content: center;
+      }
 
+      .loading-overlay.show {
+        display: flex;
+      }
 
-<!-- =====================================================
+      .spinner {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 3px solid #e2e8f0;
+        border-top-color: #6366f1;
+        animation: spin 0.7s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .empty-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 20px;
+        background: #f1f5f9;
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+      }
+
+      .scroll-x {
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .scroll-x::-webkit-scrollbar {
+        display: none;
+      }
+
+      @media (max-width: 640px) {
+        .app-shell {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        .balance-number {
+          font-size: 2.15rem;
+        }
+
+        .bottom-nav {
+          bottom: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =====================================================
      LOADING
 ====================================================== -->
 
-<div
-  id="loadingOverlay"
-  class="loading-overlay"
->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="glass rounded-3xl p-6">
+        <div class="spinner mx-auto"></div>
 
-  <div class="glass rounded-3xl p-6">
+        <p class="text-sm text-slate-500 mt-4">กำลังโหลดข้อมูล...</p>
+      </div>
+    </div>
 
-    <div class="spinner mx-auto"></div>
-
-    <p class="text-sm text-slate-500 mt-4">
-      กำลังโหลดข้อมูล...
-    </p>
-
-  </div>
-
-</div>
-
-
-
-<!-- =====================================================
+    <!-- =====================================================
      APP
 ====================================================== -->
 
-<div class="app-shell">
-
-
-  <!-- ===================================================
+    <div class="app-shell">
+      <!-- ===================================================
        HEADER
   ==================================================== -->
 
-  <header class="flex items-center justify-between gap-4 py-6">
+      <header class="flex items-center justify-between gap-4 py-6">
+        <div>
+          <p class="text-xs md:text-sm text-slate-400">
+            Da & Jay Wallet Pro ✨
+          </p>
 
-    <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mt-1">
+            สวัสดี 👋
+          </h1>
+        </div>
 
-      <p class="text-xs md:text-sm text-slate-400">
-        Da & Jay Wallet Pro ✨
-      </p>
+        <div class="glass rounded-2xl px-3 py-2 shrink-0">
+          <p class="text-[10px] text-slate-400">เดือน</p>
 
-      <h1
-        class="text-2xl md:text-3xl font-bold text-slate-800 mt-1"
-      >
-        สวัสดี 👋
-      </h1>
+          <div class="flex items-center gap-1">
+            <select
+              id="monthSelectTH"
+              class="font-semibold text-sm bg-transparent outline-none"
+            ></select>
+            <select
+              id="yearSelectTH"
+              class="font-semibold text-sm bg-transparent outline-none"
+            ></select>
+          </div>
 
-    </div>
+          <input id="monthPicker" type="hidden" />
+        </div>
+      </header>
 
-
-    <div class="glass rounded-2xl px-3 py-2 shrink-0">
-
-      <p class="text-[10px] text-slate-400">
-        เดือน
-      </p>
-
-      <input
-        id="monthPicker"
-        type="month"
-        class="font-semibold text-sm bg-transparent outline-none"
-      >
-
-    </div>
-
-  </header>
-
-
-
-  <!-- ===================================================
+      <!-- ===================================================
        PAGE: DASHBOARD
   ==================================================== -->
 
-  <section
-    id="page-dashboard"
-    class="tab-page active"
-  >
+      <section id="page-dashboard" class="tab-page active">
+        <!-- BALANCE -->
 
+        <div class="balance-card rounded-[28px] p-6 md:p-8">
+          <div class="balance-content">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="text-sm text-indigo-100">เงินที่ใช้ได้จริง</p>
 
-    <!-- BALANCE -->
+                <h2
+                  id="availableMoney"
+                  class="balance-number money text-4xl md:text-5xl font-bold text-white mt-2"
+                >
+                  ฿0
+                </h2>
 
-    <div class="balance-card rounded-[28px] p-6 md:p-8">
+                <p class="text-xs text-indigo-200 mt-3">
+                  รายรับ − ค่าใช้จ่าย − จ่ายหนี้ − หมุนหนี้
+                </p>
+              </div>
 
-      <div class="balance-content">
+              <div
+                class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/10 flex items-center justify-center shrink-0"
+              >
+                <i
+                  class="fa-solid fa-wallet text-white text-xl md:text-2xl"
+                ></i>
+              </div>
+            </div>
 
+            <!-- MINI STATS -->
 
-        <div class="flex items-start justify-between gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-7">
+              <div class="bg-white/10 rounded-2xl p-3">
+                <p class="text-[11px] text-indigo-200">รายรับ</p>
 
-          <div>
+                <p
+                  id="dashIncome"
+                  class="money text-sm md:text-base font-bold text-white mt-1"
+                >
+                  ฿0
+                </p>
+              </div>
 
-            <p class="text-sm text-indigo-100">
-              เงินที่ใช้ได้จริง
-            </p>
+              <div class="bg-white/10 rounded-2xl p-3">
+                <p class="text-[11px] text-indigo-200">ค่าใช้จ่าย</p>
 
-            <h2
-              id="availableMoney"
-              class="balance-number money text-4xl md:text-5xl font-bold text-white mt-2"
-            >
-              ฿0
-            </h2>
+                <p
+                  id="dashExpense"
+                  class="money text-sm md:text-base font-bold text-white mt-1"
+                >
+                  ฿0
+                </p>
+              </div>
 
-            <p class="text-xs text-indigo-200 mt-3">
-              รายรับ − ค่าใช้จ่าย − จ่ายหนี้ − หมุนหนี้
-            </p>
+              <div class="bg-white/10 rounded-2xl p-3">
+                <p class="text-[11px] text-indigo-200">จ่ายหนี้</p>
 
+                <p
+                  id="dashDebt"
+                  class="money text-sm md:text-base font-bold text-white mt-1"
+                >
+                  ฿0
+                </p>
+              </div>
+
+              <div class="bg-white/10 rounded-2xl p-3">
+                <p class="text-[11px] text-indigo-200">หมุนหนี้</p>
+
+                <p
+                  id="dashReuse"
+                  class="money text-sm md:text-base font-bold text-white mt-1"
+                >
+                  ฿0
+                </p>
+              </div>
+            </div>
           </div>
+        </div>
 
+        <!-- QUICK ACTION -->
 
-          <div
-            class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/10 flex items-center justify-center shrink-0"
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+          <button
+            onclick="openAdd('income')"
+            class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
-
-            <i class="fa-solid fa-wallet text-white text-xl md:text-2xl"></i>
-
-          </div>
-
-        </div>
-
-
-        <!-- MINI STATS -->
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-7">
-
-
-          <div class="bg-white/10 rounded-2xl p-3">
-
-            <p class="text-[11px] text-indigo-200">
-              รายรับ
-            </p>
-
-            <p
-              id="dashIncome"
-              class="money text-sm md:text-base font-bold text-white mt-1"
+            <div
+              class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center"
             >
-              ฿0
-            </p>
+              <i class="fa-solid fa-arrow-down"></i>
+            </div>
 
-          </div>
+            <p class="font-semibold mt-3">รายรับ</p>
 
+            <p class="text-xs text-slate-400 mt-1">เพิ่มเงินเข้า</p>
+          </button>
 
-          <div class="bg-white/10 rounded-2xl p-3">
-
-            <p class="text-[11px] text-indigo-200">
-              ค่าใช้จ่าย
-            </p>
-
-            <p
-              id="dashExpense"
-              class="money text-sm md:text-base font-bold text-white mt-1"
-            >
-              ฿0
-            </p>
-
-          </div>
-
-
-          <div class="bg-white/10 rounded-2xl p-3">
-
-            <p class="text-[11px] text-indigo-200">
-              จ่ายหนี้
-            </p>
-
-            <p
-              id="dashDebt"
-              class="money text-sm md:text-base font-bold text-white mt-1"
-            >
-              ฿0
-            </p>
-
-          </div>
-
-
-          <div class="bg-white/10 rounded-2xl p-3">
-
-            <p class="text-[11px] text-indigo-200">
-              หมุนหนี้
-            </p>
-
-            <p
-              id="dashReuse"
-              class="money text-sm md:text-base font-bold text-white mt-1"
-            >
-              ฿0
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- QUICK ACTION -->
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
-
-
-      <button
-        onclick="openAdd('income')"
-        class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
-      >
-
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-arrow-down"></i>
-
-        </div>
-
-        <p class="font-semibold mt-3">
-          รายรับ
-        </p>
-
-        <p class="text-xs text-slate-400 mt-1">
-          เพิ่มเงินเข้า
-        </p>
-
-      </button>
-
-
-
-      <button
-        onclick="openAdd('expense')"
-        class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
-      >
-
-        <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-cart-shopping"></i>
-
-        </div>
-
-        <p class="font-semibold mt-3">
-          ค่าใช้จ่าย
-        </p>
-
-        <p class="text-xs text-slate-400 mt-1">
-          รายจ่ายทั่วไป
-        </p>
-
-      </button>
-
-
-
-      <button
-        onclick="openAdd('debt')"
-        class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
-      >
-
-        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-credit-card"></i>
-
-        </div>
-
-        <p class="font-semibold mt-3">
-          จ่ายหนี้
-        </p>
-
-        <p class="text-xs text-slate-400 mt-1">
-          บันทึกเงินที่จ่าย
-        </p>
-
-      </button>
-
-
-
-      <button
-        onclick="openAdd('reuse')"
-        class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
-      >
-
-        <div class="w-10 h-10 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-rotate"></i>
-
-        </div>
-
-        <p class="font-semibold mt-3">
-          หมุนหนี้
-        </p>
-
-        <p class="text-xs text-slate-400 mt-1">
-          ใช้วงเงินกลับมา
-        </p>
-
-      </button>
-
-    </div>
-
-
-
-    <!-- DASHBOARD CHART -->
-
-    <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
-
-      <div class="flex items-center justify-between">
-
-        <div>
-
-          <h3 class="font-bold text-lg">
-            ภาพรวมเดือนนี้
-          </h3>
-
-          <p class="text-xs text-slate-400 mt-1">
-            รายรับและเงินที่ไหลออก
-          </p>
-
-        </div>
-
-        <div
-          class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center"
-        >
-
-          <i class="fa-solid fa-chart-column"></i>
-
-        </div>
-
-      </div>
-
-
-      <div class="h-[270px] mt-5">
-
-        <canvas id="dashboardChart"></canvas>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- DEBT PREVIEW -->
-
-    <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
-
-      <div class="flex items-center justify-between gap-3">
-
-        <div>
-
-          <div class="flex items-center gap-2">
-
-            <span class="text-xl">
-              🔄
-            </span>
-
-            <h3 class="font-bold text-lg">
-              หนี้หมุน
-            </h3>
-
-          </div>
-
-          <p class="text-xs text-slate-400 mt-1">
-            จ่ายไปเท่าไหร่ และหมุนกลับมาใช้เท่าไหร่
-          </p>
-
-        </div>
-
-
-        <button
-          onclick="showPage('debts')"
-          class="text-indigo-600 text-sm font-semibold whitespace-nowrap"
-        >
-          ดูทั้งหมด →
-        </button>
-
-      </div>
-
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
-
-
-        <div class="rounded-2xl bg-rose-50 p-4">
-
-          <p class="text-xs text-rose-500">
-            จ่ายหนี้
-          </p>
-
-          <p
-            id="previewDebt"
-            class="money text-xl font-bold text-rose-600 mt-1"
+          <button
+            onclick="openAdd('expense')"
+            class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
-            ฿0
-          </p>
+            <div
+              class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
 
-        </div>
+            <p class="font-semibold mt-3">ค่าใช้จ่าย</p>
 
+            <p class="text-xs text-slate-400 mt-1">รายจ่ายทั่วไป</p>
+          </button>
 
-        <div class="rounded-2xl bg-violet-50 p-4">
-
-          <p class="text-xs text-violet-500">
-            หมุนกลับมาใช้
-          </p>
-
-          <p
-            id="previewReuse"
-            class="money text-xl font-bold text-violet-600 mt-1"
+          <button
+            onclick="openAdd('debt')"
+            class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
-            ฿0
-          </p>
+            <div
+              class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
 
-        </div>
+            <p class="font-semibold mt-3">จ่ายหนี้</p>
 
+            <p class="text-xs text-slate-400 mt-1">บันทึกเงินที่จ่าย</p>
+          </button>
 
-        <div class="rounded-2xl bg-slate-100 p-4">
-
-          <p class="text-xs text-slate-500">
-            เงินไหลออกเกี่ยวกับหนี้
-          </p>
-
-          <p
-            id="previewDebtOutflow"
-            class="money text-xl font-bold text-slate-700 mt-1"
+          <button
+            onclick="openAdd('reuse')"
+            class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
-            ฿0
-          </p>
+            <div
+              class="w-10 h-10 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-rotate"></i>
+            </div>
 
+            <p class="font-semibold mt-3">หมุนหนี้</p>
+
+            <p class="text-xs text-slate-400 mt-1">ใช้วงเงินกลับมา</p>
+          </button>
         </div>
 
-      </div>
+        <!-- DASHBOARD CHART -->
 
+        <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-bold text-lg">ภาพรวมเดือนนี้</h3>
 
-      <div
-        id="dashboardProviders"
-        class="space-y-2 mt-5"
-      ></div>
+              <p class="text-xs text-slate-400 mt-1">รายรับและเงินที่ไหลออก</p>
+            </div>
 
-    </div>
+            <div
+              class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+          </div>
 
-
-
-    <!-- FORECAST -->
-
-    <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
-
-      <div class="flex items-center gap-3">
-
-        <div class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-
+          <div class="h-[270px] mt-5">
+            <canvas id="dashboardChart"></canvas>
+          </div>
         </div>
 
-        <div>
+        <!-- DEBT PREVIEW -->
 
-          <h3 class="font-bold">
-            คาดการณ์สิ้นเดือน
-          </h3>
+        <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xl"> 🔄 </span>
 
-          <p class="text-xs text-slate-400 mt-1">
-            ถ้าใช้เงินในอัตราเดิม
-          </p>
+                <h3 class="font-bold text-lg">หนี้หมุน</h3>
+              </div>
 
+              <p class="text-xs text-slate-400 mt-1">
+                จ่ายไปเท่าไหร่ และหมุนกลับมาใช้เท่าไหร่
+              </p>
+            </div>
+
+            <button
+              onclick="showPage('debts')"
+              class="text-indigo-600 text-sm font-semibold whitespace-nowrap"
+            >
+              ดูทั้งหมด →
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
+            <div class="rounded-2xl bg-rose-50 p-4">
+              <p class="text-xs text-rose-500">จ่ายหนี้</p>
+
+              <p
+                id="previewDebt"
+                class="money text-xl font-bold text-rose-600 mt-1"
+              >
+                ฿0
+              </p>
+            </div>
+
+            <div class="rounded-2xl bg-violet-50 p-4">
+              <p class="text-xs text-violet-500">หมุนกลับมาใช้</p>
+
+              <p
+                id="previewReuse"
+                class="money text-xl font-bold text-violet-600 mt-1"
+              >
+                ฿0
+              </p>
+            </div>
+
+            <div class="rounded-2xl bg-slate-100 p-4">
+              <p class="text-xs text-slate-500">เงินไหลออกเกี่ยวกับหนี้</p>
+
+              <p
+                id="previewDebtOutflow"
+                class="money text-xl font-bold text-slate-700 mt-1"
+              >
+                ฿0
+              </p>
+            </div>
+          </div>
+
+          <div id="dashboardProviders" class="space-y-2 mt-5"></div>
         </div>
 
-      </div>
+        <!-- FORECAST -->
 
+        <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
 
-      <div class="mt-5">
+            <div>
+              <h3 class="font-bold">คาดการณ์สิ้นเดือน</h3>
 
-        <p
-          id="forecastValue"
-          class="money text-3xl font-bold text-slate-800"
-        >
-          ฿0
-        </p>
+              <p class="text-xs text-slate-400 mt-1">ถ้าใช้เงินในอัตราเดิม</p>
+            </div>
+          </div>
 
-        <p
-          id="forecastText"
-          class="text-sm text-slate-500 mt-2 leading-6"
-        >
-          -
-        </p>
+          <div class="mt-5">
+            <p
+              id="forecastValue"
+              class="money text-3xl font-bold text-slate-800"
+            >
+              ฿0
+            </p>
 
-      </div>
+            <p id="forecastText" class="text-sm text-slate-500 mt-2 leading-6">
+              -
+            </p>
+          </div>
+        </div>
+      </section>
 
-    </div>
-
-  </section>
-
-
-
-  <!-- ===================================================
+      <!-- ===================================================
        PAGE: FORM
   ==================================================== -->
 
-  <section
-    id="page-form"
-    class="tab-page"
-  >
+      <section id="page-form" class="tab-page">
+        <div class="max-w-2xl mx-auto">
+          <div class="mb-5">
+            <p class="text-sm text-slate-400">Wallet</p>
 
-    <div class="max-w-2xl mx-auto">
-
-
-      <div class="mb-5">
-
-        <p class="text-sm text-slate-400">
-          Wallet
-        </p>
-
-        <h2
-          id="formTitle"
-          class="text-2xl md:text-3xl font-bold mt-1"
-        >
-          บันทึกรายการ
-        </h2>
-
-      </div>
-
-
-      <div class="glass rounded-[28px] p-5 md:p-7">
-
-
-        <!-- TYPE -->
-
-        <div>
-
-          <label class="text-sm font-semibold">
-            ประเภทรายการ
-          </label>
-
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
-
-
-            <button
-              type="button"
-              data-type="income"
-              onclick="setFormType('income')"
-              class="type-btn rounded-2xl p-3 text-sm font-medium"
-            >
-
-              <i class="fa-solid fa-arrow-down mr-1"></i>
-
-              รายรับ
-
-            </button>
-
-
-            <button
-              type="button"
-              data-type="expense"
-              onclick="setFormType('expense')"
-              class="type-btn rounded-2xl p-3 text-sm font-medium"
-            >
-
-              <i class="fa-solid fa-cart-shopping mr-1"></i>
-
-              ค่าใช้จ่าย
-
-            </button>
-
-
-            <button
-              type="button"
-              data-type="debt"
-              onclick="setFormType('debt')"
-              class="type-btn rounded-2xl p-3 text-sm font-medium"
-            >
-
-              <i class="fa-solid fa-credit-card mr-1"></i>
-
-              จ่ายหนี้
-
-            </button>
-
-
-            <button
-              type="button"
-              data-type="reuse"
-              onclick="setFormType('reuse')"
-              class="type-btn rounded-2xl p-3 text-sm font-medium"
-            >
-
-              <i class="fa-solid fa-rotate mr-1"></i>
-
-              หมุนหนี้
-
-            </button>
-
+            <h2 id="formTitle" class="text-2xl md:text-3xl font-bold mt-1">
+              บันทึกรายการ
+            </h2>
           </div>
 
-        </div>
+          <div class="glass rounded-[28px] p-5 md:p-7">
+            <!-- TYPE -->
 
+            <div>
+              <label class="text-sm font-semibold"> ประเภทรายการ </label>
 
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
+                <button
+                  type="button"
+                  data-type="income"
+                  onclick="setFormType('income')"
+                  class="type-btn rounded-2xl p-3 text-sm font-medium"
+                >
+                  <i class="fa-solid fa-arrow-down mr-1"></i>
 
-        <!-- AMOUNT -->
+                  รายรับ
+                </button>
 
-        <div class="mt-6">
+                <button
+                  type="button"
+                  data-type="expense"
+                  onclick="setFormType('expense')"
+                  class="type-btn rounded-2xl p-3 text-sm font-medium"
+                >
+                  <i class="fa-solid fa-cart-shopping mr-1"></i>
 
-          <label class="text-sm font-semibold">
-            จำนวนเงิน
-          </label>
+                  ค่าใช้จ่าย
+                </button>
 
-          <div class="relative mt-2">
+                <button
+                  type="button"
+                  data-type="debt"
+                  onclick="setFormType('debt')"
+                  class="type-btn rounded-2xl p-3 text-sm font-medium"
+                >
+                  <i class="fa-solid fa-credit-card mr-1"></i>
 
-            <span
-              class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
+                  จ่ายหนี้
+                </button>
+
+                <button
+                  type="button"
+                  data-type="reuse"
+                  onclick="setFormType('reuse')"
+                  class="type-btn rounded-2xl p-3 text-sm font-medium"
+                >
+                  <i class="fa-solid fa-rotate mr-1"></i>
+
+                  หมุนหนี้
+                </button>
+              </div>
+            </div>
+
+            <!-- AMOUNT -->
+
+            <div class="mt-6">
+              <label class="text-sm font-semibold"> จำนวนเงิน </label>
+
+              <div class="relative mt-2">
+                <span
+                  class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
+                >
+                  ฿
+                </span>
+
+                <input
+                  id="amount"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  inputmode="decimal"
+                  placeholder="0.00"
+                  class="input pl-9 text-2xl font-bold"
+                />
+              </div>
+            </div>
+
+            <!-- CATEGORY -->
+
+            <div class="mt-6">
+              <label id="categoryLabel" class="text-sm font-semibold">
+                หมวดหมู่
+              </label>
+
+              <select id="category" class="input mt-2"></select>
+            </div>
+
+            <!-- DETAIL -->
+
+            <div class="mt-6">
+              <label class="text-sm font-semibold"> รายละเอียด </label>
+
+              <input
+                id="detail"
+                type="text"
+                maxlength="200"
+                placeholder="เช่น ข้าวเย็น / เงินเดือน / ซื้อของ"
+                class="input mt-2"
+              />
+            </div>
+
+            <!-- DATE -->
+
+            <div class="mt-6">
+              <label class="text-sm font-semibold"> วันที่ </label>
+
+              <input id="date" type="date" class="input mt-2" />
+            </div>
+
+            <!-- SAVE -->
+
+            <button
+              id="saveBtn"
+              onclick="saveTransaction()"
+              class="w-full mt-7 rounded-2xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-4 flex items-center justify-center gap-2 transition"
             >
-              ฿
-            </span>
+              <i class="fa-solid fa-floppy-disk"></i>
 
-            <input
-              id="amount"
-              type="number"
-              min="0"
-              step="0.01"
-              inputmode="decimal"
-              placeholder="0.00"
-              class="input pl-9 text-2xl font-bold"
+              <span id="saveBtnText"> บันทึกรายการ </span>
+            </button>
+
+            <button
+              onclick="showPage('dashboard')"
+              class="w-full mt-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-3 transition"
             >
-
+              ยกเลิก
+            </button>
           </div>
-
         </div>
+      </section>
 
-
-
-        <!-- CATEGORY -->
-
-        <div class="mt-6">
-
-          <label
-            id="categoryLabel"
-            class="text-sm font-semibold"
-          >
-            หมวดหมู่
-          </label>
-
-          <select
-            id="category"
-            class="input mt-2"
-          ></select>
-
-        </div>
-
-
-
-        <!-- DETAIL -->
-
-        <div class="mt-6">
-
-          <label class="text-sm font-semibold">
-            รายละเอียด
-          </label>
-
-          <input
-            id="detail"
-            type="text"
-            maxlength="200"
-            placeholder="เช่น ข้าวเย็น / เงินเดือน / ซื้อของ"
-            class="input mt-2"
-          >
-
-        </div>
-
-
-
-        <!-- DATE -->
-
-        <div class="mt-6">
-
-          <label class="text-sm font-semibold">
-            วันที่
-          </label>
-
-          <input
-            id="date"
-            type="date"
-            class="input mt-2"
-          >
-
-        </div>
-
-
-
-        <!-- SAVE -->
-
-        <button
-          id="saveBtn"
-          onclick="saveTransaction()"
-          class="w-full mt-7 rounded-2xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-4 flex items-center justify-center gap-2 transition"
-        >
-
-          <i class="fa-solid fa-floppy-disk"></i>
-
-          <span id="saveBtnText">
-            บันทึกรายการ
-          </span>
-
-        </button>
-
-
-
-        <button
-          onclick="showPage('dashboard')"
-          class="w-full mt-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-3 transition"
-        >
-          ยกเลิก
-        </button>
-
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- ===================================================
+      <!-- ===================================================
        PAGE: HISTORY
   ==================================================== -->
 
-  <section
-    id="page-history"
-    class="tab-page"
-  >
+      <section id="page-history" class="tab-page">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold">ประวัติรายการ</h2>
 
-    <div>
+          <p class="text-sm text-slate-400 mt-1">ค้นหา แก้ไข หรือลบรายการ</p>
+        </div>
 
-      <h2 class="text-2xl md:text-3xl font-bold">
-        ประวัติรายการ
-      </h2>
+        <!-- SEARCH -->
 
-      <p class="text-sm text-slate-400 mt-1">
-        ค้นหา แก้ไข หรือลบรายการ
-      </p>
+        <div class="glass rounded-2xl p-3 mt-5">
+          <div class="relative">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+            ></i>
 
-    </div>
+            <input
+              id="historySearch"
+              oninput="renderHistory()"
+              type="text"
+              placeholder="ค้นหารายการ..."
+              class="input pl-11"
+            />
+          </div>
+        </div>
 
+        <!-- FILTER -->
 
+        <div class="scroll-x flex gap-2 py-4">
+          <button
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-indigo-600 text-white text-sm"
+            data-filter="all"
+            onclick="setHistoryFilter('all', this)"
+          >
+            ทั้งหมด
+          </button>
 
-    <!-- SEARCH -->
+          <button
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            data-filter="income"
+            onclick="setHistoryFilter('income', this)"
+          >
+            รายรับ
+          </button>
 
-    <div class="glass rounded-2xl p-3 mt-5">
+          <button
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            data-filter="expense"
+            onclick="setHistoryFilter('expense', this)"
+          >
+            ค่าใช้จ่าย
+          </button>
 
-      <div class="relative">
+          <button
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            data-filter="debt"
+            onclick="setHistoryFilter('debt', this)"
+          >
+            จ่ายหนี้
+          </button>
 
-        <i
-          class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-        ></i>
+          <button
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            data-filter="reuse"
+            onclick="setHistoryFilter('reuse', this)"
+          >
+            หมุนหนี้
+          </button>
+        </div>
 
-        <input
-          id="historySearch"
-          oninput="renderHistory()"
-          type="text"
-          placeholder="ค้นหารายการ..."
-          class="input pl-11"
-        >
+        <!-- LIST -->
 
-      </div>
+        <div id="historyList" class="space-y-3"></div>
+      </section>
 
-    </div>
-
-
-
-    <!-- FILTER -->
-
-    <div class="scroll-x flex gap-2 py-4">
-
-      <button
-        class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-indigo-600 text-white text-sm"
-        data-filter="all"
-        onclick="setHistoryFilter('all', this)"
-      >
-        ทั้งหมด
-      </button>
-
-
-      <button
-        class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
-        data-filter="income"
-        onclick="setHistoryFilter('income', this)"
-      >
-        รายรับ
-      </button>
-
-
-      <button
-        class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
-        data-filter="expense"
-        onclick="setHistoryFilter('expense', this)"
-      >
-        ค่าใช้จ่าย
-      </button>
-
-
-      <button
-        class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
-        data-filter="debt"
-        onclick="setHistoryFilter('debt', this)"
-      >
-        จ่ายหนี้
-      </button>
-
-
-      <button
-        class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
-        data-filter="reuse"
-        onclick="setHistoryFilter('reuse', this)"
-      >
-        หมุนหนี้
-      </button>
-
-    </div>
-
-
-
-    <!-- LIST -->
-
-    <div
-      id="historyList"
-      class="space-y-3"
-    ></div>
-
-  </section>
-
-
-
-  <!-- ===================================================
+      <!-- ===================================================
        PAGE: SUMMARY
   ==================================================== -->
 
-  <section
-    id="page-summary"
-    class="tab-page"
-  >
-
-    <div>
-
-      <h2 class="text-2xl md:text-3xl font-bold">
-        สรุปการเงิน
-      </h2>
-
-      <p class="text-sm text-slate-400 mt-1">
-        ดูภาพรวมการใช้เงินของเดือนที่เลือก
-      </p>
-
-    </div>
-
-
-
-    <!-- SUMMARY CARDS -->
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
-
-
-      <div class="glass rounded-2xl p-4">
-
-        <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-arrow-down"></i>
-
-        </div>
-
-        <p class="text-xs text-slate-400 mt-3">
-          รายรับ
-        </p>
-
-        <p
-          id="summaryIncome"
-          class="money text-lg font-bold mt-1"
-        >
-          ฿0
-        </p>
-
-      </div>
-
-
-
-      <div class="glass rounded-2xl p-4">
-
-        <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-cart-shopping"></i>
-
-        </div>
-
-        <p class="text-xs text-slate-400 mt-3">
-          ค่าใช้จ่าย
-        </p>
-
-        <p
-          id="summaryExpense"
-          class="money text-lg font-bold mt-1"
-        >
-          ฿0
-        </p>
-
-      </div>
-
-
-
-      <div class="glass rounded-2xl p-4">
-
-        <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-credit-card"></i>
-
-        </div>
-
-        <p class="text-xs text-slate-400 mt-3">
-          จ่ายหนี้
-        </p>
-
-        <p
-          id="summaryDebt"
-          class="money text-lg font-bold mt-1"
-        >
-          ฿0
-        </p>
-
-      </div>
-
-
-
-      <div class="glass rounded-2xl p-4">
-
-        <div class="w-9 h-9 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-rotate"></i>
-
-        </div>
-
-        <p class="text-xs text-slate-400 mt-3">
-          หมุนหนี้
-        </p>
-
-        <p
-          id="summaryReuse"
-          class="money text-lg font-bold mt-1"
-        >
-          ฿0
-        </p>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- EXPENSE CHART -->
-
-    <div class="glass rounded-[28px] p-5 mt-5">
-
-      <div class="flex items-center gap-3">
-
-        <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-chart-pie"></i>
-
-        </div>
-
+      <section id="page-summary" class="tab-page">
         <div>
+          <h2 class="text-2xl md:text-3xl font-bold">สรุปการเงิน</h2>
 
-          <h3 class="font-bold">
-            ค่าใช้จ่ายตามหมวดหมู่
-          </h3>
-
-          <p class="text-xs text-slate-400">
-            เฉพาะค่าใช้จ่ายทั่วไป
+          <p class="text-sm text-slate-400 mt-1">
+            ดูภาพรวมการใช้เงินของเดือนที่เลือก
           </p>
-
         </div>
 
-      </div>
+        <!-- SUMMARY CARDS -->
 
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+          <div class="glass rounded-2xl p-4">
+            <div
+              class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-arrow-down"></i>
+            </div>
 
-      <div class="h-[300px] mt-5">
+            <p class="text-xs text-slate-400 mt-3">รายรับ</p>
 
-        <canvas id="expenseChart"></canvas>
+            <p id="summaryIncome" class="money text-lg font-bold mt-1">฿0</p>
+          </div>
 
-      </div>
+          <div class="glass rounded-2xl p-4">
+            <div
+              class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
 
-    </div>
+            <p class="text-xs text-slate-400 mt-3">ค่าใช้จ่าย</p>
 
+            <p id="summaryExpense" class="money text-lg font-bold mt-1">฿0</p>
+          </div>
 
+          <div class="glass rounded-2xl p-4">
+            <div
+              class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
 
-    <!-- DAILY CHART -->
+            <p class="text-xs text-slate-400 mt-3">จ่ายหนี้</p>
 
-    <div class="glass rounded-[28px] p-5 mt-5">
+            <p id="summaryDebt" class="money text-lg font-bold mt-1">฿0</p>
+          </div>
 
-      <div class="flex items-center gap-3">
+          <div class="glass rounded-2xl p-4">
+            <div
+              class="w-9 h-9 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-rotate"></i>
+            </div>
 
-        <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+            <p class="text-xs text-slate-400 mt-3">หมุนหนี้</p>
 
-          <i class="fa-solid fa-chart-line"></i>
-
+            <p id="summaryReuse" class="money text-lg font-bold mt-1">฿0</p>
+          </div>
         </div>
 
-        <div>
+        <!-- EXPENSE CHART -->
 
-          <h3 class="font-bold">
-            แนวโน้มเงินเข้าออก
-          </h3>
+        <div class="glass rounded-[28px] p-5 mt-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
 
-          <p class="text-xs text-slate-400">
-            รายรับเทียบกับเงินออกในแต่ละวัน
-          </p>
+            <div>
+              <h3 class="font-bold">ค่าใช้จ่ายตามหมวดหมู่</h3>
 
+              <p class="text-xs text-slate-400">เฉพาะค่าใช้จ่ายทั่วไป</p>
+            </div>
+          </div>
+
+          <div class="h-[300px] mt-5">
+            <canvas id="expenseChart"></canvas>
+          </div>
         </div>
 
-      </div>
+        <!-- DAILY CHART -->
 
+        <div class="glass rounded-[28px] p-5 mt-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
 
-      <div class="h-[300px] mt-5">
+            <div>
+              <h3 class="font-bold">แนวโน้มเงินเข้าออก</h3>
 
-        <canvas id="dailyChart"></canvas>
+              <p class="text-xs text-slate-400">
+                รายรับเทียบกับเงินออกในแต่ละวัน
+              </p>
+            </div>
+          </div>
 
-      </div>
-
-    </div>
-
-
-
-    <!-- ANALYSIS -->
-
-    <div class="glass rounded-[28px] p-5 mt-5">
-
-      <div class="flex items-center gap-3">
-
-        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-lightbulb"></i>
-
+          <div class="h-[300px] mt-5">
+            <canvas id="dailyChart"></canvas>
+          </div>
         </div>
 
-        <div>
+        <!-- ANALYSIS -->
 
-          <h3 class="font-bold">
-            วิเคราะห์การเงิน
-          </h3>
+        <div class="glass rounded-[28px] p-5 mt-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
 
-          <p class="text-xs text-slate-400">
-            สรุปจากรายการที่บันทึก
-          </p>
+            <div>
+              <h3 class="font-bold">วิเคราะห์การเงิน</h3>
 
+              <p class="text-xs text-slate-400">สรุปจากรายการที่บันทึก</p>
+            </div>
+          </div>
+
+          <div id="analysisBox" class="space-y-3 mt-5"></div>
         </div>
+      </section>
 
-      </div>
-
-
-      <div
-        id="analysisBox"
-        class="space-y-3 mt-5"
-      ></div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- ===================================================
+      <!-- ===================================================
        PAGE: DEBT ROTATION
   ==================================================== -->
 
-  <section
-    id="page-debts"
-    class="tab-page"
-  >
-
-    <div>
-
-      <div class="flex items-center gap-2">
-
-        <span class="text-2xl">
-          🔄
-        </span>
-
-        <h2 class="text-2xl md:text-3xl font-bold">
-          หนี้หมุน
-        </h2>
-
-      </div>
-
-      <p class="text-sm text-slate-400 mt-1">
-        ดูจากรายการจริง ไม่ต้องกรอกยอดหนี้ตั้งต้น
-      </p>
-
-    </div>
-
-
-
-    <!-- DEBT SUMMARY -->
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
-
-
-      <div class="rounded-[26px] bg-rose-50 p-5">
-
-        <div class="w-11 h-11 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-money-bill-transfer"></i>
-
-        </div>
-
-        <p class="text-sm text-rose-500 mt-4">
-          จ่ายหนี้
-        </p>
-
-        <p
-          id="debtPagePaid"
-          class="money text-2xl font-bold text-rose-600 mt-1"
-        >
-          ฿0
-        </p>
-
-      </div>
-
-
-
-      <div class="rounded-[26px] bg-violet-50 p-5">
-
-        <div class="w-11 h-11 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-rotate"></i>
-
-        </div>
-
-        <p class="text-sm text-violet-500 mt-4">
-          หมุนกลับมาใช้
-        </p>
-
-        <p
-          id="debtPageReuse"
-          class="money text-2xl font-bold text-violet-600 mt-1"
-        >
-          ฿0
-        </p>
-
-      </div>
-
-
-
-      <div class="rounded-[26px] bg-slate-100 p-5">
-
-        <div class="w-11 h-11 rounded-2xl bg-slate-200 text-slate-600 flex items-center justify-center">
-
-          <i class="fa-solid fa-arrow-right-arrow-left"></i>
-
-        </div>
-
-        <p class="text-sm text-slate-500 mt-4">
-          เงินไหลออกเกี่ยวกับหนี้
-        </p>
-
-        <p
-          id="debtPageOutflow"
-          class="money text-2xl font-bold text-slate-700 mt-1"
-        >
-          ฿0
-        </p>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- DEBT CHART -->
-
-    <div class="glass rounded-[28px] p-5 mt-5">
-
-      <h3 class="font-bold">
-        จ่ายหนี้ VS หมุนกลับมาใช้
-      </h3>
-
-      <p class="text-xs text-slate-400 mt-1">
-        เปรียบเทียบของเดือนที่เลือก
-      </p>
-
-
-      <div class="h-[280px] mt-5">
-
-        <canvas id="debtChart"></canvas>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- PROVIDERS -->
-
-    <div class="glass rounded-[28px] p-5 mt-5">
-
-      <div>
-
-        <h3 class="font-bold">
-          แยกตามเจ้าหนี้ / วงเงิน
-        </h3>
-
-        <p class="text-xs text-slate-400 mt-1">
-          เดือนที่เลือก
-        </p>
-
-      </div>
-
-
-      <div
-        id="providerList"
-        class="space-y-3 mt-5"
-      ></div>
-
-    </div>
-
-
-
-    <!-- EXPLANATION -->
-
-    <div class="rounded-[28px] bg-indigo-50 border border-indigo-100 p-5 mt-5">
-
-      <div class="flex gap-3">
-
-        <div class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
-
-          <i class="fa-solid fa-lightbulb"></i>
-
-        </div>
-
-
+      <section id="page-debts" class="tab-page">
         <div>
+          <div class="flex items-center gap-2">
+            <span class="text-2xl"> 🔄 </span>
 
-          <h3 class="font-semibold text-indigo-900">
-            ระบบหนี้หมุนทำงานแบบนี้
-          </h3>
+            <h2 class="text-2xl md:text-3xl font-bold">หนี้หมุน</h2>
+          </div>
 
-          <p class="text-sm text-indigo-700 mt-2 leading-6">
-
-            คุณไม่ต้องกรอกว่ามีหนี้เหลือเท่าไหร่
-            เพียงบันทึกเวลาที่จ่ายหนี้ และเวลาที่นำวงเงินกลับมาใช้
-            ระบบจะนำรายการจริงมาสรุปให้เป็นรายเดือน
-
+          <p class="text-sm text-slate-400 mt-1">
+            ดูจากรายการจริง ไม่ต้องกรอกยอดหนี้ตั้งต้น
           </p>
-
         </div>
 
-      </div>
+        <!-- DEBT SUMMARY -->
 
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
+          <div class="rounded-[26px] bg-rose-50 p-5">
+            <div
+              class="w-11 h-11 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-money-bill-transfer"></i>
+            </div>
+
+            <p class="text-sm text-rose-500 mt-4">จ่ายหนี้</p>
+
+            <p
+              id="debtPagePaid"
+              class="money text-2xl font-bold text-rose-600 mt-1"
+            >
+              ฿0
+            </p>
+          </div>
+
+          <div class="rounded-[26px] bg-violet-50 p-5">
+            <div
+              class="w-11 h-11 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-rotate"></i>
+            </div>
+
+            <p class="text-sm text-violet-500 mt-4">หมุนกลับมาใช้</p>
+
+            <p
+              id="debtPageReuse"
+              class="money text-2xl font-bold text-violet-600 mt-1"
+            >
+              ฿0
+            </p>
+          </div>
+
+          <div class="rounded-[26px] bg-slate-100 p-5">
+            <div
+              class="w-11 h-11 rounded-2xl bg-slate-200 text-slate-600 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-arrow-right-arrow-left"></i>
+            </div>
+
+            <p class="text-sm text-slate-500 mt-4">เงินไหลออกเกี่ยวกับหนี้</p>
+
+            <p
+              id="debtPageOutflow"
+              class="money text-2xl font-bold text-slate-700 mt-1"
+            >
+              ฿0
+            </p>
+          </div>
+        </div>
+
+        <!-- DEBT CHART -->
+
+        <div class="glass rounded-[28px] p-5 mt-5">
+          <h3 class="font-bold">จ่ายหนี้ VS หมุนกลับมาใช้</h3>
+
+          <p class="text-xs text-slate-400 mt-1">เปรียบเทียบของเดือนที่เลือก</p>
+
+          <div class="h-[280px] mt-5">
+            <canvas id="debtChart"></canvas>
+          </div>
+        </div>
+
+        <!-- PROVIDERS -->
+
+        <div class="glass rounded-[28px] p-5 mt-5">
+          <div>
+            <h3 class="font-bold">แยกตามเจ้าหนี้ / วงเงิน</h3>
+
+            <p class="text-xs text-slate-400 mt-1">เดือนที่เลือก</p>
+          </div>
+
+          <div id="providerList" class="space-y-3 mt-5"></div>
+        </div>
+
+        <!-- EXPLANATION -->
+
+        <div
+          class="rounded-[28px] bg-indigo-50 border border-indigo-100 p-5 mt-5"
+        >
+          <div class="flex gap-3">
+            <div
+              class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0"
+            >
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
+
+            <div>
+              <h3 class="font-semibold text-indigo-900">
+                ระบบหนี้หมุนทำงานแบบนี้
+              </h3>
+
+              <p class="text-sm text-indigo-700 mt-2 leading-6">
+                คุณไม่ต้องกรอกว่ามีหนี้เหลือเท่าไหร่ เพียงบันทึกเวลาที่จ่ายหนี้
+                และเวลาที่นำวงเงินกลับมาใช้
+                ระบบจะนำรายการจริงมาสรุปให้เป็นรายเดือน
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
-  </section>
-
-
-</div>
-
-
-
-<!-- =====================================================
+    <!-- =====================================================
      BOTTOM NAVIGATION
 ====================================================== -->
 
-<div class="bottom-nav">
+    <div class="bottom-nav">
+      <nav class="glass rounded-[26px] p-2 grid grid-cols-5 gap-1">
+        <button
+          class="nav-btn active rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          data-page="dashboard"
+          onclick="showPage('dashboard')"
+        >
+          <i class="fa-solid fa-house block text-base mb-1"></i>
 
-  <nav class="glass rounded-[26px] p-2 grid grid-cols-5 gap-1">
+          ภาพรวม
+        </button>
 
+        <button
+          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          data-page="form"
+          onclick="openAdd()"
+        >
+          <i class="fa-solid fa-plus block text-base mb-1"></i>
 
-    <button
-      class="nav-btn active rounded-2xl py-3 text-[11px] md:text-xs font-medium"
-      data-page="dashboard"
-      onclick="showPage('dashboard')"
-    >
+          บันทึก
+        </button>
 
-      <i class="fa-solid fa-house block text-base mb-1"></i>
+        <button
+          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          data-page="history"
+          onclick="showPage('history')"
+        >
+          <i class="fa-solid fa-list block text-base mb-1"></i>
 
-      ภาพรวม
+          ประวัติ
+        </button>
 
-    </button>
+        <button
+          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          data-page="summary"
+          onclick="showPage('summary')"
+        >
+          <i class="fa-solid fa-chart-pie block text-base mb-1"></i>
 
+          สรุป
+        </button>
 
-    <button
-      class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
-      data-page="form"
-      onclick="openAdd()"
-    >
+        <button
+          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          data-page="debts"
+          onclick="showPage('debts')"
+        >
+          <i class="fa-solid fa-rotate block text-base mb-1"></i>
 
-      <i class="fa-solid fa-plus block text-base mb-1"></i>
+          หนี้หมุน
+        </button>
+      </nav>
+    </div>
 
-      บันทึก
-
-    </button>
-
-
-    <button
-      class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
-      data-page="history"
-      onclick="showPage('history')"
-    >
-
-      <i class="fa-solid fa-list block text-base mb-1"></i>
-
-      ประวัติ
-
-    </button>
-
-
-    <button
-      class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
-      data-page="summary"
-      onclick="showPage('summary')"
-    >
-
-      <i class="fa-solid fa-chart-pie block text-base mb-1"></i>
-
-      สรุป
-
-    </button>
-
-
-    <button
-      class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
-      data-page="debts"
-      onclick="showPage('debts')"
-    >
-
-      <i class="fa-solid fa-rotate block text-base mb-1"></i>
-
-      หนี้หมุน
-
-    </button>
-
-  </nav>
-
-</div>
-
-
-
-<!-- =====================================================
+    <!-- =====================================================
      DELETE MODAL
 ====================================================== -->
 
-<div
-  id="deleteModal"
-  class="modal fixed inset-0 bg-slate-900/40 backdrop-blur-sm items-center justify-center z-[100] p-5"
->
+    <div
+      id="deleteModal"
+      class="modal fixed inset-0 bg-slate-900/40 backdrop-blur-sm items-center justify-center z-[100] p-5"
+    >
+      <div class="bg-white rounded-[28px] p-6 w-full max-w-sm shadow-2xl">
+        <div
+          class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center"
+        >
+          <i class="fa-solid fa-trash"></i>
+        </div>
 
-  <div class="bg-white rounded-[28px] p-6 w-full max-w-sm shadow-2xl">
+        <h3 class="font-bold text-lg mt-4">ลบรายการนี้?</h3>
 
+        <p class="text-sm text-slate-500 mt-2 leading-6">
+          เมื่อลบแล้วจะไม่สามารถกู้รายการนี้กลับมาได้
+        </p>
 
-    <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
+        <div class="grid grid-cols-2 gap-2 mt-6">
+          <button
+            onclick="closeDeleteModal()"
+            class="rounded-2xl bg-slate-100 hover:bg-slate-200 py-3 font-semibold text-slate-600"
+          >
+            ยกเลิก
+          </button>
 
-      <i class="fa-solid fa-trash"></i>
-
+          <button
+            onclick="confirmDelete()"
+            class="rounded-2xl bg-rose-600 hover:bg-rose-700 text-white py-3 font-semibold"
+          >
+            ลบรายการ
+          </button>
+        </div>
+      </div>
     </div>
 
-
-    <h3 class="font-bold text-lg mt-4">
-      ลบรายการนี้?
-    </h3>
-
-
-    <p class="text-sm text-slate-500 mt-2 leading-6">
-      เมื่อลบแล้วจะไม่สามารถกู้รายการนี้กลับมาได้
-    </p>
-
-
-    <div class="grid grid-cols-2 gap-2 mt-6">
-
-
-      <button
-        onclick="closeDeleteModal()"
-        class="rounded-2xl bg-slate-100 hover:bg-slate-200 py-3 font-semibold text-slate-600"
-      >
-        ยกเลิก
-      </button>
-
-
-      <button
-        onclick="confirmDelete()"
-        class="rounded-2xl bg-rose-600 hover:bg-rose-700 text-white py-3 font-semibold"
-      >
-        ลบรายการ
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-<!-- =====================================================
+    <!-- =====================================================
      JAVASCRIPT
 ====================================================== -->
 
-<script>
-
-
-/* =====================================================
+    <script>
+      /* =====================================================
    API
 ====================================================== */
 
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbzdKBIynOMnDkSCCK9DgH7PCfYt3J1Bk4Igu_uLZb4Z3FazJKzAM8wp-MxdMHjq5g-lLA/exec';
+      const API_URL =
+        "https://script.google.com/macros/s/AKfycbzdKBIynOMnDkSCCK9DgH7PCfYt3J1Bk4Igu_uLZb4Z3FazJKzAM8wp-MxdMHjq5g-lLA/exec";
 
-
-
-/* =====================================================
+      /* =====================================================
    CATEGORIES
 ====================================================== */
 
-const normalCategories = [
+      const normalCategories = [
+        "ค่าห้องพัก",
 
-  'ค่าห้องพัก',
+        "ค่าอาหาร / ข้าว",
 
-  'ค่าอาหาร / ข้าว',
+        "ค่าน้ำ / ค่าไฟ",
 
-  'ค่าน้ำ / ค่าไฟ',
+        "ของใช้ในบ้าน",
 
-  'ของใช้ในบ้าน',
+        "เดินทาง / น้ำมัน",
 
-  'เดินทาง / น้ำมัน',
+        "ช้อปปิ้ง",
 
-  'ช้อปปิ้ง',
+        "ค่าบริการ / Subscription",
 
-  'ค่าบริการ / Subscription',
+        "สุขภาพ",
 
-  'สุขภาพ',
+        "ท่องเที่ยว",
 
-  'ท่องเที่ยว',
+        "อื่นๆ...",
+      ];
 
-  'อื่นๆ...'
+      const incomeCategories = [
+        "เงินเดือน",
 
-];
+        "รายรับอื่นๆ",
 
+        "เงินคืน / Refund",
 
-const incomeCategories = [
+        "โบนัส",
 
-  'เงินเดือน',
+        "อื่นๆ...",
+      ];
 
-  'รายรับอื่นๆ',
+      const revolvingCategories = [
+        "พรอมิส",
 
-  'เงินคืน / Refund',
+        "ฟินนิกซ์",
 
-  'โบนัส',
+        "Shopee ผ่อนของ",
 
-  'อื่นๆ...'
+        "Shopee สินเชื่อเงินสด",
 
-];
+        "TikTok ผ่อนของ",
 
+        "TikTok เงินสด",
 
-const revolvingCategories = [
+        "ยูเมะพลัส",
 
-  'พรอมิส',
+        "ทรูมันนี่ (Pay Next)",
 
-  'ฟินนิกซ์',
+        "PayPayar",
 
-  'Shopee ผ่อนของ',
+        "อื่นๆ...",
+      ];
 
-  'Shopee สินเชื่อเงินสด',
-
-  'TikTok ผ่อนของ',
-
-  'TikTok เงินสด',
-
-  'ยูเมะพลัส',
-
-  'ทรูมันนี่ (Pay Next)',
-
-  'PayPayar',
-
-  'อื่นๆ...'
-
-];
-
-
-
-/* =====================================================
+      /* =====================================================
    STATE
 ====================================================== */
 
-let records = [];
+      let records = [];
 
-let currentType = 'expense';
+      let currentType = "expense";
 
-let editingId = null;
+      let editingId = null;
 
-let historyFilter = 'all';
+      let historyFilter = "all";
 
-let deleteId = null;
+      let deleteId = null;
 
-let dashboardChart = null;
+      let dashboardChart = null;
 
-let expenseChart = null;
+      let expenseChart = null;
 
-let dailyChart = null;
+      let dailyChart = null;
 
-let debtChart = null;
+      let debtChart = null;
 
-
-
-/* =====================================================
+      /* =====================================================
    INIT
 ====================================================== */
+      const thaiMonths = [
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม",
+      ];
 
-document.addEventListener(
-  'DOMContentLoaded',
-  function() {
+      function initThaiMonthPicker(now) {
+        const monthSelect = document.getElementById("monthSelectTH");
+        const yearSelect = document.getElementById("yearSelectTH");
+        const hidden = document.getElementById("monthPicker");
 
-    const now = new Date();
+        thaiMonths.forEach(function (name, index) {
+          const option = document.createElement("option");
+          option.value = String(index + 1).padStart(2, "0");
+          option.textContent = name;
+          monthSelect.appendChild(option);
+        });
 
-    document.getElementById(
-      'monthPicker'
-    ).value =
-      now.getFullYear() +
-      '-' +
-      String(
-        now.getMonth() + 1
-      ).padStart(2, '0');
+        const currentYear = now.getFullYear();
 
+        for (let y = currentYear - 3; y <= currentYear + 1; y++) {
+          const option = document.createElement("option");
+          option.value = String(y);
+          option.textContent = String(y + 543); // แสดงเป็น พ.ศ.
+          yearSelect.appendChild(option);
+        }
 
-    document.getElementById(
-      'date'
-    ).value =
-      formatDateInput(now);
+        monthSelect.value = String(now.getMonth() + 1).padStart(2, "0");
+        yearSelect.value = String(currentYear);
 
+        function syncMonthPicker() {
+          hidden.value = yearSelect.value + "-" + monthSelect.value;
+          refreshAll();
+        }
 
-    document.getElementById(
-      'monthPicker'
-    ).addEventListener(
-      'change',
-      refreshAll
-    );
+        syncMonthPicker();
 
+        monthSelect.addEventListener("change", syncMonthPicker);
+        yearSelect.addEventListener("change", syncMonthPicker);
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        const now = new Date();
 
-    setFormType('expense');
+        initThaiMonthPicker(now);
 
-    loadData();
+        document.getElementById("date").value = formatDateInput(now);
 
-  }
-);
+        setFormType("expense");
 
+        loadData();
+      });
 
-
-/* =====================================================
+      /* =====================================================
    LOAD
 ====================================================== */
 
-async function loadData() {
+      async function loadData() {
+        showLoading(true);
 
-  showLoading(true);
+        try {
+          const response = await fetch(
+            API_URL + "?action=getAll&ts=" + Date.now(),
+          );
 
-  try {
+          const json = await response.json();
 
-    const response =
-      await fetch(
-        API_URL +
-        '?action=getAll&ts=' +
-        Date.now()
-      );
+          if (json.status !== "success") {
+            throw new Error(json.message || "โหลดข้อมูลไม่สำเร็จ");
+          }
 
+          records = Array.isArray(json.data) ? json.data : [];
 
-    const json =
-      await response.json();
+          refreshAll();
+        } catch (error) {
+          console.error(error);
 
-
-    if (
-      json.status !== 'success'
-    ) {
-
-      throw new Error(
-        json.message ||
-        'โหลดข้อมูลไม่สำเร็จ'
-      );
-
-    }
-
-
-    records =
-      Array.isArray(json.data)
-        ? json.data
-        : [];
-
-
-    refreshAll();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      'โหลดข้อมูลไม่สำเร็จ\n\n' +
-      error.message
-    );
-
-
-  } finally {
-
-    showLoading(false);
-
-  }
-
-}
-
-
-
-async function postData(data) {
-
-  const response =
-    await fetch(
-      API_URL,
-      {
-        method: 'POST',
-        body: JSON.stringify(data)
+          alert("โหลดข้อมูลไม่สำเร็จ\n\n" + error.message);
+        } finally {
+          showLoading(false);
+        }
       }
-    );
 
+      async function postData(data) {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
 
-  const json =
-    await response.json();
+        const json = await response.json();
 
+        if (json.status !== "success") {
+          throw new Error(json.message || "เกิดข้อผิดพลาด");
+        }
 
-  if (
-    json.status !== 'success'
-  ) {
+        return json;
+      }
 
-    throw new Error(
-      json.message ||
-      'เกิดข้อผิดพลาด'
-    );
-
-  }
-
-
-  return json;
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    PAGE NAVIGATION
 ====================================================== */
 
-function showPage(page) {
+      function showPage(page) {
+        document.querySelectorAll(".tab-page").forEach(function (el) {
+          el.classList.remove("active");
+        });
 
-  document
-    .querySelectorAll('.tab-page')
-    .forEach(function(el) {
+        const target = document.getElementById("page-" + page);
 
-      el.classList.remove(
-        'active'
-      );
+        if (target) {
+          target.classList.add("active");
+        }
 
-    });
+        document.querySelectorAll(".nav-btn").forEach(function (btn) {
+          btn.classList.remove("active");
 
+          if (btn.dataset.page === page) {
+            btn.classList.add("active");
+          }
+        });
 
-  const target =
-    document.getElementById(
-      'page-' + page
-    );
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
 
+        if (page === "history") {
+          renderHistory();
+        }
 
-  if (target) {
+        if (page === "summary") {
+          renderSummary();
+        }
 
-    target.classList.add(
-      'active'
-    );
-
-  }
-
-
-  document
-    .querySelectorAll('.nav-btn')
-    .forEach(function(btn) {
-
-      btn.classList.remove(
-        'active'
-      );
-
-
-      if (
-        btn.dataset.page === page
-      ) {
-
-        btn.classList.add(
-          'active'
-        );
-
+        if (page === "debts") {
+          renderDebtPage();
+        }
       }
 
-    });
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-
-
-  if (page === 'history') {
-
-    renderHistory();
-
-  }
-
-
-  if (page === 'summary') {
-
-    renderSummary();
-
-  }
-
-
-  if (page === 'debts') {
-
-    renderDebtPage();
-
-  }
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    FORM
 ====================================================== */
 
-function openAdd(type) {
+      function openAdd(type) {
+        editingId = null;
 
-  editingId = null;
+        clearForm();
 
-  clearForm();
+        showPage("form");
 
-  showPage('form');
+        document.getElementById("formTitle").textContent = "บันทึกรายการ";
 
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'บันทึกรายการ';
+        document.getElementById("saveBtnText").textContent = "บันทึกรายการ";
 
+        setFormType(type || "expense");
+      }
 
-  document.getElementById(
-    'saveBtnText'
-  ).textContent =
-    'บันทึกรายการ';
+      function openEdit(id) {
+        const record = records.find(function (r) {
+          return String(r.id) === String(id);
+        });
 
+        if (!record) {
+          alert("ไม่พบรายการ");
 
-  setFormType(
-    type || 'expense'
-  );
+          return;
+        }
 
-}
+        editingId = record.id;
 
+        showPage("form");
 
+        document.getElementById("formTitle").textContent = "แก้ไขรายการ";
 
-function openEdit(id) {
+        document.getElementById("saveBtnText").textContent = "บันทึกการแก้ไข";
 
-  const record =
-    records.find(function(r) {
+        setFormType(record.type);
 
-      return String(r.id) ===
-        String(id);
+        document.getElementById("amount").value = record.amount || "";
 
-    });
+        document.getElementById("detail").value = record.detail || "";
 
+        document.getElementById("date").value =
+          record.date || formatDateInput(new Date());
 
-  if (!record) {
+        document.getElementById("category").value = record.category || "";
+      }
 
-    alert('ไม่พบรายการ');
+      function clearForm() {
+        document.getElementById("amount").value = "";
 
-    return;
+        document.getElementById("detail").value = "";
 
-  }
+        document.getElementById("date").value = formatDateInput(new Date());
 
+        document.getElementById("formTitle").textContent = "บันทึกรายการ";
 
-  editingId =
-    record.id;
+        document.getElementById("saveBtnText").textContent = "บันทึกรายการ";
+      }
 
+      function resetForm() {
+        editingId = null;
 
-  showPage('form');
+        clearForm();
 
+        setFormType("expense");
+      }
 
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'แก้ไขรายการ';
+      function setFormType(type) {
+        currentType = type || "expense";
 
+        document.querySelectorAll(".type-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.dataset.type === currentType);
+        });
 
-  document.getElementById(
-    'saveBtnText'
-  ).textContent =
-    'บันทึกการแก้ไข';
+        const select = document.getElementById("category");
 
+        let categories = normalCategories;
 
-  setFormType(
-    record.type
-  );
+        let label = "หมวดหมู่";
 
+        if (currentType === "income") {
+          categories = incomeCategories;
 
-  document.getElementById(
-    'amount'
-  ).value =
-    record.amount || '';
+          label = "ประเภทเงินเข้า";
+        }
 
+        if (currentType === "debt" || currentType === "reuse") {
+          categories = revolvingCategories;
 
-  document.getElementById(
-    'detail'
-  ).value =
-    record.detail || '';
+          label =
+            currentType === "debt"
+              ? "เจ้าหนี้ / ผู้ให้บริการ"
+              : "เจ้าหนี้ / วงเงิน";
+        }
 
+        document.getElementById("categoryLabel").textContent = label;
 
-  document.getElementById(
-    'date'
-  ).value =
-    record.date ||
-    formatDateInput(new Date());
+        select.innerHTML = "";
 
+        categories.forEach(function (item) {
+          const option = document.createElement("option");
 
-  document.getElementById(
-    'category'
-  ).value =
-    record.category || '';
+          option.value = item;
 
-}
+          option.textContent = item;
 
+          select.appendChild(option);
+        });
 
+        if (editingId) {
+          const record = records.find(function (r) {
+            return String(r.id) === String(editingId);
+          });
 
-function clearForm() {
+          if (record) {
+            select.value = record.category || "";
+          }
+        }
+      }
 
-  document.getElementById(
-    'amount'
-  ).value = '';
-
-
-  document.getElementById(
-    'detail'
-  ).value = '';
-
-
-  document.getElementById(
-    'date'
-  ).value =
-    formatDateInput(
-      new Date()
-    );
-
-
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'บันทึกรายการ';
-
-
-  document.getElementById(
-    'saveBtnText'
-  ).textContent =
-    'บันทึกรายการ';
-
-}
-
-
-
-function resetForm() {
-
-  editingId = null;
-
-  clearForm();
-
-  setFormType('expense');
-
-}
-
-
-
-function setFormType(type) {
-
-  currentType =
-    type || 'expense';
-
-
-  document
-    .querySelectorAll('.type-btn')
-    .forEach(function(btn) {
-
-      btn.classList.toggle(
-        'active',
-        btn.dataset.type ===
-          currentType
-      );
-
-    });
-
-
-  const select =
-    document.getElementById(
-      'category'
-    );
-
-
-  let categories =
-    normalCategories;
-
-
-  let label =
-    'หมวดหมู่';
-
-
-  if (
-    currentType ===
-    'income'
-  ) {
-
-    categories =
-      incomeCategories;
-
-    label =
-      'ประเภทเงินเข้า';
-
-  }
-
-
-  if (
-    currentType === 'debt' ||
-    currentType === 'reuse'
-  ) {
-
-    categories =
-      revolvingCategories;
-
-    label =
-      currentType === 'debt'
-        ? 'เจ้าหนี้ / ผู้ให้บริการ'
-        : 'เจ้าหนี้ / วงเงิน';
-
-  }
-
-
-  document.getElementById(
-    'categoryLabel'
-  ).textContent =
-    label;
-
-
-  select.innerHTML = '';
-
-
-  categories.forEach(function(item) {
-
-    const option =
-      document.createElement(
-        'option'
-      );
-
-    option.value =
-      item;
-
-    option.textContent =
-      item;
-
-    select.appendChild(
-      option
-    );
-
-  });
-
-
-  if (editingId) {
-
-    const record =
-      records.find(function(r) {
-
-        return String(r.id) ===
-          String(editingId);
-
-      });
-
-
-    if (record) {
-
-      select.value =
-        record.category || '';
-
-    }
-
-  }
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    SAVE TRANSACTION
 ====================================================== */
 
-async function saveTransaction() {
+      async function saveTransaction() {
+        const amount = Number(document.getElementById("amount").value);
 
-  const amount =
-    Number(
-      document.getElementById(
-        'amount'
-      ).value
-    );
+        const category = document.getElementById("category").value;
 
+        const detail = document.getElementById("detail").value.trim();
 
-  const category =
-    document.getElementById(
-      'category'
-    ).value;
+        const date = document.getElementById("date").value;
 
+        if (!amount || amount <= 0) {
+          alert("กรุณากรอกจำนวนเงิน");
 
-  const detail =
-    document.getElementById(
-      'detail'
-    ).value.trim();
-
-
-  const date =
-    document.getElementById(
-      'date'
-    ).value;
-
-
-  if (
-    !amount ||
-    amount <= 0
-  ) {
-
-    alert(
-      'กรุณากรอกจำนวนเงิน'
-    );
-
-    return;
-
-  }
-
-
-  if (!date) {
-
-    alert(
-      'กรุณาเลือกวันที่'
-    );
-
-    return;
-
-  }
-
-
-  const isEdit =
-    Boolean(editingId);
-
-
-  const payload = {
-
-    action:
-      isEdit
-        ? 'edit'
-        : 'add',
-
-    id:
-      isEdit
-        ? editingId
-        : undefined,
-
-    type:
-      currentType,
-
-    typeLabel:
-      getTypeLabel(
-        currentType
-      ),
-
-    category:
-      category,
-
-    detail:
-      detail,
-
-    amount:
-      amount,
-
-    date:
-      date
-
-  };
-
-
-  setSaveLoading(true);
-
-
-  try {
-
-    await postData(
-      payload
-    );
-
-
-    if (!isEdit) {
-
-      confetti({
-        particleCount: 70,
-        spread: 70,
-        origin: {
-          y: .7
+          return;
         }
-      });
 
-    }
+        if (!date) {
+          alert("กรุณาเลือกวันที่");
 
+          return;
+        }
 
-    alert(
-      isEdit
-        ? 'แก้ไขรายการเรียบร้อย ✨'
-        : 'บันทึกรายการเรียบร้อย ✨'
-    );
+        const isEdit = Boolean(editingId);
 
+        const payload = {
+          action: isEdit ? "edit" : "add",
 
-    editingId = null;
+          id: isEdit ? editingId : undefined,
 
-    clearForm();
+          type: currentType,
 
-    await loadData();
+          typeLabel: getTypeLabel(currentType),
 
-    showPage('dashboard');
+          category: category,
 
+          detail: detail,
 
-  } catch (error) {
+          amount: amount,
 
-    console.error(error);
+          date: date,
+        };
 
-    alert(
-      'บันทึกไม่สำเร็จ\n\n' +
-      error.message
-    );
+        setSaveLoading(true);
 
-  } finally {
+        try {
+          await postData(payload);
 
-    setSaveLoading(false);
+          if (!isEdit) {
+            confetti({
+              particleCount: 70,
+              spread: 70,
+              origin: {
+                y: 0.7,
+              },
+            });
+          }
 
-  }
+          alert(
+            isEdit ? "แก้ไขรายการเรียบร้อย ✨" : "บันทึกรายการเรียบร้อย ✨",
+          );
 
-}
+          editingId = null;
 
+          clearForm();
 
+          await loadData();
 
-function getTypeLabel(type) {
+          showPage("dashboard");
+        } catch (error) {
+          console.error(error);
 
-  const labels = {
+          alert("บันทึกไม่สำเร็จ\n\n" + error.message);
+        } finally {
+          setSaveLoading(false);
+        }
+      }
 
-    income:
-      'รายรับ',
+      function getTypeLabel(type) {
+        const labels = {
+          income: "รายรับ",
 
-    expense:
-      'ค่าใช้จ่าย',
+          expense: "ค่าใช้จ่าย",
 
-    debt:
-      'จ่ายหนี้',
+          debt: "จ่ายหนี้",
 
-    reuse:
-      'หมุนหนี้'
+          reuse: "หมุนหนี้",
+        };
 
-  };
+        return labels[type] || "ค่าใช้จ่าย";
+      }
 
-
-  return (
-    labels[type] ||
-    'ค่าใช้จ่าย'
-  );
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    REFRESH
 ====================================================== */
 
-function refreshAll() {
+      function refreshAll() {
+        renderDashboard();
 
-  renderDashboard();
+        renderHistory();
 
-  renderHistory();
+        renderSummary();
 
-  renderSummary();
+        renderDebtPage();
+      }
 
-  renderDebtPage();
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    MONTH
 ====================================================== */
 
-function getSelectedMonth() {
+      function getSelectedMonth() {
+        const value = document.getElementById("monthPicker").value;
 
-  const value =
-    document.getElementById(
-      'monthPicker'
-    ).value;
+        if (value) {
+          return value;
+        }
 
+        const now = new Date();
 
-  if (value) {
+        return (
+          now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0")
+        );
+      }
 
-    return value;
+      function getMonthRecords() {
+        const month = getSelectedMonth();
 
-  }
+        return records.filter(function (record) {
+          return String(record.date || "").startsWith(month);
+        });
+      }
 
-
-  const now =
-    new Date();
-
-
-  return (
-    now.getFullYear() +
-    '-' +
-    String(
-      now.getMonth() + 1
-    ).padStart(2, '0')
-  );
-
-}
-
-
-
-function getMonthRecords() {
-
-  const month =
-    getSelectedMonth();
-
-
-  return records.filter(
-    function(record) {
-
-      return String(
-        record.date || ''
-      ).startsWith(month);
-
-    }
-  );
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    DASHBOARD
 ====================================================== */
 
-function renderDashboard() {
+      function renderDashboard() {
+        const data = getMonthRecords();
 
-  const data =
-    getMonthRecords();
+        let income = 0;
 
+        let expense = 0;
 
-  let income = 0;
+        let debt = 0;
 
-  let expense = 0;
+        let reuse = 0;
 
-  let debt = 0;
+        data.forEach(function (r) {
+          const amount = Number(r.amount) || 0;
 
-  let reuse = 0;
+          if (r.type === "income") {
+            income += amount;
+          } else if (r.type === "expense") {
+            expense += amount;
+          } else if (r.type === "debt") {
+            debt += amount;
+          } else if (r.type === "reuse") {
+            reuse += amount;
+          }
+        });
 
+        const available = income - expense - debt - reuse;
 
-  data.forEach(function(r) {
+        setText("availableMoney", money(available));
 
-    const amount =
-      Number(r.amount) || 0;
+        setText("dashIncome", money(income));
 
+        setText("dashExpense", money(expense));
 
-    if (
-      r.type === 'income'
-    ) {
+        setText("dashDebt", money(debt));
 
-      income += amount;
+        setText("dashReuse", money(reuse));
 
-    }
+        setText("previewDebt", money(debt));
 
-    else if (
-      r.type === 'expense'
-    ) {
+        setText("previewReuse", money(reuse));
 
-      expense += amount;
+        setText("previewDebtOutflow", money(debt + reuse));
 
-    }
+        renderDashboardProviders(data);
 
-    else if (
-      r.type === 'debt'
-    ) {
+        renderDashboardChart(data);
 
-      debt += amount;
+        renderForecast(data, available);
+      }
 
-    }
-
-    else if (
-      r.type === 'reuse'
-    ) {
-
-      reuse += amount;
-
-    }
-
-  });
-
-
-  const available =
-    income -
-    expense -
-    debt -
-    reuse;
-
-
-  setText(
-    'availableMoney',
-    money(available)
-  );
-
-
-  setText(
-    'dashIncome',
-    money(income)
-  );
-
-
-  setText(
-    'dashExpense',
-    money(expense)
-  );
-
-
-  setText(
-    'dashDebt',
-    money(debt)
-  );
-
-
-  setText(
-    'dashReuse',
-    money(reuse)
-  );
-
-
-  setText(
-    'previewDebt',
-    money(debt)
-  );
-
-
-  setText(
-    'previewReuse',
-    money(reuse)
-  );
-
-
-  setText(
-    'previewDebtOutflow',
-    money(debt + reuse)
-  );
-
-
-  renderDashboardProviders(
-    data
-  );
-
-
-  renderDashboardChart(
-    data
-  );
-
-
-  renderForecast(
-    data,
-    available
-  );
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    DASHBOARD PROVIDERS
 ====================================================== */
 
-function renderDashboardProviders(data) {
+      function renderDashboardProviders(data) {
+        const map = {};
 
-  const map = {};
+        data.forEach(function (r) {
+          if (r.type !== "debt" && r.type !== "reuse") {
+            return;
+          }
 
+          const provider = r.category || "อื่นๆ...";
 
-  data.forEach(function(r) {
+          if (!map[provider]) {
+            map[provider] = {
+              paid: 0,
 
-    if (
-      r.type !== 'debt' &&
-      r.type !== 'reuse'
-    ) {
+              reused: 0,
+            };
+          }
 
-      return;
+          if (r.type === "debt") {
+            map[provider].paid += Number(r.amount) || 0;
+          }
 
-    }
+          if (r.type === "reuse") {
+            map[provider].reused += Number(r.amount) || 0;
+          }
+        });
 
+        const entries = Object.entries(map)
+          .sort(function (a, b) {
+            const aTotal = a[1].paid + a[1].reused;
 
-    const provider =
-      r.category ||
-      'อื่นๆ...';
+            const bTotal = b[1].paid + b[1].reused;
 
+            return bTotal - aTotal;
+          })
+          .slice(0, 4);
 
-    if (!map[provider]) {
+        const box = document.getElementById("dashboardProviders");
 
-      map[provider] = {
-
-        paid: 0,
-
-        reused: 0
-
-      };
-
-    }
-
-
-    if (
-      r.type === 'debt'
-    ) {
-
-      map[provider].paid +=
-        Number(r.amount) || 0;
-
-    }
-
-
-    if (
-      r.type === 'reuse'
-    ) {
-
-      map[provider].reused +=
-        Number(r.amount) || 0;
-
-    }
-
-  });
-
-
-  const entries =
-    Object.entries(map)
-      .sort(function(a, b) {
-
-        const aTotal =
-          a[1].paid +
-          a[1].reused;
-
-
-        const bTotal =
-          b[1].paid +
-          b[1].reused;
-
-
-        return bTotal - aTotal;
-
-      })
-      .slice(0, 4);
-
-
-  const box =
-    document.getElementById(
-      'dashboardProviders'
-    );
-
-
-  if (!entries.length) {
-
-    box.innerHTML = `
+        if (!entries.length) {
+          box.innerHTML = `
 
       <div class="text-center py-5 text-sm text-slate-400">
 
@@ -2781,23 +1786,16 @@ function renderDashboardProviders(data) {
 
     `;
 
-    return;
+          return;
+        }
 
-  }
+        box.innerHTML = entries
+          .map(function (item) {
+            const name = item[0];
 
+            const d = item[1];
 
-  box.innerHTML =
-    entries.map(function(item) {
-
-      const name =
-        item[0];
-
-
-      const d =
-        item[1];
-
-
-      return `
+            return `
 
         <div class="flex items-center justify-between gap-3 rounded-2xl bg-slate-50 p-4">
 
@@ -2832,451 +1830,209 @@ function renderDashboardProviders(data) {
         </div>
 
       `;
+          })
+          .join("");
+      }
 
-    }).join('');
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    DASHBOARD CHART
 ====================================================== */
 
-function renderDashboardChart(data) {
+      function renderDashboardChart(data) {
+        const canvas = document.getElementById("dashboardChart");
 
-  const canvas =
-    document.getElementById(
-      'dashboardChart'
-    );
+        if (!canvas) return;
 
+        let income = 0;
 
-  if (!canvas) return;
+        let expense = 0;
 
+        let debt = 0;
 
-  let income = 0;
+        let reuse = 0;
 
-  let expense = 0;
+        data.forEach(function (r) {
+          const amount = Number(r.amount) || 0;
 
-  let debt = 0;
-
-  let reuse = 0;
-
-
-  data.forEach(function(r) {
-
-    const amount =
-      Number(r.amount) || 0;
-
-
-    if (
-      r.type === 'income'
-    ) {
-
-      income += amount;
-
-    }
-
-    else if (
-      r.type === 'expense'
-    ) {
-
-      expense += amount;
-
-    }
-
-    else if (
-      r.type === 'debt'
-    ) {
-
-      debt += amount;
-
-    }
-
-    else if (
-      r.type === 'reuse'
-    ) {
-
-      reuse += amount;
-
-    }
-
-  });
-
-
-  if (dashboardChart) {
-
-    dashboardChart.destroy();
-
-  }
-
-
-  dashboardChart =
-    new Chart(
-      canvas.getContext('2d'),
-      {
-
-        type: 'bar',
-
-        data: {
-
-          labels: [
-            'รายรับ',
-            'ค่าใช้จ่าย',
-            'จ่ายหนี้',
-            'หมุนหนี้'
-          ],
-
-          datasets: [
-
-            {
-
-              label:
-                'จำนวนเงิน',
-
-              data: [
-                income,
-                expense,
-                debt,
-                reuse
-              ],
-
-              borderRadius:
-                12,
-
-              borderSkipped:
-                false
-
-            }
-
-          ]
-
-        },
-
-        options: {
-
-          responsive:
-            true,
-
-          maintainAspectRatio:
-            false,
-
-          plugins: {
-
-            legend: {
-              display: false
-            }
-
-          },
-
-          scales: {
-
-            y: {
-
-              beginAtZero:
-                true,
-
-              ticks: {
-
-                callback:
-                  function(value) {
-
-                    return '฿' +
-                      Number(value)
-                        .toLocaleString(
-                          'th-TH'
-                        );
-
-                  }
-
-              }
-
-            },
-
-            x: {
-
-              grid: {
-                display: false
-              }
-
-            }
-
+          if (r.type === "income") {
+            income += amount;
+          } else if (r.type === "expense") {
+            expense += amount;
+          } else if (r.type === "debt") {
+            debt += amount;
+          } else if (r.type === "reuse") {
+            reuse += amount;
           }
+        });
 
+        if (dashboardChart) {
+          dashboardChart.destroy();
         }
 
+        dashboardChart = new Chart(canvas.getContext("2d"), {
+          type: "bar",
+
+          data: {
+            labels: ["รายรับ", "ค่าใช้จ่าย", "จ่ายหนี้", "หมุนหนี้"],
+
+            datasets: [
+              {
+                label: "จำนวนเงิน",
+
+                data: [income, expense, debt, reuse],
+
+                borderRadius: 12,
+
+                borderSkipped: false,
+              },
+            ],
+          },
+
+          options: {
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+
+            scales: {
+              y: {
+                beginAtZero: true,
+
+                ticks: {
+                  callback: function (value) {
+                    return "฿" + Number(value).toLocaleString("th-TH");
+                  },
+                },
+              },
+
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+          },
+        });
       }
-    );
 
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    FORECAST
 ====================================================== */
 
-function renderForecast(
-  data,
-  available
-) {
+      function renderForecast(data, available) {
+        const selected = getSelectedMonth();
 
-  const selected =
-    getSelectedMonth();
+        const parts = selected.split("-").map(Number);
 
+        const year = parts[0];
 
-  const parts =
-    selected.split('-')
-      .map(Number);
+        const month = parts[1];
 
+        const now = new Date();
 
-  const year =
-    parts[0];
+        const daysInMonth = new Date(year, month, 0).getDate();
 
+        let currentDay = daysInMonth;
 
-  const month =
-    parts[1];
+        if (year === now.getFullYear() && month === now.getMonth() + 1) {
+          currentDay = now.getDate();
+        }
 
+        const outflow = data
+          .filter(function (r) {
+            return (
+              r.type === "expense" || r.type === "debt" || r.type === "reuse"
+            );
+          })
+          .reduce(function (sum, r) {
+            return sum + Number(r.amount || 0);
+          }, 0);
 
-  const now =
-    new Date();
+        const dailyAverage = outflow / Math.max(currentDay, 1);
 
+        const remainingDays = Math.max(daysInMonth - currentDay, 0);
 
-  const daysInMonth =
-    new Date(
-      year,
-      month,
-      0
-    ).getDate();
+        const forecast = available - dailyAverage * remainingDays;
 
+        setText("forecastValue", money(forecast));
 
-  let currentDay =
-    daysInMonth;
+        if (forecast >= 0) {
+          setText(
+            "forecastText",
+            `ถ้าใช้เงินเฉลี่ยวันละ ${money(dailyAverage)} มีแนวโน้มเหลือประมาณ ${money(forecast)} สิ้นเดือน`,
+          );
+        } else {
+          setText(
+            "forecastText",
+            `ถ้าใช้เงินในอัตราเดิม อาจติดลบประมาณ ${money(Math.abs(forecast))} สิ้นเดือน`,
+          );
+        }
+      }
 
-
-  if (
-    year === now.getFullYear() &&
-    month === now.getMonth() + 1
-  ) {
-
-    currentDay =
-      now.getDate();
-
-  }
-
-
-  const outflow =
-    data
-      .filter(function(r) {
-
-        return (
-          r.type === 'expense' ||
-          r.type === 'debt' ||
-          r.type === 'reuse'
-        );
-
-      })
-      .reduce(function(sum, r) {
-
-        return sum +
-          Number(r.amount || 0);
-
-      }, 0);
-
-
-  const dailyAverage =
-    outflow /
-    Math.max(
-      currentDay,
-      1
-    );
-
-
-  const remainingDays =
-    Math.max(
-      daysInMonth -
-      currentDay,
-      0
-    );
-
-
-  const forecast =
-    available -
-    (
-      dailyAverage *
-      remainingDays
-    );
-
-
-  setText(
-    'forecastValue',
-    money(forecast)
-  );
-
-
-  if (
-    forecast >= 0
-  ) {
-
-    setText(
-      'forecastText',
-      `ถ้าใช้เงินเฉลี่ยวันละ ${money(dailyAverage)} มีแนวโน้มเหลือประมาณ ${money(forecast)} สิ้นเดือน`
-    );
-
-  }
-
-  else {
-
-    setText(
-      'forecastText',
-      `ถ้าใช้เงินในอัตราเดิม อาจติดลบประมาณ ${money(Math.abs(forecast))} สิ้นเดือน`
-    );
-
-  }
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    HISTORY FILTER
 ====================================================== */
 
-function setHistoryFilter(
-  filter,
-  button
-) {
+      function setHistoryFilter(filter, button) {
+        historyFilter = filter;
 
-  historyFilter =
-    filter;
+        document.querySelectorAll(".history-filter").forEach(function (btn) {
+          btn.classList.remove("bg-indigo-600", "text-white");
 
+          btn.classList.add("bg-white", "border");
+        });
 
-  document
-    .querySelectorAll(
-      '.history-filter'
-    )
-    .forEach(function(btn) {
+        button.classList.remove("bg-white", "border");
 
-      btn.classList.remove(
-        'bg-indigo-600',
-        'text-white'
-      );
+        button.classList.add("bg-indigo-600", "text-white");
 
-      btn.classList.add(
-        'bg-white',
-        'border'
-      );
+        renderHistory();
+      }
 
-    });
-
-
-  button.classList.remove(
-    'bg-white',
-    'border'
-  );
-
-
-  button.classList.add(
-    'bg-indigo-600',
-    'text-white'
-  );
-
-
-  renderHistory();
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    HISTORY
 ====================================================== */
 
-function renderHistory() {
+      function renderHistory() {
+        const box = document.getElementById("historyList");
 
-  const box =
-    document.getElementById(
-      'historyList'
-    );
+        if (!box) return;
 
+        const search = (document.getElementById("historySearch")?.value || "")
+          .trim()
+          .toLowerCase();
 
-  if (!box) return;
+        let list = records.slice();
 
+        if (historyFilter !== "all") {
+          list = list.filter(function (r) {
+            return r.type === historyFilter;
+          });
+        }
 
-  const search =
-    (
-      document.getElementById(
-        'historySearch'
-      )?.value ||
-      ''
-    )
-      .trim()
-      .toLowerCase();
+        if (search) {
+          list = list.filter(function (r) {
+            const text = (
+              String(r.category || "") +
+              " " +
+              String(r.detail || "") +
+              " " +
+              String(r.typeLabel || "") +
+              " " +
+              String(r.amount || "")
+            ).toLowerCase();
 
+            return text.includes(search);
+          });
+        }
 
-  let list =
-    records.slice();
-
-
-  if (
-    historyFilter !== 'all'
-  ) {
-
-    list =
-      list.filter(function(r) {
-
-        return r.type ===
-          historyFilter;
-
-      });
-
-  }
-
-
-  if (search) {
-
-    list =
-      list.filter(function(r) {
-
-        const text = (
-
-          String(
-            r.category || ''
-          ) +
-
-          ' ' +
-
-          String(
-            r.detail || ''
-          ) +
-
-          ' ' +
-
-          String(
-            r.typeLabel || ''
-          ) +
-
-          ' ' +
-
-          String(
-            r.amount || ''
-          )
-
-        ).toLowerCase();
-
-
-        return text.includes(
-          search
-        );
-
-      });
-
-  }
-
-
-  if (!list.length) {
-
-    box.innerHTML = `
+        if (!list.length) {
+          box.innerHTML = `
 
       <div class="glass rounded-[28px] p-10 text-center">
 
@@ -3298,53 +2054,26 @@ function renderHistory() {
 
     `;
 
-    return;
+          return;
+        }
 
-  }
+        box.innerHTML = list.map(renderHistoryItem).join("");
+      }
 
-
-  box.innerHTML =
-    list.map(
-      renderHistoryItem
-    ).join('');
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    HISTORY ITEM
 ====================================================== */
 
-function renderHistoryItem(r) {
+      function renderHistoryItem(r) {
+        const icon = getTypeIcon(r.type);
 
-  const icon =
-    getTypeIcon(
-      r.type
-    );
+        const color = getTypeColor(r.type);
 
+        const sign = r.type === "income" ? "+" : "-";
 
-  const color =
-    getTypeColor(
-      r.type
-    );
+        const isLegacy = String(r.id || "").startsWith("legacy-");
 
-
-  const sign =
-    r.type === 'income'
-      ? '+'
-      : '-';
-
-
-  const isLegacy =
-    String(
-      r.id || ''
-    ).startsWith(
-      'legacy-'
-    );
-
-
-  return `
+        return `
 
     <div class="glass rounded-2xl p-4">
 
@@ -3366,20 +2095,18 @@ function renderHistoryItem(r) {
             <div class="min-w-0">
 
               <p class="font-semibold truncate">
-                ${escapeHtml(r.category || '-')}
+                ${escapeHtml(r.category || "-")}
               </p>
 
               <p class="text-xs text-slate-400 mt-1 truncate">
-                ${escapeHtml(r.detail || r.typeLabel || '-')}
+                ${escapeHtml(r.detail || r.typeLabel || "-")}
               </p>
 
             </div>
 
 
             <p class="money font-bold whitespace-nowrap ${
-              r.type === 'income'
-                ? 'text-emerald-600'
-                : 'text-slate-700'
+              r.type === "income" ? "text-emerald-600" : "text-slate-700"
             }">
 
               ${sign}${money(r.amount)}
@@ -3397,14 +2124,14 @@ function renderHistoryItem(r) {
 
               ·
 
-              ${escapeHtml(r.typeLabel || '')}
+              ${escapeHtml(r.typeLabel || "")}
 
             </p>
 
 
             ${
               isLegacy
-                ? ''
+                ? ""
                 : `
 
                   <div class="flex gap-1 shrink-0">
@@ -3444,488 +2171,243 @@ function renderHistoryItem(r) {
     </div>
 
   `;
+      }
 
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    SUMMARY
 ====================================================== */
 
-function renderSummary() {
+      function renderSummary() {
+        const data = getMonthRecords();
 
-  const data =
-    getMonthRecords();
+        let income = 0;
 
+        let expense = 0;
 
-  let income = 0;
+        let debt = 0;
 
-  let expense = 0;
+        let reuse = 0;
 
-  let debt = 0;
+        data.forEach(function (r) {
+          const amount = Number(r.amount) || 0;
 
-  let reuse = 0;
+          if (r.type === "income") {
+            income += amount;
+          } else if (r.type === "expense") {
+            expense += amount;
+          } else if (r.type === "debt") {
+            debt += amount;
+          } else if (r.type === "reuse") {
+            reuse += amount;
+          }
+        });
 
+        setText("summaryIncome", money(income));
 
-  data.forEach(function(r) {
+        setText("summaryExpense", money(expense));
 
-    const amount =
-      Number(r.amount) || 0;
+        setText("summaryDebt", money(debt));
 
+        setText("summaryReuse", money(reuse));
 
-    if (
-      r.type === 'income'
-    ) {
+        renderExpenseChart(data);
 
-      income += amount;
+        renderDailyChart(data);
 
-    }
+        renderAnalysis(data);
+      }
 
-    else if (
-      r.type === 'expense'
-    ) {
-
-      expense += amount;
-
-    }
-
-    else if (
-      r.type === 'debt'
-    ) {
-
-      debt += amount;
-
-    }
-
-    else if (
-      r.type === 'reuse'
-    ) {
-
-      reuse += amount;
-
-    }
-
-  });
-
-
-  setText(
-    'summaryIncome',
-    money(income)
-  );
-
-
-  setText(
-    'summaryExpense',
-    money(expense)
-  );
-
-
-  setText(
-    'summaryDebt',
-    money(debt)
-  );
-
-
-  setText(
-    'summaryReuse',
-    money(reuse)
-  );
-
-
-  renderExpenseChart(
-    data
-  );
-
-
-  renderDailyChart(
-    data
-  );
-
-
-  renderAnalysis(
-    data
-  );
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    EXPENSE CHART
 ====================================================== */
 
-function renderExpenseChart(data) {
+      function renderExpenseChart(data) {
+        const map = {};
 
-  const map = {};
-
-
-  data.forEach(function(r) {
-
-    if (
-      r.type !== 'expense'
-    ) {
-
-      return;
-
-    }
-
-
-    const category =
-      r.category ||
-      'อื่นๆ...';
-
-
-    map[category] =
-      (
-        map[category] || 0
-      ) +
-      Number(r.amount || 0);
-
-  });
-
-
-  const entries =
-    Object.entries(map)
-      .sort(function(a, b) {
-
-        return b[1] - a[1];
-
-      });
-
-
-  const labels =
-    entries.map(
-      item => item[0]
-    );
-
-
-  const values =
-    entries.map(
-      item => item[1]
-    );
-
-
-  const canvas =
-    document.getElementById(
-      'expenseChart'
-    );
-
-
-  if (!canvas) return;
-
-
-  if (expenseChart) {
-
-    expenseChart.destroy();
-
-  }
-
-
-  expenseChart =
-    new Chart(
-      canvas.getContext('2d'),
-      {
-
-        type: 'doughnut',
-
-        data: {
-
-          labels:
-            labels.length
-              ? labels
-              : ['ยังไม่มีข้อมูล'],
-
-          datasets: [
-
-            {
-
-              data:
-                values.length
-                  ? values
-                  : [1],
-
-              borderWidth:
-                0
-
-            }
-
-          ]
-
-        },
-
-        options: {
-
-          responsive:
-            true,
-
-          maintainAspectRatio:
-            false,
-
-          cutout:
-            '68%',
-
-          plugins: {
-
-            legend: {
-
-              position:
-                'bottom',
-
-              labels: {
-
-                padding:
-                  16,
-
-                usePointStyle:
-                  true
-
-              }
-
-            }
-
+        data.forEach(function (r) {
+          if (r.type !== "expense") {
+            return;
           }
 
+          const category = r.category || "อื่นๆ...";
+
+          map[category] = (map[category] || 0) + Number(r.amount || 0);
+        });
+
+        const entries = Object.entries(map).sort(function (a, b) {
+          return b[1] - a[1];
+        });
+
+        const labels = entries.map((item) => item[0]);
+
+        const values = entries.map((item) => item[1]);
+
+        const canvas = document.getElementById("expenseChart");
+
+        if (!canvas) return;
+
+        if (expenseChart) {
+          expenseChart.destroy();
         }
 
+        expenseChart = new Chart(canvas.getContext("2d"), {
+          type: "doughnut",
+
+          data: {
+            labels: labels.length ? labels : ["ยังไม่มีข้อมูล"],
+
+            datasets: [
+              {
+                data: values.length ? values : [1],
+
+                borderWidth: 0,
+              },
+            ],
+          },
+
+          options: {
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            cutout: "68%",
+
+            plugins: {
+              legend: {
+                position: "bottom",
+
+                labels: {
+                  padding: 16,
+
+                  usePointStyle: true,
+                },
+              },
+            },
+          },
+        });
       }
-    );
 
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    DAILY CHART
 ====================================================== */
 
-function renderDailyChart(data) {
+      function renderDailyChart(data) {
+        const map = {};
 
-  const map = {};
+        data.forEach(function (r) {
+          const date = r.date || "";
 
+          if (!date) return;
 
-  data.forEach(function(r) {
+          if (!map[date]) {
+            map[date] = {
+              income: 0,
 
-    const date =
-      r.date || '';
-
-
-    if (!date) return;
-
-
-    if (!map[date]) {
-
-      map[date] = {
-
-        income: 0,
-
-        outflow: 0
-
-      };
-
-    }
-
-
-    const amount =
-      Number(r.amount) || 0;
-
-
-    if (
-      r.type === 'income'
-    ) {
-
-      map[date].income +=
-        amount;
-
-    }
-
-    else {
-
-      map[date].outflow +=
-        amount;
-
-    }
-
-  });
-
-
-  const dates =
-    Object.keys(map)
-      .sort();
-
-
-  const income =
-    dates.map(function(date) {
-
-      return map[date].income;
-
-    });
-
-
-  const outflow =
-    dates.map(function(date) {
-
-      return map[date].outflow;
-
-    });
-
-
-  const canvas =
-    document.getElementById(
-      'dailyChart'
-    );
-
-
-  if (!canvas) return;
-
-
-  if (dailyChart) {
-
-    dailyChart.destroy();
-
-  }
-
-
-  dailyChart =
-    new Chart(
-      canvas.getContext('2d'),
-      {
-
-        type: 'line',
-
-        data: {
-
-          labels:
-            dates.map(
-              formatShortDate
-            ),
-
-          datasets: [
-
-            {
-
-              label:
-                'รายรับ',
-
-              data:
-                income,
-
-              tension:
-                .35,
-
-              fill:
-                false
-
-            },
-
-            {
-
-              label:
-                'เงินออก',
-
-              data:
-                outflow,
-
-              tension:
-                .35,
-
-              fill:
-                false
-
-            }
-
-          ]
-
-        },
-
-        options: {
-
-          responsive:
-            true,
-
-          maintainAspectRatio:
-            false,
-
-          interaction: {
-
-            intersect:
-              false,
-
-            mode:
-              'index'
-
-          },
-
-          scales: {
-
-            y: {
-
-              beginAtZero:
-                true,
-
-              ticks: {
-
-                callback:
-                  function(value) {
-
-                    return '฿' +
-                      Number(value)
-                        .toLocaleString(
-                          'th-TH'
-                        );
-
-                  }
-
-              }
-
-            },
-
-            x: {
-
-              grid: {
-
-                display:
-                  false
-
-              }
-
-            }
-
+              outflow: 0,
+            };
           }
 
+          const amount = Number(r.amount) || 0;
+
+          if (r.type === "income") {
+            map[date].income += amount;
+          } else {
+            map[date].outflow += amount;
+          }
+        });
+
+        const dates = Object.keys(map).sort();
+
+        const income = dates.map(function (date) {
+          return map[date].income;
+        });
+
+        const outflow = dates.map(function (date) {
+          return map[date].outflow;
+        });
+
+        const canvas = document.getElementById("dailyChart");
+
+        if (!canvas) return;
+
+        if (dailyChart) {
+          dailyChart.destroy();
         }
 
+        dailyChart = new Chart(canvas.getContext("2d"), {
+          type: "line",
+
+          data: {
+            labels: dates.map(formatShortDate),
+
+            datasets: [
+              {
+                label: "รายรับ",
+
+                data: income,
+
+                tension: 0.35,
+
+                fill: false,
+              },
+
+              {
+                label: "เงินออก",
+
+                data: outflow,
+
+                tension: 0.35,
+
+                fill: false,
+              },
+            ],
+          },
+
+          options: {
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            interaction: {
+              intersect: false,
+
+              mode: "index",
+            },
+
+            scales: {
+              y: {
+                beginAtZero: true,
+
+                ticks: {
+                  callback: function (value) {
+                    return "฿" + Number(value).toLocaleString("th-TH");
+                  },
+                },
+              },
+
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+          },
+        });
       }
-    );
 
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    ANALYSIS
 ====================================================== */
 
-function renderAnalysis(data) {
+      function renderAnalysis(data) {
+        const box = document.getElementById("analysisBox");
 
-  const box =
-    document.getElementById(
-      'analysisBox'
-    );
+        const expenses = data.filter(function (r) {
+          return r.type === "expense";
+        });
 
-
-  const expenses =
-    data.filter(function(r) {
-
-      return r.type ===
-        'expense';
-
-    });
-
-
-  if (!expenses.length) {
-
-    box.innerHTML = `
+        if (!expenses.length) {
+          box.innerHTML = `
 
       <div class="rounded-2xl bg-slate-50 p-4 text-sm text-slate-500">
         เดือนนี้ยังมีข้อมูลไม่พอสำหรับวิเคราะห์
@@ -3933,64 +2415,29 @@ function renderAnalysis(data) {
 
     `;
 
-    return;
+          return;
+        }
 
-  }
+        const categoryMap = {};
 
+        expenses.forEach(function (r) {
+          const category = r.category || "อื่นๆ...";
 
-  const categoryMap = {};
+          categoryMap[category] =
+            (categoryMap[category] || 0) + Number(r.amount || 0);
+        });
 
+        const top = Object.entries(categoryMap).sort(function (a, b) {
+          return b[1] - a[1];
+        })[0];
 
-  expenses.forEach(function(r) {
+        const total = expenses.reduce(function (sum, r) {
+          return sum + Number(r.amount || 0);
+        }, 0);
 
-    const category =
-      r.category ||
-      'อื่นๆ...';
+        const average = total / Math.max(expenses.length, 1);
 
-
-    categoryMap[category] =
-      (
-        categoryMap[category] ||
-        0
-      ) +
-      Number(r.amount || 0);
-
-  });
-
-
-  const top =
-    Object.entries(
-      categoryMap
-    ).sort(
-      function(a, b) {
-
-        return b[1] - a[1];
-
-      }
-    )[0];
-
-
-  const total =
-    expenses.reduce(
-      function(sum, r) {
-
-        return sum +
-          Number(r.amount || 0);
-
-      },
-      0
-    );
-
-
-  const average =
-    total /
-    Math.max(
-      expenses.length,
-      1
-    );
-
-
-  box.innerHTML = `
+        box.innerHTML = `
 
     <div class="rounded-2xl bg-orange-50 p-4">
 
@@ -4035,174 +2482,85 @@ function renderAnalysis(data) {
     </div>
 
   `;
+      }
 
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    DEBT PAGE
 ====================================================== */
 
-function renderDebtPage() {
+      function renderDebtPage() {
+        const data = getMonthRecords();
 
-  const data =
-    getMonthRecords();
+        const paid = data
+          .filter(function (r) {
+            return r.type === "debt";
+          })
+          .reduce(function (sum, r) {
+            return sum + Number(r.amount || 0);
+          }, 0);
 
+        const reused = data
+          .filter(function (r) {
+            return r.type === "reuse";
+          })
+          .reduce(function (sum, r) {
+            return sum + Number(r.amount || 0);
+          }, 0);
 
-  const paid =
-    data
-      .filter(function(r) {
+        setText("debtPagePaid", money(paid));
 
-        return r.type ===
-          'debt';
+        setText("debtPageReuse", money(reused));
 
-      })
-      .reduce(function(sum, r) {
+        setText("debtPageOutflow", money(paid + reused));
 
-        return sum +
-          Number(r.amount || 0);
+        renderProviderList(data);
 
-      }, 0);
+        renderDebtChart(paid, reused);
+      }
 
-
-  const reused =
-    data
-      .filter(function(r) {
-
-        return r.type ===
-          'reuse';
-
-      })
-      .reduce(function(sum, r) {
-
-        return sum +
-          Number(r.amount || 0);
-
-      }, 0);
-
-
-  setText(
-    'debtPagePaid',
-    money(paid)
-  );
-
-
-  setText(
-    'debtPageReuse',
-    money(reused)
-  );
-
-
-  setText(
-    'debtPageOutflow',
-    money(paid + reused)
-  );
-
-
-  renderProviderList(
-    data
-  );
-
-
-  renderDebtChart(
-    paid,
-    reused
-  );
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    PROVIDER LIST
 ====================================================== */
 
-function renderProviderList(data) {
+      function renderProviderList(data) {
+        const map = {};
 
-  const map = {};
+        data.forEach(function (r) {
+          if (r.type !== "debt" && r.type !== "reuse") {
+            return;
+          }
 
+          const provider = r.category || "อื่นๆ...";
 
-  data.forEach(function(r) {
+          if (!map[provider]) {
+            map[provider] = {
+              paid: 0,
 
-    if (
-      r.type !== 'debt' &&
-      r.type !== 'reuse'
-    ) {
+              reused: 0,
+            };
+          }
 
-      return;
+          if (r.type === "debt") {
+            map[provider].paid += Number(r.amount || 0);
+          }
 
-    }
+          if (r.type === "reuse") {
+            map[provider].reused += Number(r.amount || 0);
+          }
+        });
 
+        const entries = Object.entries(map).sort(function (a, b) {
+          const aTotal = a[1].paid + a[1].reused;
 
-    const provider =
-      r.category ||
-      'อื่นๆ...';
+          const bTotal = b[1].paid + b[1].reused;
 
+          return bTotal - aTotal;
+        });
 
-    if (!map[provider]) {
+        const box = document.getElementById("providerList");
 
-      map[provider] = {
-
-        paid: 0,
-
-        reused: 0
-
-      };
-
-    }
-
-
-    if (
-      r.type === 'debt'
-    ) {
-
-      map[provider].paid +=
-        Number(r.amount || 0);
-
-    }
-
-
-    if (
-      r.type === 'reuse'
-    ) {
-
-      map[provider].reused +=
-        Number(r.amount || 0);
-
-    }
-
-  });
-
-
-  const entries =
-    Object.entries(map)
-      .sort(function(a, b) {
-
-        const aTotal =
-          a[1].paid +
-          a[1].reused;
-
-
-        const bTotal =
-          b[1].paid +
-          b[1].reused;
-
-
-        return bTotal - aTotal;
-
-      });
-
-
-  const box =
-    document.getElementById(
-      'providerList'
-    );
-
-
-  if (!entries.length) {
-
-    box.innerHTML = `
+        if (!entries.length) {
+          box.innerHTML = `
 
       <div class="text-center py-12 text-slate-400">
 
@@ -4225,35 +2583,21 @@ function renderProviderList(data) {
 
     `;
 
-    return;
+          return;
+        }
 
-  }
+        box.innerHTML = entries
+          .map(function (item) {
+            const name = item[0];
 
+            const d = item[1];
 
-  box.innerHTML =
-    entries.map(function(item) {
+            const difference = d.reused - d.paid;
 
-      const name =
-        item[0];
+            let status;
 
-
-      const d =
-        item[1];
-
-
-      const difference =
-        d.reused -
-        d.paid;
-
-
-      let status;
-
-
-      if (
-        difference > 0
-      ) {
-
-        status = `
+            if (difference > 0) {
+              status = `
 
           <span class="text-xs text-violet-600">
             ใช้กลับมากกว่าที่จ่าย
@@ -4261,14 +2605,8 @@ function renderProviderList(data) {
           </span>
 
         `;
-
-      }
-
-      else if (
-        difference < 0
-      ) {
-
-        status = `
+            } else if (difference < 0) {
+              status = `
 
           <span class="text-xs text-emerald-600">
             จ่ายมากกว่าที่ใช้กลับ
@@ -4276,23 +2614,17 @@ function renderProviderList(data) {
           </span>
 
         `;
-
-      }
-
-      else {
-
-        status = `
+            } else {
+              status = `
 
           <span class="text-xs text-slate-400">
             จ่ายและหมุนเท่ากัน
           </span>
 
         `;
+            }
 
-      }
-
-
-      return `
+            return `
 
         <div class="provider-card rounded-2xl border border-slate-100 bg-white p-4">
 
@@ -4353,593 +2685,274 @@ function renderProviderList(data) {
         </div>
 
       `;
+          })
+          .join("");
+      }
 
-    }).join('');
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    DEBT CHART
 ====================================================== */
 
-function renderDebtChart(
-  paid,
-  reused
-) {
+      function renderDebtChart(paid, reused) {
+        const canvas = document.getElementById("debtChart");
 
-  const canvas =
-    document.getElementById(
-      'debtChart'
-    );
+        if (!canvas) return;
 
-
-  if (!canvas) return;
-
-
-  if (debtChart) {
-
-    debtChart.destroy();
-
-  }
-
-
-  debtChart =
-    new Chart(
-      canvas.getContext('2d'),
-      {
-
-        type: 'bar',
-
-        data: {
-
-          labels: [
-            'จ่ายหนี้',
-            'หมุนกลับมาใช้'
-          ],
-
-          datasets: [
-
-            {
-
-              label:
-                'จำนวนเงิน',
-
-              data: [
-                paid,
-                reused
-              ],
-
-              borderRadius:
-                12,
-
-              borderSkipped:
-                false
-
-            }
-
-          ]
-
-        },
-
-        options: {
-
-          responsive:
-            true,
-
-          maintainAspectRatio:
-            false,
-
-          plugins: {
-
-            legend: {
-              display: false
-            }
-
-          },
-
-          scales: {
-
-            y: {
-
-              beginAtZero:
-                true,
-
-              ticks: {
-
-                callback:
-                  function(value) {
-
-                    return '฿' +
-                      Number(value)
-                        .toLocaleString(
-                          'th-TH'
-                        );
-
-                  }
-
-              }
-
-            },
-
-            x: {
-
-              grid: {
-                display: false
-              }
-
-            }
-
-          }
-
+        if (debtChart) {
+          debtChart.destroy();
         }
 
+        debtChart = new Chart(canvas.getContext("2d"), {
+          type: "bar",
+
+          data: {
+            labels: ["จ่ายหนี้", "หมุนกลับมาใช้"],
+
+            datasets: [
+              {
+                label: "จำนวนเงิน",
+
+                data: [paid, reused],
+
+                borderRadius: 12,
+
+                borderSkipped: false,
+              },
+            ],
+          },
+
+          options: {
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+
+            scales: {
+              y: {
+                beginAtZero: true,
+
+                ticks: {
+                  callback: function (value) {
+                    return "฿" + Number(value).toLocaleString("th-TH");
+                  },
+                },
+              },
+
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+          },
+        });
       }
-    );
 
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    DELETE
 ====================================================== */
 
-function askDelete(id) {
+      function askDelete(id) {
+        deleteId = id;
 
-  deleteId =
-    id;
+        document.getElementById("deleteModal").classList.add("show");
+      }
 
+      function closeDeleteModal() {
+        deleteId = null;
 
-  document
-    .getElementById(
-      'deleteModal'
-    )
-    .classList.add(
-      'show'
-    );
+        document.getElementById("deleteModal").classList.remove("show");
+      }
 
-}
+      async function confirmDelete() {
+        if (!deleteId) {
+          return;
+        }
 
+        showLoading(true);
 
+        try {
+          await postData({
+            action: "delete",
 
-function closeDeleteModal() {
+            id: deleteId,
+          });
 
-  deleteId =
-    null;
+          closeDeleteModal();
 
+          await loadData();
 
-  document
-    .getElementById(
-      'deleteModal'
-    )
-    .classList.remove(
-      'show'
-    );
+          alert("ลบรายการเรียบร้อย");
+        } catch (error) {
+          console.error(error);
 
-}
+          alert("ลบรายการไม่สำเร็จ\n\n" + error.message);
+        } finally {
+          showLoading(false);
+        }
+      }
 
-
-
-async function confirmDelete() {
-
-  if (!deleteId) {
-    return;
-  }
-
-
-  showLoading(true);
-
-
-  try {
-
-    await postData({
-
-      action:
-        'delete',
-
-      id:
-        deleteId
-
-    });
-
-
-    closeDeleteModal();
-
-
-    await loadData();
-
-
-    alert(
-      'ลบรายการเรียบร้อย'
-    );
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      'ลบรายการไม่สำเร็จ\n\n' +
-      error.message
-    );
-
-  } finally {
-
-    showLoading(false);
-
-  }
-
-}
-
-
-
-/* =====================================================
+      /* =====================================================
    HELPERS
 ====================================================== */
 
-function money(value) {
+      function money(value) {
+        return (
+          "฿" +
+          Number(value || 0).toLocaleString("th-TH", {
+            minimumFractionDigits: 0,
 
-  return '฿' +
-    Number(value || 0)
-      .toLocaleString(
-        'th-TH',
-        {
-          minimumFractionDigits:
-            0,
+            maximumFractionDigits: 2,
+          })
+        );
+      }
 
-          maximumFractionDigits:
-            2
+      function setText(id, value) {
+        const el = document.getElementById(id);
 
+        if (el) {
+          el.textContent = value;
         }
-      );
+      }
 
-}
+      function formatDateInput(date) {
+        const year = date.getFullYear();
 
+        const month = String(date.getMonth() + 1).padStart(2, "0");
 
+        const day = String(date.getDate()).padStart(2, "0");
 
-function setText(
-  id,
-  value
-) {
+        return year + "-" + month + "-" + day;
+      }
 
-  const el =
-    document.getElementById(
-      id
-    );
+      function formatThaiDate(value) {
+        if (!value) {
+          return "-";
+        }
 
+        const d = new Date(value + "T00:00:00");
 
-  if (el) {
+        if (isNaN(d.getTime())) {
+          return value;
+        }
 
-    el.textContent =
-      value;
+        return d.toLocaleDateString("th-TH", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      }
 
-  }
+      function formatShortDate(value) {
+        if (!value) {
+          return "";
+        }
 
-}
+        const parts = value.split("-");
 
+        if (parts.length !== 3) {
+          return value;
+        }
 
+        return parts[2] + "/" + parts[1];
+      }
 
-function formatDateInput(date) {
+      function getTypeIcon(type) {
+        const icons = {
+          income: "fa-solid fa-arrow-down",
 
-  const year =
-    date.getFullYear();
+          expense: "fa-solid fa-cart-shopping",
 
+          debt: "fa-solid fa-credit-card",
 
-  const month =
-    String(
-      date.getMonth() + 1
-    ).padStart(
-      2,
-      '0'
-    );
+          reuse: "fa-solid fa-rotate",
+        };
 
+        return icons[type] || icons.expense;
+      }
 
-  const day =
-    String(
-      date.getDate()
-    ).padStart(
-      2,
-      '0'
-    );
+      function getTypeColor(type) {
+        const colors = {
+          income: {
+            bg: "bg-emerald-100",
 
+            text: "text-emerald-600",
+          },
 
-  return (
-    year +
-    '-' +
-    month +
-    '-' +
-    day
-  );
+          expense: {
+            bg: "bg-orange-100",
 
-}
+            text: "text-orange-600",
+          },
 
+          debt: {
+            bg: "bg-rose-100",
 
+            text: "text-rose-600",
+          },
 
-function formatThaiDate(value) {
+          reuse: {
+            bg: "bg-violet-100",
 
-  if (!value) {
-    return '-';
-  }
+            text: "text-violet-600",
+          },
+        };
 
+        return colors[type] || colors.expense;
+      }
 
-  const d =
-    new Date(
-      value +
-      'T00:00:00'
-    );
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
 
+          .replace(/</g, "&lt;")
 
-  if (
-    isNaN(
-      d.getTime()
-    )
-  ) {
+          .replace(/>/g, "&gt;")
 
-    return value;
+          .replace(/"/g, "&quot;")
 
-  }
+          .replace(/'/g, "&#039;");
+      }
 
+      function escapeJs(value) {
+        return String(value || "")
+          .replace(/\\/g, "\\\\")
 
-  return d.toLocaleDateString(
-    'th-TH',
-    {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric'
-    }
-  );
+          .replace(/'/g, "\\'");
+      }
 
-}
+      function showLoading(show) {
+        const overlay = document.getElementById("loadingOverlay");
 
+        if (!overlay) return;
 
+        if (show) {
+          overlay.classList.add("show");
+        } else {
+          overlay.classList.remove("show");
+        }
+      }
 
-function formatShortDate(value) {
+      function setSaveLoading(loading) {
+        const button = document.getElementById("saveBtn");
 
-  if (!value) {
-    return '';
-  }
+        const text = document.getElementById("saveBtnText");
 
+        if (loading) {
+          button.disabled = true;
 
-  const parts =
-    value.split('-');
+          text.textContent = "กำลังบันทึก...";
+        } else {
+          button.disabled = false;
 
-
-  if (
-    parts.length !== 3
-  ) {
-
-    return value;
-
-  }
-
-
-  return (
-    parts[2] +
-    '/' +
-    parts[1]
-  );
-
-}
-
-
-
-function getTypeIcon(type) {
-
-  const icons = {
-
-    income:
-      'fa-solid fa-arrow-down',
-
-    expense:
-      'fa-solid fa-cart-shopping',
-
-    debt:
-      'fa-solid fa-credit-card',
-
-    reuse:
-      'fa-solid fa-rotate'
-
-  };
-
-
-  return (
-    icons[type] ||
-    icons.expense
-  );
-
-}
-
-
-
-function getTypeColor(type) {
-
-  const colors = {
-
-    income: {
-
-      bg:
-        'bg-emerald-100',
-
-      text:
-        'text-emerald-600'
-
-    },
-
-    expense: {
-
-      bg:
-        'bg-orange-100',
-
-      text:
-        'text-orange-600'
-
-    },
-
-    debt: {
-
-      bg:
-        'bg-rose-100',
-
-      text:
-        'text-rose-600'
-
-    },
-
-    reuse: {
-
-      bg:
-        'bg-violet-100',
-
-      text:
-        'text-violet-600'
-
-    }
-
-  };
-
-
-  return (
-    colors[type] ||
-    colors.expense
-  );
-
-}
-
-
-
-function escapeHtml(value) {
-
-  return String(
-    value || ''
-  )
-
-    .replace(
-      /&/g,
-      '&amp;'
-    )
-
-    .replace(
-      /</g,
-      '&lt;'
-    )
-
-    .replace(
-      />/g,
-      '&gt;'
-    )
-
-    .replace(
-      /"/g,
-      '&quot;'
-    )
-
-    .replace(
-      /'/g,
-      '&#039;'
-    );
-
-}
-
-
-
-function escapeJs(value) {
-
-  return String(
-    value || ''
-  )
-
-    .replace(
-      /\\/g,
-      '\\\\'
-    )
-
-    .replace(
-      /'/g,
-      "\\'"
-    );
-
-}
-
-
-
-function showLoading(show) {
-
-  const overlay =
-    document.getElementById(
-      'loadingOverlay'
-    );
-
-
-  if (!overlay) return;
-
-
-  if (show) {
-
-    overlay.classList.add(
-      'show'
-    );
-
-  }
-
-  else {
-
-    overlay.classList.remove(
-      'show'
-    );
-
-  }
-
-}
-
-
-
-function setSaveLoading(
-  loading
-) {
-
-  const button =
-    document.getElementById(
-      'saveBtn'
-    );
-
-
-  const text =
-    document.getElementById(
-      'saveBtnText'
-    );
-
-
-  if (loading) {
-
-    button.disabled =
-      true;
-
-
-    text.textContent =
-      'กำลังบันทึก...';
-
-  }
-
-  else {
-
-    button.disabled =
-      false;
-
-
-    text.textContent =
-      editingId
-        ? 'บันทึกการแก้ไข'
-        : 'บันทึกรายการ';
-
-  }
-
-}
-
-
-</script>
-
-</body>
-
+          text.textContent = editingId ? "บันทึกการแก้ไข" : "บันทึกรายการ";
+        }
+      }
+    </script>
+  </body>
 </html>
