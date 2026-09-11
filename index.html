@@ -10,9 +10,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Anuphan -->
+    <!-- Anuphan + Fraunces -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap"
       rel="stylesheet"
     />
 
@@ -37,22 +37,44 @@
         scroll-behavior: smooth;
       }
 
+      :root {
+        --ink: #0a0b10;
+        --panel: #14161f;
+        --panel-raised: #1b1e28;
+        --hairline: rgba(214, 178, 110, 0.16);
+        --gold: #cba35c;
+        --gold-bright: #e4c98a;
+        --vault: #6fd4d9;
+        --text: #f1ece0;
+        --text-dim: #8b8778;
+      }
+
       body {
         margin: 0;
         font-family: "Anuphan", sans-serif;
-        color: #1e293b;
+        color: var(--text);
         background:
           radial-gradient(
-            circle at 0% 0%,
-            rgba(99, 102, 241, 0.1),
-            transparent 28%
+            circle at 8% 0%,
+            rgba(203, 163, 92, 0.1),
+            transparent 32%
           ),
           radial-gradient(
-            circle at 100% 10%,
-            rgba(168, 85, 247, 0.08),
-            transparent 25%
+            circle at 100% 6%,
+            rgba(139, 110, 168, 0.1),
+            transparent 30%
           ),
-          #f8fafc;
+          radial-gradient(
+            circle at 90% 90%,
+            rgba(34, 211, 238, 0.05),
+            transparent 35%
+          ),
+          var(--ink);
+        min-height: 100vh;
+      }
+
+      .font-display {
+        font-family: "Fraunces", "Anuphan", serif;
       }
 
       button,
@@ -72,26 +94,99 @@
       }
 
       .glass {
-        background: rgba(255, 255, 255, 0.86);
+        background: rgba(20, 22, 31, 0.86);
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 14px 40px rgba(15, 23, 42, 0.06);
+        border: 1px solid var(--hairline);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      button.glass:hover,
+      .provider-card:hover {
+        border-color: rgba(228, 201, 138, 0.4);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(228, 201, 138, 0.15),
+          0 0 26px rgba(203, 163, 92, 0.18),
+          0 0 42px rgba(139, 110, 168, 0.1);
       }
 
       .balance-card {
         position: relative;
         overflow: hidden;
-        background: linear-gradient(
-          135deg,
-          #111827 0%,
-          #312e81 52%,
-          #4f46e5 100%
-        );
-        box-shadow: 0 24px 55px rgba(49, 46, 129, 0.25);
+        background: linear-gradient(150deg, #14161f 0%, #1b1e28 55%, #14161f 100%);
+        border: 1px solid var(--hairline);
+        box-shadow: 0 24px 55px rgba(0, 0, 0, 0.45);
       }
 
       .balance-card::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        right: -110px;
+        top: -120px;
+        background: radial-gradient(
+          circle,
+          rgba(203, 163, 92, 0.16),
+          transparent 70%
+        );
+      }
+
+      .balance-card::after {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        left: -90px;
+        bottom: -100px;
+        background: radial-gradient(
+          circle,
+          rgba(139, 110, 168, 0.12),
+          transparent 70%
+        );
+      }
+
+      .balance-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .balance-number {
+        font-family: "Fraunces", "Anuphan", serif;
+        font-style: italic;
+        background: linear-gradient(
+          100deg,
+          var(--gold-bright) 0%,
+          #f4e2b8 20%,
+          #f0a8c4 45%,
+          var(--gold-bright) 70%,
+          #7fe3e8 88%,
+          var(--gold-bright) 100%
+        );
+        background-size: 260% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 7s ease-in-out infinite;
+      }
+
+      /* ---------- VAULT ---------- */
+
+      .vault-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(140deg, #12181f 0%, #16212a 60%, #12181f 100%);
+        border: 1px solid rgba(111, 212, 217, 0.2);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+      }
+
+      .vault-card::before {
         content: "";
         position: absolute;
         width: 240px;
@@ -99,23 +194,77 @@
         border-radius: 50%;
         right: -100px;
         top: -110px;
-        background: rgba(255, 255, 255, 0.08);
+        background: radial-gradient(
+          circle,
+          rgba(111, 212, 217, 0.16),
+          transparent 70%
+        );
       }
 
-      .balance-card::after {
-        content: "";
-        position: absolute;
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        left: -90px;
-        bottom: -100px;
-        background: rgba(255, 255, 255, 0.05);
+      .vault-number {
+        font-family: "Fraunces", "Anuphan", serif;
+        font-style: italic;
+        background: linear-gradient(
+          100deg,
+          #7fe3e8 0%,
+          #cfeff0 30%,
+          var(--gold-bright) 60%,
+          #7fe3e8 100%
+        );
+        background-size: 240% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 8s ease-in-out infinite;
       }
 
-      .balance-content {
-        position: relative;
-        z-index: 2;
+      .chip {
+        border: 1px solid rgba(111, 212, 217, 0.24);
+        background: rgba(111, 212, 217, 0.08);
+        color: #9fe4e8;
+        transition: all 0.16s ease;
+      }
+
+      .chip:hover {
+        background: rgba(111, 212, 217, 0.18);
+        border-color: rgba(111, 212, 217, 0.5);
+        transform: translateY(-1px);
+      }
+
+      .chip:active {
+        transform: scale(0.96);
+      }
+
+      .chip:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .jar-track {
+        height: 8px;
+        border-radius: 99px;
+        background: #1b1e28;
+        overflow: hidden;
+      }
+
+      .jar-fill {
+        height: 100%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #6fd4d9, #e4c98a);
+        transition: width 0.5s ease;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       .tab-page {
@@ -141,56 +290,74 @@
 
       .nav-btn {
         transition: all 0.2s ease;
-        color: #64748b;
+        color: var(--text-dim);
       }
 
       .nav-btn:hover {
-        color: #4f46e5;
-        background: #f8fafc;
+        color: var(--gold-bright);
+        background: rgba(203, 163, 92, 0.07);
       }
 
       .nav-btn.active {
-        color: #4f46e5;
-        background: #eef2ff;
+        color: var(--gold-bright);
+        background: rgba(203, 163, 92, 0.12);
+      }
+
+      .nav-btn[data-page="vault"].active {
+        color: #8fe0e4;
+        background: rgba(111, 212, 217, 0.12);
       }
 
       .type-btn {
-        border: 1px solid #e2e8f0;
-        background: white;
-        color: #64748b;
+        border: 1px solid var(--hairline);
+        background: var(--panel);
+        color: var(--text-dim);
         transition: all 0.2s ease;
       }
 
       .type-btn:hover {
-        border-color: #c7d2fe;
+        border-color: rgba(228, 201, 138, 0.4);
         transform: translateY(-1px);
       }
 
       .type-btn.active {
-        color: #4f46e5;
-        border-color: #818cf8;
-        background: #eef2ff;
-        box-shadow: 0 7px 18px rgba(99, 102, 241, 0.1);
+        color: var(--gold-bright);
+        border-color: var(--gold);
+        background: rgba(203, 163, 92, 0.12);
+        box-shadow: 0 7px 18px rgba(203, 163, 92, 0.12);
+      }
+
+      .type-btn[data-type="save"].active,
+      .type-btn[data-type="unsave"].active {
+        color: #8fe0e4;
+        border-color: var(--vault);
+        background: rgba(111, 212, 217, 0.12);
+        box-shadow: 0 7px 18px rgba(111, 212, 217, 0.12);
       }
 
       .input {
         width: 100%;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--hairline);
         border-radius: 15px;
         padding: 12px 14px;
         outline: none;
-        background: white;
-        color: #1e293b;
+        background: var(--panel);
+        color: var(--text);
         transition: all 0.2s ease;
       }
 
+      .input::placeholder {
+        color: #56543f;
+      }
+
       .input:focus {
-        border-color: #818cf8;
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+        border-color: var(--gold);
+        box-shadow: 0 0 0 4px rgba(203, 163, 92, 0.12);
       }
 
       .money {
         font-variant-numeric: tabular-nums;
+        font-family: "Fraunces", "Anuphan", serif;
       }
 
       .bottom-nav {
@@ -199,7 +366,7 @@
         left: 50%;
         bottom: 14px;
         transform: translateX(-50%);
-        width: min(720px, calc(100% - 24px));
+        width: min(760px, calc(100% - 24px));
       }
 
       .modal {
@@ -216,7 +383,6 @@
 
       .provider-card:hover {
         transform: translateY(-1px);
-        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
       }
 
       .loading-overlay {
@@ -224,7 +390,7 @@
         position: fixed;
         z-index: 200;
         inset: 0;
-        background: rgba(15, 23, 42, 0.18);
+        background: rgba(10, 11, 16, 0.55);
         backdrop-filter: blur(4px);
         align-items: center;
         justify-content: center;
@@ -238,8 +404,8 @@
         width: 42px;
         height: 42px;
         border-radius: 50%;
-        border: 3px solid #e2e8f0;
-        border-top-color: #6366f1;
+        border: 3px solid var(--panel-raised);
+        border-top-color: var(--gold);
         animation: spin 0.7s linear infinite;
       }
 
@@ -253,8 +419,8 @@
         width: 58px;
         height: 58px;
         border-radius: 20px;
-        background: #f1f5f9;
-        color: #94a3b8;
+        background: var(--panel-raised);
+        color: var(--text-dim);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -268,6 +434,22 @@
 
       .scroll-x::-webkit-scrollbar {
         display: none;
+      }
+
+      .toast {
+        position: fixed;
+        z-index: 300;
+        left: 50%;
+        bottom: 96px;
+        transform: translateX(-50%) translateY(16px);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.25s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
       }
 
       @media (max-width: 640px) {
@@ -296,7 +478,19 @@
       <div class="glass rounded-3xl p-6">
         <div class="spinner mx-auto"></div>
 
-        <p class="text-sm text-slate-500 mt-4">กำลังโหลดข้อมูล...</p>
+        <p class="text-sm text-[#79765F] mt-4">กำลังโหลดข้อมูล...</p>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+
+    <div id="toast" class="toast">
+      <div
+        class="glass rounded-2xl px-5 py-3 flex items-center gap-3 border-[rgba(111,212,217,0.3)]"
+      >
+        <i id="toastIcon" class="fa-solid fa-piggy-bank text-[#8FE0E4]"></i>
+
+        <span id="toastText" class="text-sm font-semibold">บันทึกแล้ว</span>
       </div>
     </div>
 
@@ -311,17 +505,20 @@
 
       <header class="flex items-center justify-between gap-4 py-6">
         <div>
-          <p class="text-xs md:text-sm text-slate-400">
+          <p class="text-xs md:text-sm text-[#8B8778]">
             Da & Jay Wallet Pro ✨
           </p>
 
-          <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mt-1">
+          <h1
+            id="greetingText"
+            class="text-2xl md:text-3xl font-bold text-[#F1ECE0] mt-1"
+          >
             สวัสดี 👋
           </h1>
         </div>
 
         <div class="glass rounded-2xl px-3 py-2 shrink-0">
-          <p class="text-[10px] text-slate-400">เดือน</p>
+          <p class="text-[10px] text-[#8B8778]">เดือน</p>
 
           <div class="flex items-center gap-1">
             <select
@@ -349,7 +546,7 @@
           <div class="balance-content">
             <div class="flex items-start justify-between gap-4">
               <div>
-                <p class="text-sm text-indigo-100">เงินที่ใช้ได้จริง</p>
+                <p class="text-sm text-[#E7DFCB]">เงินที่ใช้ได้จริง</p>
 
                 <h2
                   id="availableMoney"
@@ -358,13 +555,13 @@
                   ฿0
                 </h2>
 
-                <p class="text-xs text-indigo-200 mt-3">
-                  รายรับ − ค่าใช้จ่าย − จ่ายหนี้ − หมุนหนี้
+                <p class="text-xs text-[#C9C2AC] mt-3">
+                  รายรับ − ค่าใช้จ่าย − จ่ายหนี้ − หมุนหนี้ − เงินออม
                 </p>
               </div>
 
               <div
-                class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/10 flex items-center justify-center shrink-0"
+                class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-[#12141C]/10 flex items-center justify-center shrink-0"
               >
                 <i
                   class="fa-solid fa-wallet text-white text-xl md:text-2xl"
@@ -374,9 +571,9 @@
 
             <!-- MINI STATS -->
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-7">
-              <div class="bg-white/10 rounded-2xl p-3">
-                <p class="text-[11px] text-indigo-200">รายรับ</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-7">
+              <div class="bg-[#12141C]/10 rounded-2xl p-3">
+                <p class="text-[11px] text-[#C9C2AC]">รายรับ</p>
 
                 <p
                   id="dashIncome"
@@ -386,8 +583,8 @@
                 </p>
               </div>
 
-              <div class="bg-white/10 rounded-2xl p-3">
-                <p class="text-[11px] text-indigo-200">ค่าใช้จ่าย</p>
+              <div class="bg-[#12141C]/10 rounded-2xl p-3">
+                <p class="text-[11px] text-[#C9C2AC]">ค่าใช้จ่าย</p>
 
                 <p
                   id="dashExpense"
@@ -397,8 +594,8 @@
                 </p>
               </div>
 
-              <div class="bg-white/10 rounded-2xl p-3">
-                <p class="text-[11px] text-indigo-200">จ่ายหนี้</p>
+              <div class="bg-[#12141C]/10 rounded-2xl p-3">
+                <p class="text-[11px] text-[#C9C2AC]">จ่ายหนี้</p>
 
                 <p
                   id="dashDebt"
@@ -408,11 +605,24 @@
                 </p>
               </div>
 
-              <div class="bg-white/10 rounded-2xl p-3">
-                <p class="text-[11px] text-indigo-200">หมุนหนี้</p>
+              <div class="bg-[#12141C]/10 rounded-2xl p-3">
+                <p class="text-[11px] text-[#C9C2AC]">หมุนหนี้</p>
 
                 <p
                   id="dashReuse"
+                  class="money text-sm md:text-base font-bold text-white mt-1"
+                >
+                  ฿0
+                </p>
+              </div>
+
+              <div
+                class="col-span-2 md:col-span-1 bg-[#12141C]/10 rounded-2xl p-3"
+              >
+                <p class="text-[11px] text-[#C9C2AC]">ออมเดือนนี้</p>
+
+                <p
+                  id="dashSave"
                   class="money text-sm md:text-base font-bold text-white mt-1"
                 >
                   ฿0
@@ -422,22 +632,58 @@
           </div>
         </div>
 
+        <!-- VAULT STRIP -->
+
+        <button
+          onclick="showPage('vault')"
+          class="vault-card rounded-[26px] p-5 md:p-6 mt-4 w-full text-left"
+        >
+          <div class="relative z-10 flex items-center justify-between gap-4">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="text-lg"> 🐷 </span>
+
+                <p id="vaultStripName" class="text-sm text-[#9FE4E8]">
+                  D&J Vault
+                </p>
+              </div>
+
+              <h3
+                id="vaultStripBalance"
+                class="vault-number money text-3xl md:text-4xl font-bold mt-1"
+              >
+                ฿0
+              </h3>
+
+              <p id="vaultStripMeta" class="text-xs text-[#7D9BA0] mt-2">
+                ยังไม่ได้หยอดกระปุกเลย
+              </p>
+            </div>
+
+            <div
+              class="w-12 h-12 rounded-2xl bg-[rgba(111,212,217,0.12)] text-[#8FE0E4] flex items-center justify-center shrink-0"
+            >
+              <i class="fa-solid fa-piggy-bank text-xl"></i>
+            </div>
+          </div>
+        </button>
+
         <!-- QUICK ACTION -->
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-5">
           <button
             onclick="openAdd('income')"
             class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
             <div
-              class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(47,169,139,0.16)] text-[#5FC9AE] flex items-center justify-center"
             >
               <i class="fa-solid fa-arrow-down"></i>
             </div>
 
             <p class="font-semibold mt-3">รายรับ</p>
 
-            <p class="text-xs text-slate-400 mt-1">เพิ่มเงินเข้า</p>
+            <p class="text-xs text-[#8B8778] mt-1">เพิ่มเงินเข้า</p>
           </button>
 
           <button
@@ -445,14 +691,14 @@
             class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
             <div
-              class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(224,153,90,0.16)] text-[#E6A868] flex items-center justify-center"
             >
               <i class="fa-solid fa-cart-shopping"></i>
             </div>
 
             <p class="font-semibold mt-3">ค่าใช้จ่าย</p>
 
-            <p class="text-xs text-slate-400 mt-1">รายจ่ายทั่วไป</p>
+            <p class="text-xs text-[#8B8778] mt-1">รายจ่ายทั่วไป</p>
           </button>
 
           <button
@@ -460,14 +706,14 @@
             class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
             <div
-              class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(193,92,107,0.16)] text-[#E08999] flex items-center justify-center"
             >
               <i class="fa-solid fa-credit-card"></i>
             </div>
 
             <p class="font-semibold mt-3">จ่ายหนี้</p>
 
-            <p class="text-xs text-slate-400 mt-1">บันทึกเงินที่จ่าย</p>
+            <p class="text-xs text-[#8B8778] mt-1">บันทึกเงินที่จ่าย</p>
           </button>
 
           <button
@@ -475,14 +721,29 @@
             class="glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
           >
             <div
-              class="w-10 h-10 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(155,127,209,0.16)] text-[#B79EEA] flex items-center justify-center"
             >
               <i class="fa-solid fa-rotate"></i>
             </div>
 
             <p class="font-semibold mt-3">หมุนหนี้</p>
 
-            <p class="text-xs text-slate-400 mt-1">ใช้วงเงินกลับมา</p>
+            <p class="text-xs text-[#8B8778] mt-1">ใช้วงเงินกลับมา</p>
+          </button>
+
+          <button
+            onclick="showPage('vault')"
+            class="col-span-2 md:col-span-1 glass rounded-2xl p-4 text-left hover:-translate-y-0.5 transition"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-[rgba(111,212,217,0.16)] text-[#8FE0E4] flex items-center justify-center"
+            >
+              <i class="fa-solid fa-piggy-bank"></i>
+            </div>
+
+            <p class="font-semibold mt-3">หยอดกระปุก</p>
+
+            <p class="text-xs text-[#8B8778] mt-1">เก็บไว้ใช้วันหน้า</p>
           </button>
         </div>
 
@@ -493,11 +754,11 @@
             <div>
               <h3 class="font-bold text-lg">ภาพรวมเดือนนี้</h3>
 
-              <p class="text-xs text-slate-400 mt-1">รายรับและเงินที่ไหลออก</p>
+              <p class="text-xs text-[#8B8778] mt-1">รายรับและเงินที่ไหลออก</p>
             </div>
 
             <div
-              class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(203,163,92,0.10)] text-[#D8B876] flex items-center justify-center"
             >
               <i class="fa-solid fa-chart-column"></i>
             </div>
@@ -519,48 +780,48 @@
                 <h3 class="font-bold text-lg">หนี้หมุน</h3>
               </div>
 
-              <p class="text-xs text-slate-400 mt-1">
+              <p class="text-xs text-[#8B8778] mt-1">
                 จ่ายไปเท่าไหร่ และหมุนกลับมาใช้เท่าไหร่
               </p>
             </div>
 
             <button
               onclick="showPage('debts')"
-              class="text-indigo-600 text-sm font-semibold whitespace-nowrap"
+              class="text-[#D8B876] text-sm font-semibold whitespace-nowrap"
             >
               ดูทั้งหมด →
             </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
-            <div class="rounded-2xl bg-rose-50 p-4">
-              <p class="text-xs text-rose-500">จ่ายหนี้</p>
+            <div class="rounded-2xl bg-[rgba(193,92,107,0.10)] p-4">
+              <p class="text-xs text-[#D98C8C]">จ่ายหนี้</p>
 
               <p
                 id="previewDebt"
-                class="money text-xl font-bold text-rose-600 mt-1"
+                class="money text-xl font-bold text-[#E08999] mt-1"
               >
                 ฿0
               </p>
             </div>
 
-            <div class="rounded-2xl bg-violet-50 p-4">
-              <p class="text-xs text-violet-500">หมุนกลับมาใช้</p>
+            <div class="rounded-2xl bg-[rgba(155,127,209,0.10)] p-4">
+              <p class="text-xs text-[#C7AEDD]">หมุนกลับมาใช้</p>
 
               <p
                 id="previewReuse"
-                class="money text-xl font-bold text-violet-600 mt-1"
+                class="money text-xl font-bold text-[#B79EEA] mt-1"
               >
                 ฿0
               </p>
             </div>
 
-            <div class="rounded-2xl bg-slate-100 p-4">
-              <p class="text-xs text-slate-500">เงินไหลออกเกี่ยวกับหนี้</p>
+            <div class="rounded-2xl bg-[#1B1E28] p-4">
+              <p class="text-xs text-[#79765F]">เงินไหลออกเกี่ยวกับหนี้</p>
 
               <p
                 id="previewDebtOutflow"
-                class="money text-xl font-bold text-slate-700 mt-1"
+                class="money text-xl font-bold text-[#D9D4C4] mt-1"
               >
                 ฿0
               </p>
@@ -575,7 +836,7 @@
         <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
           <div class="flex items-center gap-3">
             <div
-              class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center"
+              class="w-11 h-11 rounded-2xl bg-[rgba(203,163,92,0.16)] text-[#D8B876] flex items-center justify-center"
             >
               <i class="fa-solid fa-wand-magic-sparkles"></i>
             </div>
@@ -583,22 +844,289 @@
             <div>
               <h3 class="font-bold">คาดการณ์สิ้นเดือน</h3>
 
-              <p class="text-xs text-slate-400 mt-1">ถ้าใช้เงินในอัตราเดิม</p>
+              <p class="text-xs text-[#8B8778] mt-1">ถ้าใช้เงินในอัตราเดิม</p>
             </div>
           </div>
 
           <div class="mt-5">
             <p
               id="forecastValue"
-              class="money text-3xl font-bold text-slate-800"
+              class="money text-3xl font-bold text-[#F1ECE0]"
             >
               ฿0
             </p>
 
-            <p id="forecastText" class="text-sm text-slate-500 mt-2 leading-6">
+            <p id="forecastText" class="text-sm text-[#79765F] mt-2 leading-6">
               -
             </p>
           </div>
+        </div>
+      </section>
+
+      <!-- ===================================================
+       PAGE: VAULT  (กระปุกออมเงิน)
+  ==================================================== -->
+
+      <section id="page-vault" class="tab-page">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-2xl"> 🐷 </span>
+
+            <h2 id="vaultPageTitle" class="text-2xl md:text-3xl font-bold">
+              D&J Vault
+            </h2>
+          </div>
+
+          <p class="text-sm text-[#8B8778] mt-1">
+            กดหยอดทีละนิด เดี๋ยวมันก็โตเอง
+          </p>
+        </div>
+
+        <!-- VAULT BALANCE -->
+
+        <div class="vault-card rounded-[28px] p-6 md:p-8 mt-5">
+          <div class="relative z-10">
+            <p class="text-sm text-[#9FE4E8]">ยอดในกระปุกตอนนี้</p>
+
+            <h2
+              id="vaultBalance"
+              class="vault-number money text-4xl md:text-5xl font-bold mt-2"
+            >
+              ฿0
+            </h2>
+
+            <div class="grid grid-cols-3 gap-3 mt-7">
+              <div class="bg-[#0A0F13]/40 rounded-2xl p-3">
+                <p class="text-[11px] text-[#7D9BA0]">หยอดมาแล้ว</p>
+
+                <p
+                  id="vaultTotalIn"
+                  class="money text-sm md:text-base font-bold text-[#CFEFF0] mt-1"
+                >
+                  ฿0
+                </p>
+              </div>
+
+              <div class="bg-[#0A0F13]/40 rounded-2xl p-3">
+                <p class="text-[11px] text-[#7D9BA0]">ถอนออกไป</p>
+
+                <p
+                  id="vaultTotalOut"
+                  class="money text-sm md:text-base font-bold text-[#CFEFF0] mt-1"
+                >
+                  ฿0
+                </p>
+              </div>
+
+              <div class="bg-[#0A0F13]/40 rounded-2xl p-3">
+                <p class="text-[11px] text-[#7D9BA0]">จำนวนครั้ง</p>
+
+                <p
+                  id="vaultDropCount"
+                  class="money text-sm md:text-base font-bold text-[#CFEFF0] mt-1"
+                >
+                  0
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK DROP -->
+
+        <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-11 h-11 rounded-2xl bg-[rgba(111,212,217,0.16)] text-[#8FE0E4] flex items-center justify-center"
+            >
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+            </div>
+
+            <div>
+              <h3 class="font-bold">หยอดเร็ว</h3>
+
+              <p class="text-xs text-[#8B8778] mt-1">
+                เลือกกระปุก แล้วกดยอดที่จะหยอดได้เลย
+              </p>
+            </div>
+          </div>
+
+          <!-- JAR PICKER -->
+
+          <div class="mt-5">
+            <label class="text-sm font-semibold"> หยอดเข้ากระปุก </label>
+
+            <div class="relative mt-2" id="jarDropdownWrap">
+              <button
+                type="button"
+                id="jarDropdownBtn"
+                onclick="toggleJarDropdown()"
+                class="input flex items-center justify-between text-left"
+              >
+                <span id="jarDropdownLabel">กระปุกรวม</span>
+
+                <i
+                  id="jarDropdownChevron"
+                  class="fa-solid fa-chevron-down text-[#8B8778] text-sm transition-transform duration-200"
+                ></i>
+              </button>
+
+              <div
+                id="jarDropdownList"
+                class="hidden absolute z-30 mt-2 w-full max-h-64 overflow-y-auto rounded-2xl border border-[rgba(111,212,217,0.18)] bg-[#12141C] shadow-xl p-2 space-y-1"
+              ></div>
+            </div>
+          </div>
+
+          <!-- PRESET AMOUNTS -->
+
+          <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-4">
+            <button
+              onclick="quickDrop(20)"
+              class="chip rounded-2xl py-3 font-semibold text-sm"
+            >
+              ฿20
+            </button>
+
+            <button
+              onclick="quickDrop(50)"
+              class="chip rounded-2xl py-3 font-semibold text-sm"
+            >
+              ฿50
+            </button>
+
+            <button
+              onclick="quickDrop(100)"
+              class="chip rounded-2xl py-3 font-semibold text-sm"
+            >
+              ฿100
+            </button>
+
+            <button
+              onclick="quickDrop(200)"
+              class="chip rounded-2xl py-3 font-semibold text-sm"
+            >
+              ฿200
+            </button>
+
+            <button
+              onclick="quickDrop(500)"
+              class="chip rounded-2xl py-3 font-semibold text-sm"
+            >
+              ฿500
+            </button>
+
+            <button
+              onclick="quickDrop(1000)"
+              class="chip rounded-2xl py-3 font-semibold text-sm"
+            >
+              ฿1,000
+            </button>
+          </div>
+
+          <!-- CUSTOM AMOUNT -->
+
+          <div class="flex gap-2 mt-3">
+            <div class="relative flex-1">
+              <span
+                class="absolute left-4 top-1/2 -translate-y-1/2 text-[#8B8778] font-semibold"
+              >
+                ฿
+              </span>
+
+              <input
+                id="vaultCustomAmount"
+                type="number"
+                min="0"
+                step="0.01"
+                inputmode="decimal"
+                placeholder="ยอดอื่น..."
+                class="input pl-9"
+                onkeydown="if(event.key==='Enter'){quickDropCustom()}"
+              />
+            </div>
+
+            <button
+              onclick="quickDropCustom()"
+              class="shrink-0 rounded-2xl px-5 bg-gradient-to-r from-[#6FD4D9] to-[#E4C98A] hover:brightness-110 text-[#0A0F13] font-semibold transition"
+            >
+              หยอด
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 mt-3">
+            <button
+              onclick="openAdd('save')"
+              class="rounded-2xl bg-[#1B1E28] hover:bg-[#232733] text-[#B9B4A4] text-sm font-medium py-3 transition"
+            >
+              <i class="fa-solid fa-pen-to-square mr-1"></i>
+
+              หยอดแบบใส่รายละเอียด
+            </button>
+
+            <button
+              onclick="openAdd('unsave')"
+              class="rounded-2xl bg-[#1B1E28] hover:bg-[#232733] text-[#B9B4A4] text-sm font-medium py-3 transition"
+            >
+              <i class="fa-solid fa-arrow-up-from-bracket mr-1"></i>
+
+              ถอนจากกระปุก
+            </button>
+          </div>
+        </div>
+
+        <!-- JARS -->
+
+        <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <h3 class="font-bold">กระปุกทั้งหมด</h3>
+
+              <p class="text-xs text-[#8B8778] mt-1">
+                ตั้งเป้าหมายได้ กดที่รูปธงเพื่อแก้
+              </p>
+            </div>
+
+            <div
+              class="w-10 h-10 rounded-xl bg-[rgba(111,212,217,0.10)] text-[#8FE0E4] flex items-center justify-center shrink-0"
+            >
+              <i class="fa-solid fa-jar"></i>
+            </div>
+          </div>
+
+          <div id="jarList" class="space-y-3 mt-5"></div>
+        </div>
+
+        <!-- GROWTH CHART -->
+
+        <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-[rgba(111,212,217,0.16)] text-[#8FE0E4] flex items-center justify-center"
+            >
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+
+            <div>
+              <h3 class="font-bold">กระปุกโตขึ้นแค่ไหน</h3>
+
+              <p class="text-xs text-[#8B8778] mt-1">ยอดสะสมรายเดือน</p>
+            </div>
+          </div>
+
+          <div class="h-[280px] mt-5">
+            <canvas id="vaultChart"></canvas>
+          </div>
+        </div>
+
+        <!-- RECENT -->
+
+        <div class="glass rounded-[28px] p-5 md:p-6 mt-5">
+          <h3 class="font-bold">รายการล่าสุดของกระปุก</h3>
+
+          <p class="text-xs text-[#8B8778] mt-1">10 รายการหลังสุด</p>
+
+          <div id="vaultRecent" class="space-y-2 mt-5"></div>
         </div>
       </section>
 
@@ -609,7 +1137,7 @@
       <section id="page-form" class="tab-page">
         <div class="max-w-2xl mx-auto">
           <div class="mb-5">
-            <p class="text-sm text-slate-400">Wallet</p>
+            <p class="text-sm text-[#8B8778]">Wallet</p>
 
             <h2 id="formTitle" class="text-2xl md:text-3xl font-bold mt-1">
               บันทึกรายการ
@@ -622,7 +1150,7 @@
             <div>
               <label class="text-sm font-semibold"> ประเภทรายการ </label>
 
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-3">
                 <button
                   type="button"
                   data-type="income"
@@ -666,6 +1194,28 @@
 
                   หมุนหนี้
                 </button>
+
+                <button
+                  type="button"
+                  data-type="save"
+                  onclick="setFormType('save')"
+                  class="type-btn rounded-2xl p-3 text-sm font-medium"
+                >
+                  <i class="fa-solid fa-piggy-bank mr-1"></i>
+
+                  หยอดกระปุก
+                </button>
+
+                <button
+                  type="button"
+                  data-type="unsave"
+                  onclick="setFormType('unsave')"
+                  class="type-btn rounded-2xl p-3 text-sm font-medium"
+                >
+                  <i class="fa-solid fa-arrow-up-from-bracket mr-1"></i>
+
+                  ถอนกระปุก
+                </button>
               </div>
             </div>
 
@@ -676,7 +1226,7 @@
 
               <div class="relative mt-2">
                 <span
-                  class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
+                  class="absolute left-4 top-1/2 -translate-y-1/2 text-[#8B8778] font-semibold"
                 >
                   ฿
                 </span>
@@ -712,13 +1262,13 @@
                   <span id="categoryDropdownLabel">เลือกหมวดหมู่</span>
                   <i
                     id="categoryDropdownChevron"
-                    class="fa-solid fa-chevron-down text-slate-400 text-sm transition-transform duration-200"
+                    class="fa-solid fa-chevron-down text-[#8B8778] text-sm transition-transform duration-200"
                   ></i>
                 </button>
 
                 <div
                   id="categoryDropdownList"
-                  class="hidden absolute z-30 mt-2 w-full max-h-64 overflow-y-auto rounded-2xl border border-slate-100 bg-white shadow-xl p-2 space-y-1"
+                  class="hidden absolute z-30 mt-2 w-full max-h-64 overflow-y-auto rounded-2xl border border-[rgba(214,178,110,0.14)] bg-[#12141C] shadow-xl p-2 space-y-1"
                 ></div>
               </div>
             </div>
@@ -750,7 +1300,7 @@
             <button
               id="saveBtn"
               onclick="saveTransaction()"
-              class="w-full mt-7 rounded-2xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-4 flex items-center justify-center gap-2 transition"
+              class="w-full mt-7 rounded-2xl bg-gradient-to-r from-[#CBA35C] to-[#E4C98A] hover:brightness-110 disabled:opacity-60 text-[#14161F] font-semibold py-4 flex items-center justify-center gap-2 transition shadow-[0_10px_28px_rgba(203,163,92,0.22)]"
             >
               <i class="fa-solid fa-floppy-disk"></i>
 
@@ -759,7 +1309,7 @@
 
             <button
               onclick="showPage('dashboard')"
-              class="w-full mt-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-3 transition"
+              class="w-full mt-2 rounded-2xl bg-[#1B1E28] hover:bg-[#232733] text-[#B9B4A4] font-medium py-3 transition"
             >
               ยกเลิก
             </button>
@@ -775,7 +1325,7 @@
         <div>
           <h2 class="text-2xl md:text-3xl font-bold">ประวัติรายการ</h2>
 
-          <p class="text-sm text-slate-400 mt-1">ค้นหา แก้ไข หรือลบรายการ</p>
+          <p class="text-sm text-[#8B8778] mt-1">ค้นหา แก้ไข หรือลบรายการ</p>
         </div>
 
         <!-- SEARCH -->
@@ -783,7 +1333,7 @@
         <div class="glass rounded-2xl p-3 mt-5">
           <div class="relative">
             <i
-              class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[#8B8778]"
             ></i>
 
             <input
@@ -800,7 +1350,7 @@
 
         <div class="scroll-x flex gap-2 py-4">
           <button
-            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-indigo-600 text-white text-sm"
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-gradient-to-r from-[#CBA35C] to-[#E4C98A] text-[#14161F] text-sm font-medium"
             data-filter="all"
             onclick="setHistoryFilter('all', this)"
           >
@@ -808,7 +1358,7 @@
           </button>
 
           <button
-            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-[#12141C] border border-[rgba(214,178,110,0.18)] text-[#B9B4A4] text-sm"
             data-filter="income"
             onclick="setHistoryFilter('income', this)"
           >
@@ -816,7 +1366,7 @@
           </button>
 
           <button
-            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-[#12141C] border border-[rgba(214,178,110,0.18)] text-[#B9B4A4] text-sm"
             data-filter="expense"
             onclick="setHistoryFilter('expense', this)"
           >
@@ -824,7 +1374,7 @@
           </button>
 
           <button
-            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-[#12141C] border border-[rgba(214,178,110,0.18)] text-[#B9B4A4] text-sm"
             data-filter="debt"
             onclick="setHistoryFilter('debt', this)"
           >
@@ -832,11 +1382,27 @@
           </button>
 
           <button
-            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-white border text-sm"
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-[#12141C] border border-[rgba(214,178,110,0.18)] text-[#B9B4A4] text-sm"
             data-filter="reuse"
             onclick="setHistoryFilter('reuse', this)"
           >
             หมุนหนี้
+          </button>
+
+          <button
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-[#12141C] border border-[rgba(214,178,110,0.18)] text-[#B9B4A4] text-sm"
+            data-filter="save"
+            onclick="setHistoryFilter('save', this)"
+          >
+            หยอดกระปุก
+          </button>
+
+          <button
+            class="history-filter whitespace-nowrap px-4 py-2 rounded-full bg-[#12141C] border border-[rgba(214,178,110,0.18)] text-[#B9B4A4] text-sm"
+            data-filter="unsave"
+            onclick="setHistoryFilter('unsave', this)"
+          >
+            ถอนกระปุก
           </button>
         </div>
 
@@ -853,60 +1419,102 @@
         <div>
           <h2 class="text-2xl md:text-3xl font-bold">สรุปการเงิน</h2>
 
-          <p class="text-sm text-slate-400 mt-1">
+          <p class="text-sm text-[#8B8778] mt-1">
             ดูภาพรวมการใช้เงินของเดือนที่เลือก
           </p>
         </div>
 
         <!-- SUMMARY CARDS -->
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-5">
           <div class="glass rounded-2xl p-4">
             <div
-              class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center"
+              class="w-9 h-9 rounded-xl bg-[rgba(47,169,139,0.16)] text-[#5FC9AE] flex items-center justify-center"
             >
               <i class="fa-solid fa-arrow-down"></i>
             </div>
 
-            <p class="text-xs text-slate-400 mt-3">รายรับ</p>
+            <p class="text-xs text-[#8B8778] mt-3">รายรับ</p>
 
             <p id="summaryIncome" class="money text-lg font-bold mt-1">฿0</p>
           </div>
 
           <div class="glass rounded-2xl p-4">
             <div
-              class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center"
+              class="w-9 h-9 rounded-xl bg-[rgba(224,153,90,0.16)] text-[#E6A868] flex items-center justify-center"
             >
               <i class="fa-solid fa-cart-shopping"></i>
             </div>
 
-            <p class="text-xs text-slate-400 mt-3">ค่าใช้จ่าย</p>
+            <p class="text-xs text-[#8B8778] mt-3">ค่าใช้จ่าย</p>
 
             <p id="summaryExpense" class="money text-lg font-bold mt-1">฿0</p>
           </div>
 
           <div class="glass rounded-2xl p-4">
             <div
-              class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center"
+              class="w-9 h-9 rounded-xl bg-[rgba(193,92,107,0.16)] text-[#E08999] flex items-center justify-center"
             >
               <i class="fa-solid fa-credit-card"></i>
             </div>
 
-            <p class="text-xs text-slate-400 mt-3">จ่ายหนี้</p>
+            <p class="text-xs text-[#8B8778] mt-3">จ่ายหนี้</p>
 
             <p id="summaryDebt" class="money text-lg font-bold mt-1">฿0</p>
           </div>
 
           <div class="glass rounded-2xl p-4">
             <div
-              class="w-9 h-9 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center"
+              class="w-9 h-9 rounded-xl bg-[rgba(155,127,209,0.16)] text-[#B79EEA] flex items-center justify-center"
             >
               <i class="fa-solid fa-rotate"></i>
             </div>
 
-            <p class="text-xs text-slate-400 mt-3">หมุนหนี้</p>
+            <p class="text-xs text-[#8B8778] mt-3">หมุนหนี้</p>
 
             <p id="summaryReuse" class="money text-lg font-bold mt-1">฿0</p>
+          </div>
+
+          <div class="col-span-2 md:col-span-1 glass rounded-2xl p-4">
+            <div
+              class="w-9 h-9 rounded-xl bg-[rgba(111,212,217,0.16)] text-[#8FE0E4] flex items-center justify-center"
+            >
+              <i class="fa-solid fa-piggy-bank"></i>
+            </div>
+
+            <p class="text-xs text-[#8B8778] mt-3">ออมสุทธิ</p>
+
+            <p id="summarySave" class="money text-lg font-bold mt-1">฿0</p>
+          </div>
+        </div>
+
+        <!-- SAVING RATE -->
+
+        <div class="glass rounded-[28px] p-5 mt-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-[rgba(111,212,217,0.16)] text-[#8FE0E4] flex items-center justify-center"
+            >
+              <i class="fa-solid fa-percent"></i>
+            </div>
+
+            <div>
+              <h3 class="font-bold">อัตราการออมเดือนนี้</h3>
+
+              <p class="text-xs text-[#8B8778]">ออมได้กี่ % ของรายรับ</p>
+            </div>
+          </div>
+
+          <div class="flex items-end gap-3 mt-5">
+            <p id="savingRate" class="money text-3xl font-bold text-[#8FE0E4]">
+              0%
+            </p>
+
+            <p id="savingRateText" class="text-sm text-[#79765F] pb-1">-</p>
+          </div>
+
+          <div class="jar-track mt-4">
+            <div id="savingRateBar" class="jar-fill" style="width: 0%"></div>
           </div>
         </div>
 
@@ -915,7 +1523,7 @@
         <div class="glass rounded-[28px] p-5 mt-5">
           <div class="flex items-center gap-3">
             <div
-              class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(224,153,90,0.16)] text-[#E6A868] flex items-center justify-center"
             >
               <i class="fa-solid fa-chart-pie"></i>
             </div>
@@ -923,7 +1531,7 @@
             <div>
               <h3 class="font-bold">ค่าใช้จ่ายตามหมวดหมู่</h3>
 
-              <p class="text-xs text-slate-400">เฉพาะค่าใช้จ่ายทั่วไป</p>
+              <p class="text-xs text-[#8B8778]">เฉพาะค่าใช้จ่ายทั่วไป</p>
             </div>
           </div>
 
@@ -937,7 +1545,7 @@
         <div class="glass rounded-[28px] p-5 mt-5">
           <div class="flex items-center gap-3">
             <div
-              class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(203,163,92,0.16)] text-[#D8B876] flex items-center justify-center"
             >
               <i class="fa-solid fa-chart-line"></i>
             </div>
@@ -945,7 +1553,7 @@
             <div>
               <h3 class="font-bold">แนวโน้มเงินเข้าออก</h3>
 
-              <p class="text-xs text-slate-400">
+              <p class="text-xs text-[#8B8778]">
                 รายรับเทียบกับเงินออกในแต่ละวัน
               </p>
             </div>
@@ -961,7 +1569,7 @@
         <div class="glass rounded-[28px] p-5 mt-5">
           <div class="flex items-center gap-3">
             <div
-              class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center"
+              class="w-10 h-10 rounded-xl bg-[rgba(203,163,92,0.16)] text-[#E4C98A] flex items-center justify-center"
             >
               <i class="fa-solid fa-lightbulb"></i>
             </div>
@@ -969,7 +1577,7 @@
             <div>
               <h3 class="font-bold">วิเคราะห์การเงิน</h3>
 
-              <p class="text-xs text-slate-400">สรุปจากรายการที่บันทึก</p>
+              <p class="text-xs text-[#8B8778]">สรุปจากรายการที่บันทึก</p>
             </div>
           </div>
 
@@ -989,7 +1597,7 @@
             <h2 class="text-2xl md:text-3xl font-bold">หนี้หมุน</h2>
           </div>
 
-          <p class="text-sm text-slate-400 mt-1">
+          <p class="text-sm text-[#8B8778] mt-1">
             ดูจากรายการจริง ไม่ต้องกรอกยอดหนี้ตั้งต้น
           </p>
         </div>
@@ -997,52 +1605,52 @@
         <!-- DEBT SUMMARY -->
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
-          <div class="rounded-[26px] bg-rose-50 p-5">
+          <div class="rounded-[26px] bg-[rgba(193,92,107,0.10)] p-5">
             <div
-              class="w-11 h-11 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center"
+              class="w-11 h-11 rounded-2xl bg-[rgba(193,92,107,0.16)] text-[#E08999] flex items-center justify-center"
             >
               <i class="fa-solid fa-money-bill-transfer"></i>
             </div>
 
-            <p class="text-sm text-rose-500 mt-4">จ่ายหนี้</p>
+            <p class="text-sm text-[#D98C8C] mt-4">จ่ายหนี้</p>
 
             <p
               id="debtPagePaid"
-              class="money text-2xl font-bold text-rose-600 mt-1"
+              class="money text-2xl font-bold text-[#E08999] mt-1"
             >
               ฿0
             </p>
           </div>
 
-          <div class="rounded-[26px] bg-violet-50 p-5">
+          <div class="rounded-[26px] bg-[rgba(155,127,209,0.10)] p-5">
             <div
-              class="w-11 h-11 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center"
+              class="w-11 h-11 rounded-2xl bg-[rgba(155,127,209,0.16)] text-[#B79EEA] flex items-center justify-center"
             >
               <i class="fa-solid fa-rotate"></i>
             </div>
 
-            <p class="text-sm text-violet-500 mt-4">หมุนกลับมาใช้</p>
+            <p class="text-sm text-[#C7AEDD] mt-4">หมุนกลับมาใช้</p>
 
             <p
               id="debtPageReuse"
-              class="money text-2xl font-bold text-violet-600 mt-1"
+              class="money text-2xl font-bold text-[#B79EEA] mt-1"
             >
               ฿0
             </p>
           </div>
 
-          <div class="rounded-[26px] bg-slate-100 p-5">
+          <div class="rounded-[26px] bg-[#1B1E28] p-5">
             <div
-              class="w-11 h-11 rounded-2xl bg-slate-200 text-slate-600 flex items-center justify-center"
+              class="w-11 h-11 rounded-2xl bg-[#232733] text-[#B9B4A4] flex items-center justify-center"
             >
               <i class="fa-solid fa-arrow-right-arrow-left"></i>
             </div>
 
-            <p class="text-sm text-slate-500 mt-4">เงินไหลออกเกี่ยวกับหนี้</p>
+            <p class="text-sm text-[#79765F] mt-4">เงินไหลออกเกี่ยวกับหนี้</p>
 
             <p
               id="debtPageOutflow"
-              class="money text-2xl font-bold text-slate-700 mt-1"
+              class="money text-2xl font-bold text-[#D9D4C4] mt-1"
             >
               ฿0
             </p>
@@ -1054,7 +1662,7 @@
         <div class="glass rounded-[28px] p-5 mt-5">
           <h3 class="font-bold">จ่ายหนี้ VS หมุนกลับมาใช้</h3>
 
-          <p class="text-xs text-slate-400 mt-1">เปรียบเทียบของเดือนที่เลือก</p>
+          <p class="text-xs text-[#8B8778] mt-1">เปรียบเทียบของเดือนที่เลือก</p>
 
           <div class="h-[280px] mt-5">
             <canvas id="debtChart"></canvas>
@@ -1067,7 +1675,7 @@
           <div>
             <h3 class="font-bold">แยกตามเจ้าหนี้ / วงเงิน</h3>
 
-            <p class="text-xs text-slate-400 mt-1">เดือนที่เลือก</p>
+            <p class="text-xs text-[#8B8778] mt-1">เดือนที่เลือก</p>
           </div>
 
           <div id="providerList" class="space-y-3 mt-5"></div>
@@ -1076,21 +1684,21 @@
         <!-- EXPLANATION -->
 
         <div
-          class="rounded-[28px] bg-indigo-50 border border-indigo-100 p-5 mt-5"
+          class="rounded-[28px] bg-[rgba(203,163,92,0.10)] border border-[rgba(203,163,92,0.25)] p-5 mt-5"
         >
           <div class="flex gap-3">
             <div
-              class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0"
+              class="w-11 h-11 rounded-2xl bg-[rgba(203,163,92,0.16)] text-[#D8B876] flex items-center justify-center shrink-0"
             >
               <i class="fa-solid fa-lightbulb"></i>
             </div>
 
             <div>
-              <h3 class="font-semibold text-indigo-900">
+              <h3 class="font-semibold text-[#F1ECE0]">
                 ระบบหนี้หมุนทำงานแบบนี้
               </h3>
 
-              <p class="text-sm text-indigo-700 mt-2 leading-6">
+              <p class="text-sm text-[#E4C98A] mt-2 leading-6">
                 คุณไม่ต้องกรอกว่ามีหนี้เหลือเท่าไหร่ เพียงบันทึกเวลาที่จ่ายหนี้
                 และเวลาที่นำวงเงินกลับมาใช้
                 ระบบจะนำรายการจริงมาสรุปให้เป็นรายเดือน
@@ -1106,9 +1714,9 @@
 ====================================================== -->
 
     <div class="bottom-nav">
-      <nav class="glass rounded-[26px] p-2 grid grid-cols-5 gap-1">
+      <nav class="glass rounded-[26px] p-2 grid grid-cols-6 gap-1">
         <button
-          class="nav-btn active rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          class="nav-btn active rounded-2xl py-3 text-[10px] md:text-xs font-medium"
           data-page="dashboard"
           onclick="showPage('dashboard')"
         >
@@ -1118,7 +1726,7 @@
         </button>
 
         <button
-          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          class="nav-btn rounded-2xl py-3 text-[10px] md:text-xs font-medium"
           data-page="form"
           onclick="openAdd()"
         >
@@ -1128,7 +1736,17 @@
         </button>
 
         <button
-          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          class="nav-btn rounded-2xl py-3 text-[10px] md:text-xs font-medium"
+          data-page="vault"
+          onclick="showPage('vault')"
+        >
+          <i class="fa-solid fa-piggy-bank block text-base mb-1"></i>
+
+          กระปุก
+        </button>
+
+        <button
+          class="nav-btn rounded-2xl py-3 text-[10px] md:text-xs font-medium"
           data-page="history"
           onclick="showPage('history')"
         >
@@ -1138,7 +1756,7 @@
         </button>
 
         <button
-          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          class="nav-btn rounded-2xl py-3 text-[10px] md:text-xs font-medium"
           data-page="summary"
           onclick="showPage('summary')"
         >
@@ -1148,7 +1766,7 @@
         </button>
 
         <button
-          class="nav-btn rounded-2xl py-3 text-[11px] md:text-xs font-medium"
+          class="nav-btn rounded-2xl py-3 text-[10px] md:text-xs font-medium"
           data-page="debts"
           onclick="showPage('debts')"
         >
@@ -1165,34 +1783,95 @@
 
     <div
       id="deleteModal"
-      class="modal fixed inset-0 bg-slate-900/40 backdrop-blur-sm items-center justify-center z-[100] p-5"
+      class="modal fixed inset-0 bg-black/70 backdrop-blur-sm items-center justify-center z-[100] p-5"
     >
-      <div class="bg-white rounded-[28px] p-6 w-full max-w-sm shadow-2xl">
+      <div class="bg-[#12141C] border border-[rgba(214,178,110,0.16)] rounded-[28px] p-6 w-full max-w-sm shadow-2xl">
         <div
-          class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center"
+          class="w-12 h-12 rounded-2xl bg-[rgba(193,92,107,0.16)] text-[#E08999] flex items-center justify-center"
         >
           <i class="fa-solid fa-trash"></i>
         </div>
 
         <h3 class="font-bold text-lg mt-4">ลบรายการนี้?</h3>
 
-        <p class="text-sm text-slate-500 mt-2 leading-6">
+        <p class="text-sm text-[#79765F] mt-2 leading-6">
           เมื่อลบแล้วจะไม่สามารถกู้รายการนี้กลับมาได้
         </p>
 
         <div class="grid grid-cols-2 gap-2 mt-6">
           <button
             onclick="closeDeleteModal()"
-            class="rounded-2xl bg-slate-100 hover:bg-slate-200 py-3 font-semibold text-slate-600"
+            class="rounded-2xl bg-[#1B1E28] hover:bg-[#232733] py-3 font-semibold text-[#B9B4A4]"
           >
             ยกเลิก
           </button>
 
           <button
             onclick="confirmDelete()"
-            class="rounded-2xl bg-rose-600 hover:bg-rose-700 text-white py-3 font-semibold"
+            class="rounded-2xl bg-[#B24A5A] hover:bg-[#9C3F4D] text-white py-3 font-semibold"
           >
             ลบรายการ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+     TARGET MODAL
+====================================================== -->
+
+    <div
+      id="targetModal"
+      class="modal fixed inset-0 bg-black/70 backdrop-blur-sm items-center justify-center z-[100] p-5"
+    >
+      <div
+        class="bg-[#12141C] border border-[rgba(111,212,217,0.2)] rounded-[28px] p-6 w-full max-w-sm shadow-2xl"
+      >
+        <div
+          class="w-12 h-12 rounded-2xl bg-[rgba(111,212,217,0.16)] text-[#8FE0E4] flex items-center justify-center"
+        >
+          <i class="fa-solid fa-flag"></i>
+        </div>
+
+        <h3 class="font-bold text-lg mt-4">ตั้งเป้าหมาย</h3>
+
+        <p id="targetJarName" class="text-sm text-[#79765F] mt-1">-</p>
+
+        <div class="relative mt-5">
+          <span
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-[#8B8778] font-semibold"
+          >
+            ฿
+          </span>
+
+          <input
+            id="targetAmount"
+            type="number"
+            min="0"
+            step="100"
+            inputmode="decimal"
+            placeholder="เช่น 30000"
+            class="input pl-9 text-lg font-bold"
+          />
+        </div>
+
+        <p class="text-xs text-[#56543F] mt-2">
+          เว้นว่างไว้ = ไม่ตั้งเป้า (เก็บไว้ในเครื่องนี้เท่านั้น)
+        </p>
+
+        <div class="grid grid-cols-2 gap-2 mt-6">
+          <button
+            onclick="closeTargetModal()"
+            class="rounded-2xl bg-[#1B1E28] hover:bg-[#232733] py-3 font-semibold text-[#B9B4A4]"
+          >
+            ยกเลิก
+          </button>
+
+          <button
+            onclick="confirmTarget()"
+            class="rounded-2xl bg-gradient-to-r from-[#6FD4D9] to-[#E4C98A] hover:brightness-110 text-[#0A0F13] py-3 font-semibold"
+          >
+            บันทึกเป้า
           </button>
         </div>
       </div>
@@ -1209,6 +1888,14 @@
 
       const API_URL =
         "https://script.google.com/macros/s/AKfycbzdKBIynOMnDkSCCK9DgH7PCfYt3J1Bk4Igu_uLZb4Z3FazJKzAM8wp-MxdMHjq5g-lLA/exec";
+
+      /* =====================================================
+   VAULT NAME  ←← เปลี่ยนชื่อกระปุกตรงนี้ได้เลย
+   เช่น "The Da & Jay Reserve" / "Our Little Vault" /
+        "Two Hands, One Jar" / "กระปุกเรา"
+====================================================== */
+
+      const VAULT_NAME = "D&J Vault";
 
       /* =====================================================
    CATEGORIES
@@ -1270,6 +1957,59 @@
         "อื่นๆ...",
       ];
 
+      /* กระปุก — แก้/เพิ่มได้ตามใจ */
+
+      const savingCategories = [
+        "กระปุกรวม",
+
+        "เงินฉุกเฉิน",
+
+        "ทริปเที่ยวด้วยกัน",
+
+        "บ้าน / ห้องใหม่",
+
+        "ของขวัญให้กัน",
+
+        "ค่ารถ",
+
+        "งานแต่ง",
+
+        "ก้อนลงทุน",
+
+        "อื่นๆ...",
+      ];
+
+      /* =====================================================
+   THEME PALETTE
+====================================================== */
+
+      const palette = {
+        gold: "#CBA35C",
+        goldBright: "#E4C98A",
+        income: "#4FC7AE",
+        expense: "#E3A868",
+        debt: "#D9748A",
+        reuse: "#A98DE0",
+        save: "#6FD4D9",
+        unsave: "#9AA8B8",
+        cycle: [
+          "#CBA35C",
+          "#4FC7AE",
+          "#D9748A",
+          "#A98DE0",
+          "#7FC4D9",
+          "#E3A868",
+          "#8FB5A0",
+          "#C9A6D6",
+        ],
+      };
+
+      if (window.Chart) {
+        Chart.defaults.color = "#8B8778";
+        Chart.defaults.borderColor = "rgba(214, 178, 110, 0.1)";
+        Chart.defaults.font.family = "Anuphan, sans-serif";
+      }
+
       /* =====================================================
    STATE
 ====================================================== */
@@ -1284,6 +2024,10 @@
 
       let deleteId = null;
 
+      let targetJar = null;
+
+      let selectedJar = savingCategories[0];
+
       let dashboardChart = null;
 
       let expenseChart = null;
@@ -1291,6 +2035,8 @@
       let dailyChart = null;
 
       let debtChart = null;
+
+      let vaultChart = null;
 
       /* =====================================================
    INIT
@@ -1362,8 +2108,8 @@
           item.className =
             "w-full text-left px-3 py-2.5 rounded-xl text-sm transition " +
             (opt.value === select.value
-              ? "bg-indigo-50 text-indigo-600 font-semibold"
-              : "text-slate-600 hover:bg-slate-50");
+              ? "bg-[rgba(203,163,92,0.10)] text-[#D8B876] font-semibold"
+              : "text-[#B9B4A4] hover:bg-[#171A22]");
           item.onclick = function () {
             selectCategoryOption(opt.value);
           };
@@ -1406,21 +2152,120 @@
           .classList.remove("rotate-180");
       }
 
+      /* =====================================================
+   JAR DROPDOWN (หน้ากระปุก)
+====================================================== */
+
+      function renderJarDropdownList() {
+        const list = document.getElementById("jarDropdownList");
+
+        if (!list) return;
+
+        list.innerHTML = "";
+
+        getAllJarNames().forEach(function (name) {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.textContent = name;
+          item.className =
+            "w-full text-left px-3 py-2.5 rounded-xl text-sm transition " +
+            (name === selectedJar
+              ? "bg-[rgba(111,212,217,0.10)] text-[#8FE0E4] font-semibold"
+              : "text-[#B9B4A4] hover:bg-[#171A22]");
+          item.onclick = function () {
+            selectedJar = name;
+            document.getElementById("jarDropdownLabel").textContent = name;
+            renderJarDropdownList();
+            closeJarDropdown();
+          };
+          list.appendChild(item);
+        });
+
+        document.getElementById("jarDropdownLabel").textContent = selectedJar;
+      }
+
+      function toggleJarDropdown() {
+        const list = document.getElementById("jarDropdownList");
+        const chevron = document.getElementById("jarDropdownChevron");
+
+        if (!list.classList.contains("hidden")) {
+          closeJarDropdown();
+        } else {
+          list.classList.remove("hidden");
+          chevron.classList.add("rotate-180");
+        }
+      }
+
+      function closeJarDropdown() {
+        const list = document.getElementById("jarDropdownList");
+        const chevron = document.getElementById("jarDropdownChevron");
+
+        if (list) list.classList.add("hidden");
+        if (chevron) chevron.classList.remove("rotate-180");
+      }
+
       document.addEventListener("click", function (e) {
         const wrap = document.getElementById("categoryDropdownWrap");
         if (wrap && !wrap.contains(e.target)) {
           closeCategoryDropdown();
         }
+
+        const jarWrap = document.getElementById("jarDropdownWrap");
+        if (jarWrap && !jarWrap.contains(e.target)) {
+          closeJarDropdown();
+        }
       });
+
+      function getGreeting(now) {
+        const hour = now.getHours();
+
+        if (hour >= 5 && hour < 11) {
+          return "อรุณสวัสดิ์ ☀️";
+        }
+
+        if (hour >= 11 && hour < 13) {
+          return "สวัสดีตอนเที่ยง 🍚";
+        }
+
+        if (hour >= 13 && hour < 17) {
+          return "สวัสดีตอนบ่าย 🌤️";
+        }
+
+        if (hour >= 17 && hour < 20) {
+          return "สวัสดีตอนเย็น 🌇";
+        }
+
+        if (hour >= 20 && hour < 24) {
+          return "สวัสดีตอนค่ำ 🌙";
+        }
+
+        return "ดึกแล้วนะ ✨";
+      }
+
+      function setGreeting(now) {
+        const el = document.getElementById("greetingText");
+
+        if (el) {
+          el.textContent = getGreeting(now);
+        }
+      }
 
       document.addEventListener("DOMContentLoaded", function () {
         const now = new Date();
+
+        setGreeting(now);
+
+        setText("vaultStripName", VAULT_NAME);
+
+        setText("vaultPageTitle", VAULT_NAME);
 
         initThaiMonthPicker(now);
 
         document.getElementById("date").value = formatDateInput(now);
 
         setFormType("expense");
+
+        renderJarDropdownList();
 
         loadData();
       });
@@ -1509,6 +2354,10 @@
         if (page === "debts") {
           renderDebtPage();
         }
+
+        if (page === "vault") {
+          renderVaultPage();
+        }
       }
 
       /* =====================================================
@@ -1527,6 +2376,21 @@
         document.getElementById("saveBtnText").textContent = "บันทึกรายการ";
 
         setFormType(type || "expense");
+
+        /* ถ้ามาจากหน้ากระปุก ให้ล็อกกระปุกที่เลือกไว้ */
+
+        if (type === "save" || type === "unsave") {
+          const select = document.getElementById("category");
+
+          if (
+            Array.from(select.options).some(function (o) {
+              return o.value === selectedJar;
+            })
+          ) {
+            select.value = selectedJar;
+            renderCategoryDropdownList();
+          }
+        }
       }
 
       function openEdit(id) {
@@ -1610,6 +2474,13 @@
               : "เจ้าหนี้ / วงเงิน";
         }
 
+        if (currentType === "save" || currentType === "unsave") {
+          categories = getAllJarNames();
+
+          label =
+            currentType === "save" ? "หยอดเข้ากระปุก" : "ถอนจากกระปุก";
+        }
+
         document.getElementById("categoryLabel").textContent = label;
 
         select.innerHTML = "";
@@ -1662,6 +2533,28 @@
           return;
         }
 
+        if (currentType === "unsave" && !editingId) {
+          const jarBalance = getVaultTotals().jars[category];
+
+          const available = jarBalance
+            ? jarBalance.in - jarBalance.out
+            : 0;
+
+          if (amount > available) {
+            const ok = confirm(
+              "กระปุก " +
+                category +
+                " มีอยู่ " +
+                money(available) +
+                "\nถอน " +
+                money(amount) +
+                " จะทำให้ติดลบ\n\nยืนยันจะถอนไหม?",
+            );
+
+            if (!ok) return;
+          }
+        }
+
         const isEdit = Boolean(editingId);
 
         const payload = {
@@ -1688,13 +2581,7 @@
           await postData(payload);
 
           if (!isEdit) {
-            confetti({
-              particleCount: 70,
-              spread: 70,
-              origin: {
-                y: 0.7,
-              },
-            });
+            celebrate(currentType);
           }
 
           alert(
@@ -1707,7 +2594,11 @@
 
           await loadData();
 
-          showPage("dashboard");
+          showPage(
+            currentType === "save" || currentType === "unsave"
+              ? "vault"
+              : "dashboard",
+          );
         } catch (error) {
           console.error(error);
 
@@ -1715,6 +2606,139 @@
         } finally {
           setSaveLoading(false);
         }
+      }
+
+      /* =====================================================
+   QUICK DROP (หยอดกระปุกแบบกดปุ่มเดียว)
+====================================================== */
+
+      let dropping = false;
+
+      async function quickDrop(amount) {
+        if (dropping) return;
+
+        if (!amount || amount <= 0) {
+          alert("กรุณากรอกจำนวนเงิน");
+
+          return;
+        }
+
+        dropping = true;
+
+        setChipsDisabled(true);
+
+        const before = getVaultTotals();
+
+        try {
+          await postData({
+            action: "add",
+
+            type: "save",
+
+            typeLabel: getTypeLabel("save"),
+
+            category: selectedJar,
+
+            detail: "หยอดกระปุก",
+
+            amount: amount,
+
+            date: formatDateInput(new Date()),
+          });
+
+          celebrate("save");
+
+          toast("หยอด " + money(amount) + " เข้า " + selectedJar + " แล้ว 🐷");
+
+          document.getElementById("vaultCustomAmount").value = "";
+
+          await loadData();
+
+          checkMilestone(before, selectedJar);
+        } catch (error) {
+          console.error(error);
+
+          alert("หยอดกระปุกไม่สำเร็จ\n\n" + error.message);
+        } finally {
+          dropping = false;
+
+          setChipsDisabled(false);
+        }
+      }
+
+      function quickDropCustom() {
+        const input = document.getElementById("vaultCustomAmount");
+
+        const amount = Number(input.value);
+
+        if (!amount || amount <= 0) {
+          alert("กรุณากรอกจำนวนเงิน");
+
+          input.focus();
+
+          return;
+        }
+
+        quickDrop(amount);
+      }
+
+      function setChipsDisabled(disabled) {
+        document.querySelectorAll(".chip").forEach(function (btn) {
+          btn.disabled = disabled;
+        });
+      }
+
+      /* ถ้าหยอดแล้วถึงเป้า → ฉลอง */
+
+      function checkMilestone(before, jarName) {
+        const targets = getTargets();
+
+        const target = Number(targets[jarName] || 0);
+
+        if (!target) return;
+
+        const prev = before.jars[jarName]
+          ? before.jars[jarName].in - before.jars[jarName].out
+          : 0;
+
+        const now = getVaultTotals().jars[jarName];
+
+        const current = now ? now.in - now.out : 0;
+
+        if (prev < target && current >= target) {
+          confetti({
+            particleCount: 180,
+            spread: 100,
+            origin: { y: 0.6 },
+            colors: ["#6FD4D9", "#E4C98A", "#F0A8C4", "#CFEFF0"],
+          });
+
+          setTimeout(function () {
+            alert(
+              "🎉 ถึงเป้าแล้ว!\n\n" +
+                jarName +
+                " ครบ " +
+                money(target) +
+                " ตามที่ตั้งไว้",
+            );
+          }, 350);
+        }
+      }
+
+      function celebrate(type) {
+        const colors =
+          type === "save"
+            ? ["#6FD4D9", "#CFEFF0", "#E4C98A", "#7FE3E8"]
+            : ["#CBA35C", "#E4C98A", "#F0A8C4", "#7FE3E8"];
+
+        confetti({
+          particleCount: type === "save" ? 90 : 70,
+          spread: 70,
+          origin: {
+            y: 0.7,
+          },
+          colors: colors,
+        });
       }
 
       function getTypeLabel(type) {
@@ -1726,6 +2750,10 @@
           debt: "จ่ายหนี้",
 
           reuse: "หมุนหนี้",
+
+          save: "หยอดกระปุก",
+
+          unsave: "ถอนกระปุก",
         };
 
         return labels[type] || "ค่าใช้จ่าย";
@@ -1743,6 +2771,8 @@
         renderSummary();
 
         renderDebtPage();
+
+        renderVaultPage();
       }
 
       /* =====================================================
@@ -1772,55 +2802,580 @@
       }
 
       /* =====================================================
+   TOTALS HELPER
+====================================================== */
+
+      function sumByType(list) {
+        const total = {
+          income: 0,
+
+          expense: 0,
+
+          debt: 0,
+
+          reuse: 0,
+
+          save: 0,
+
+          unsave: 0,
+        };
+
+        list.forEach(function (r) {
+          const amount = Number(r.amount) || 0;
+
+          if (Object.prototype.hasOwnProperty.call(total, r.type)) {
+            total[r.type] += amount;
+          }
+        });
+
+        return total;
+      }
+
+      /* เงินที่ใช้ได้จริง = รายรับ − ใช้จ่าย − จ่ายหนี้ − หมุนหนี้ − ออม + ถอนออม */
+
+      function availableFrom(total) {
+        return (
+          total.income -
+          total.expense -
+          total.debt -
+          total.reuse -
+          total.save +
+          total.unsave
+        );
+      }
+
+      /* =====================================================
+   VAULT DATA (ยอดสะสมทั้งหมด ไม่ใช่รายเดือน)
+====================================================== */
+
+      function getVaultTotals() {
+        let inTotal = 0;
+
+        let outTotal = 0;
+
+        let dropCount = 0;
+
+        const jars = {};
+
+        records.forEach(function (r) {
+          if (r.type !== "save" && r.type !== "unsave") {
+            return;
+          }
+
+          const amount = Number(r.amount) || 0;
+
+          const jar = r.category || "กระปุกรวม";
+
+          if (!jars[jar]) {
+            jars[jar] = {
+              in: 0,
+
+              out: 0,
+            };
+          }
+
+          if (r.type === "save") {
+            inTotal += amount;
+
+            dropCount += 1;
+
+            jars[jar].in += amount;
+          } else {
+            outTotal += amount;
+
+            jars[jar].out += amount;
+          }
+        });
+
+        return {
+          in: inTotal,
+
+          out: outTotal,
+
+          balance: inTotal - outTotal,
+
+          dropCount: dropCount,
+
+          jars: jars,
+        };
+      }
+
+      /* รวมชื่อกระปุกจาก preset + ที่เคยใช้จริง */
+
+      function getAllJarNames() {
+        const names = savingCategories.slice();
+
+        records.forEach(function (r) {
+          if (r.type !== "save" && r.type !== "unsave") return;
+
+          const jar = r.category || "";
+
+          if (jar && names.indexOf(jar) === -1) {
+            names.push(jar);
+          }
+        });
+
+        return names;
+      }
+
+      /* =====================================================
+   TARGETS (เก็บใน localStorage ของเครื่องนี้)
+====================================================== */
+
+      const TARGET_KEY = "dj_vault_targets";
+
+      function getTargets() {
+        try {
+          return JSON.parse(localStorage.getItem(TARGET_KEY) || "{}");
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function saveTargets(targets) {
+        try {
+          localStorage.setItem(TARGET_KEY, JSON.stringify(targets));
+        } catch (error) {
+          console.warn("บันทึกเป้าไม่ได้", error);
+        }
+      }
+
+      function askTarget(jarName) {
+        targetJar = jarName;
+
+        setText("targetJarName", jarName);
+
+        document.getElementById("targetAmount").value =
+          getTargets()[jarName] || "";
+
+        document.getElementById("targetModal").classList.add("show");
+      }
+
+      function closeTargetModal() {
+        targetJar = null;
+
+        document.getElementById("targetModal").classList.remove("show");
+      }
+
+      function confirmTarget() {
+        if (!targetJar) return;
+
+        const value = Number(document.getElementById("targetAmount").value);
+
+        const targets = getTargets();
+
+        if (!value || value <= 0) {
+          delete targets[targetJar];
+        } else {
+          targets[targetJar] = value;
+        }
+
+        saveTargets(targets);
+
+        closeTargetModal();
+
+        renderVaultPage();
+      }
+
+      /* =====================================================
+   VAULT PAGE
+====================================================== */
+
+      function renderVaultPage() {
+        const vault = getVaultTotals();
+
+        setText("vaultBalance", money(vault.balance));
+
+        setText("vaultTotalIn", money(vault.in));
+
+        setText("vaultTotalOut", money(vault.out));
+
+        setText("vaultDropCount", vault.dropCount + " ครั้ง");
+
+        setText("vaultStripBalance", money(vault.balance));
+
+        if (vault.dropCount) {
+          setText(
+            "vaultStripMeta",
+            "หยอดมาแล้ว " +
+              vault.dropCount +
+              " ครั้ง · กดเพื่อหยอดเพิ่ม",
+          );
+        } else {
+          setText("vaultStripMeta", "ยังไม่ได้หยอดกระปุกเลย · กดเพื่อเริ่ม");
+        }
+
+        renderJarList(vault);
+
+        renderVaultChart();
+
+        renderVaultRecent();
+
+        renderJarDropdownList();
+      }
+
+      /* ---------- JAR LIST ---------- */
+
+      function renderJarList(vault) {
+        const box = document.getElementById("jarList");
+
+        if (!box) return;
+
+        const targets = getTargets();
+
+        const entries = Object.entries(vault.jars)
+          .map(function (item) {
+            return {
+              name: item[0],
+
+              in: item[1].in,
+
+              out: item[1].out,
+
+              balance: item[1].in - item[1].out,
+            };
+          })
+          .sort(function (a, b) {
+            return b.balance - a.balance;
+          });
+
+        if (!entries.length) {
+          box.innerHTML = `
+
+      <div class="text-center py-12 text-[#8B8778]">
+
+        <div class="empty-icon">
+
+          <i class="fa-solid fa-piggy-bank text-xl"></i>
+
+        </div>
+
+        <p class="font-semibold mt-4 text-[#B9B4A4]">
+          ยังไม่มีกระปุกไหนมีเงิน
+        </p>
+
+        <p class="text-sm mt-1 leading-6">
+          กดปุ่มหยอดเร็วด้านบนเพื่อเริ่มเก็บ
+        </p>
+
+      </div>
+
+    `;
+
+          return;
+        }
+
+        box.innerHTML = entries
+          .map(function (jar) {
+            const target = Number(targets[jar.name] || 0);
+
+            const percent = target
+              ? Math.min((jar.balance / target) * 100, 100)
+              : 0;
+
+            const targetBlock = target
+              ? `
+
+          <div class="mt-3">
+
+            <div class="jar-track">
+
+              <div class="jar-fill" style="width: ${percent}%"></div>
+
+            </div>
+
+            <div class="flex items-center justify-between mt-2">
+
+              <p class="text-xs text-[#7D9BA0]">
+                เป้า ${money(target)}
+              </p>
+
+              <p class="text-xs font-semibold ${
+                percent >= 100 ? "text-[#8FE0E4]" : "text-[#79765F]"
+              }">
+                ${percent >= 100 ? "ถึงเป้าแล้ว 🎉" : Math.round(percent) + "%"}
+              </p>
+
+            </div>
+
+          </div>
+
+        `
+              : `
+
+          <p class="text-xs text-[#56543F] mt-3">
+            ยังไม่ได้ตั้งเป้า
+          </p>
+
+        `;
+
+            return `
+
+        <div class="provider-card rounded-2xl border border-[rgba(111,212,217,0.14)] bg-[#12141C] p-4">
+
+          <div class="flex items-center gap-3">
+
+            <div class="w-11 h-11 rounded-2xl bg-[rgba(111,212,217,0.10)] flex items-center justify-center text-[#8FE0E4] shrink-0">
+
+              <i class="fa-solid fa-jar"></i>
+
+            </div>
+
+
+            <div class="flex-1 min-w-0">
+
+              <p class="font-bold truncate">
+                ${escapeHtml(jar.name)}
+              </p>
+
+              <p class="text-xs text-[#8B8778] mt-1">
+                หยอด ${money(jar.in)}
+                ·
+                ถอน ${money(jar.out)}
+              </p>
+
+            </div>
+
+
+            <div class="text-right shrink-0">
+
+              <p class="money font-bold text-[#CFEFF0]">
+                ${money(jar.balance)}
+              </p>
+
+              <button
+                onclick="askTarget('${escapeJs(jar.name)}')"
+                class="text-xs text-[#7D9BA0] hover:text-[#8FE0E4] mt-1"
+                title="ตั้งเป้าหมาย"
+              >
+
+                <i class="fa-solid fa-flag"></i>
+                ตั้งเป้า
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          ${targetBlock}
+
+        </div>
+
+      `;
+          })
+          .join("");
+      }
+
+      /* ---------- VAULT GROWTH CHART ---------- */
+
+      function renderVaultChart() {
+        const canvas = document.getElementById("vaultChart");
+
+        if (!canvas) return;
+
+        const byMonth = {};
+
+        records.forEach(function (r) {
+          if (r.type !== "save" && r.type !== "unsave") return;
+
+          const month = String(r.date || "").slice(0, 7);
+
+          if (!month) return;
+
+          if (!byMonth[month]) {
+            byMonth[month] = 0;
+          }
+
+          const amount = Number(r.amount) || 0;
+
+          byMonth[month] += r.type === "save" ? amount : -amount;
+        });
+
+        const months = Object.keys(byMonth).sort();
+
+        let running = 0;
+
+        const cumulative = months.map(function (month) {
+          running += byMonth[month];
+
+          return running;
+        });
+
+        if (vaultChart) {
+          vaultChart.destroy();
+        }
+
+        vaultChart = new Chart(canvas.getContext("2d"), {
+          type: "line",
+
+          data: {
+            labels: months.length ? months.map(formatMonthLabel) : ["-"],
+
+            datasets: [
+              {
+                label: "ยอดสะสมในกระปุก",
+
+                data: cumulative.length ? cumulative : [0],
+
+                borderColor: palette.save,
+
+                backgroundColor: "rgba(111, 212, 217, 0.12)",
+
+                pointBackgroundColor: palette.save,
+
+                tension: 0.35,
+
+                fill: true,
+              },
+            ],
+          },
+
+          options: {
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+
+            scales: {
+              y: {
+                beginAtZero: true,
+
+                ticks: {
+                  callback: function (value) {
+                    return "฿" + Number(value).toLocaleString("th-TH");
+                  },
+                },
+              },
+
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      /* ---------- VAULT RECENT ---------- */
+
+      function renderVaultRecent() {
+        const box = document.getElementById("vaultRecent");
+
+        if (!box) return;
+
+        const list = records
+          .filter(function (r) {
+            return r.type === "save" || r.type === "unsave";
+          })
+          .slice()
+          .sort(function (a, b) {
+            return String(b.date || "").localeCompare(String(a.date || ""));
+          })
+          .slice(0, 10);
+
+        if (!list.length) {
+          box.innerHTML = `
+
+      <div class="text-center py-6 text-sm text-[#8B8778]">
+        ยังไม่มีรายการกระปุก
+      </div>
+
+    `;
+
+          return;
+        }
+
+        box.innerHTML = list
+          .map(function (r) {
+            const isIn = r.type === "save";
+
+            return `
+
+        <div class="flex items-center justify-between gap-3 rounded-2xl bg-[#171A22] p-3">
+
+          <div class="flex items-center gap-3 min-w-0">
+
+            <div class="w-9 h-9 rounded-xl ${
+              isIn
+                ? "bg-[rgba(111,212,217,0.12)] text-[#8FE0E4]"
+                : "bg-[#232733] text-[#9AA8B8]"
+            } flex items-center justify-center shrink-0">
+
+              <i class="fa-solid ${
+                isIn ? "fa-piggy-bank" : "fa-arrow-up-from-bracket"
+              } text-sm"></i>
+
+            </div>
+
+
+            <div class="min-w-0">
+
+              <p class="text-sm font-semibold truncate">
+                ${escapeHtml(r.category || "กระปุกรวม")}
+              </p>
+
+              <p class="text-xs text-[#8B8778] mt-0.5">
+                ${formatThaiDate(r.date)}
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <p class="money text-sm font-bold whitespace-nowrap ${
+            isIn ? "text-[#8FE0E4]" : "text-[#9AA8B8]"
+          }">
+            ${isIn ? "+" : "-"}${money(r.amount)}
+          </p>
+
+        </div>
+
+      `;
+          })
+          .join("");
+      }
+
+      /* =====================================================
    DASHBOARD
 ====================================================== */
 
       function renderDashboard() {
         const data = getMonthRecords();
 
-        let income = 0;
+        const total = sumByType(data);
 
-        let expense = 0;
-
-        let debt = 0;
-
-        let reuse = 0;
-
-        data.forEach(function (r) {
-          const amount = Number(r.amount) || 0;
-
-          if (r.type === "income") {
-            income += amount;
-          } else if (r.type === "expense") {
-            expense += amount;
-          } else if (r.type === "debt") {
-            debt += amount;
-          } else if (r.type === "reuse") {
-            reuse += amount;
-          }
-        });
-
-        const available = income - expense - debt - reuse;
+        const available = availableFrom(total);
 
         setText("availableMoney", money(available));
 
-        setText("dashIncome", money(income));
+        setText("dashIncome", money(total.income));
 
-        setText("dashExpense", money(expense));
+        setText("dashExpense", money(total.expense));
 
-        setText("dashDebt", money(debt));
+        setText("dashDebt", money(total.debt));
 
-        setText("dashReuse", money(reuse));
+        setText("dashReuse", money(total.reuse));
 
-        setText("previewDebt", money(debt));
+        setText("dashSave", money(total.save - total.unsave));
 
-        setText("previewReuse", money(reuse));
+        setText("previewDebt", money(total.debt));
 
-        setText("previewDebtOutflow", money(debt + reuse));
+        setText("previewReuse", money(total.reuse));
+
+        setText("previewDebtOutflow", money(total.debt + total.reuse));
 
         renderDashboardProviders(data);
 
-        renderDashboardChart(data);
+        renderDashboardChart(total);
 
         renderForecast(data, available);
       }
@@ -1871,7 +3426,7 @@
         if (!entries.length) {
           box.innerHTML = `
 
-      <div class="text-center py-5 text-sm text-slate-400">
+      <div class="text-center py-5 text-sm text-[#8B8778]">
 
         เดือนนี้ยังไม่มีรายการหนี้หมุน
 
@@ -1890,11 +3445,11 @@
 
             return `
 
-        <div class="flex items-center justify-between gap-3 rounded-2xl bg-slate-50 p-4">
+        <div class="flex items-center justify-between gap-3 rounded-2xl bg-[#171A22] p-4">
 
           <div class="flex items-center gap-3 min-w-0">
 
-            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-slate-500 shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-[#12141C] flex items-center justify-center text-[#79765F] shrink-0">
 
               <i class="fa-solid fa-credit-card"></i>
 
@@ -1906,7 +3461,7 @@
                 ${escapeHtml(name)}
               </p>
 
-              <p class="text-xs text-slate-400 mt-1">
+              <p class="text-xs text-[#8B8778] mt-1">
                 จ่าย ${money(d.paid)}
                 ·
                 หมุน ${money(d.reused)}
@@ -1916,7 +3471,7 @@
 
           </div>
 
-          <p class="money text-xs font-semibold text-slate-500 whitespace-nowrap">
+          <p class="money text-xs font-semibold text-[#79765F] whitespace-nowrap">
             ${money(d.paid + d.reused)}
           </p>
 
@@ -1931,32 +3486,10 @@
    DASHBOARD CHART
 ====================================================== */
 
-      function renderDashboardChart(data) {
+      function renderDashboardChart(total) {
         const canvas = document.getElementById("dashboardChart");
 
         if (!canvas) return;
-
-        let income = 0;
-
-        let expense = 0;
-
-        let debt = 0;
-
-        let reuse = 0;
-
-        data.forEach(function (r) {
-          const amount = Number(r.amount) || 0;
-
-          if (r.type === "income") {
-            income += amount;
-          } else if (r.type === "expense") {
-            expense += amount;
-          } else if (r.type === "debt") {
-            debt += amount;
-          } else if (r.type === "reuse") {
-            reuse += amount;
-          }
-        });
 
         if (dashboardChart) {
           dashboardChart.destroy();
@@ -1966,13 +3499,33 @@
           type: "bar",
 
           data: {
-            labels: ["รายรับ", "ค่าใช้จ่าย", "จ่ายหนี้", "หมุนหนี้"],
+            labels: [
+              "รายรับ",
+              "ค่าใช้จ่าย",
+              "จ่ายหนี้",
+              "หมุนหนี้",
+              "ออม",
+            ],
 
             datasets: [
               {
                 label: "จำนวนเงิน",
 
-                data: [income, expense, debt, reuse],
+                data: [
+                  total.income,
+                  total.expense,
+                  total.debt,
+                  total.reuse,
+                  Math.max(total.save - total.unsave, 0),
+                ],
+
+                backgroundColor: [
+                  palette.income,
+                  palette.expense,
+                  palette.debt,
+                  palette.reuse,
+                  palette.save,
+                ],
 
                 borderRadius: 12,
 
@@ -2036,6 +3589,8 @@
           currentDay = now.getDate();
         }
 
+        /* ไม่นับเงินออมเป็น "รายจ่าย" ในการคาดการณ์ เพราะเงินยังอยู่กับเรา */
+
         const outflow = data
           .filter(function (r) {
             return (
@@ -2075,14 +3630,36 @@
         historyFilter = filter;
 
         document.querySelectorAll(".history-filter").forEach(function (btn) {
-          btn.classList.remove("bg-indigo-600", "text-white");
+          btn.classList.remove(
+            "bg-gradient-to-r",
+            "from-[#CBA35C]",
+            "to-[#E4C98A]",
+            "text-[#14161F]",
+            "font-medium",
+          );
 
-          btn.classList.add("bg-white", "border");
+          btn.classList.add(
+            "bg-[#12141C]",
+            "border",
+            "border-[rgba(214,178,110,0.18)]",
+            "text-[#B9B4A4]",
+          );
         });
 
-        button.classList.remove("bg-white", "border");
+        button.classList.remove(
+          "bg-[#12141C]",
+          "border",
+          "border-[rgba(214,178,110,0.18)]",
+          "text-[#B9B4A4]",
+        );
 
-        button.classList.add("bg-indigo-600", "text-white");
+        button.classList.add(
+          "bg-gradient-to-r",
+          "from-[#CBA35C]",
+          "to-[#E4C98A]",
+          "text-[#14161F]",
+          "font-medium",
+        );
 
         renderHistory();
       }
@@ -2139,7 +3716,7 @@
           ยังไม่มีรายการ
         </p>
 
-        <p class="text-sm text-slate-400 mt-1">
+        <p class="text-sm text-[#8B8778] mt-1">
           ลองบันทึกรายการแรกของคุณ
         </p>
 
@@ -2162,9 +3739,18 @@
 
         const color = getTypeColor(r.type);
 
-        const sign = r.type === "income" ? "+" : "-";
+        const sign =
+          r.type === "income" || r.type === "unsave" ? "+" : "-";
 
         const isLegacy = String(r.id || "").startsWith("legacy-");
+
+        let amountClass = "text-[#D9D4C4]";
+
+        if (r.type === "income") {
+          amountClass = "text-[#5FC9AE]";
+        } else if (r.type === "save") {
+          amountClass = "text-[#8FE0E4]";
+        }
 
         return `
 
@@ -2191,16 +3777,14 @@
                 ${escapeHtml(r.category || "-")}
               </p>
 
-              <p class="text-xs text-slate-400 mt-1 truncate">
+              <p class="text-xs text-[#8B8778] mt-1 truncate">
                 ${escapeHtml(r.detail || r.typeLabel || "-")}
               </p>
 
             </div>
 
 
-            <p class="money font-bold whitespace-nowrap ${
-              r.type === "income" ? "text-emerald-600" : "text-slate-700"
-            }">
+            <p class="money font-bold whitespace-nowrap ${amountClass}">
 
               ${sign}${money(r.amount)}
 
@@ -2211,7 +3795,7 @@
 
           <div class="flex items-center justify-between gap-2 mt-3">
 
-            <p class="text-xs text-slate-400">
+            <p class="text-xs text-[#8B8778]">
 
               ${formatThaiDate(r.date)}
 
@@ -2231,7 +3815,7 @@
 
                     <button
                       onclick="openEdit('${escapeJs(r.id)}')"
-                      class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500"
+                      class="w-8 h-8 rounded-lg bg-[#1B1E28] hover:bg-[#232733] text-[#79765F]"
                       title="แก้ไข"
                     >
 
@@ -2242,7 +3826,7 @@
 
                     <button
                       onclick="askDelete('${escapeJs(r.id)}')"
-                      class="w-8 h-8 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500"
+                      class="w-8 h-8 rounded-lg bg-[rgba(193,92,107,0.10)] hover:bg-[rgba(193,92,107,0.16)] text-[#D98C8C]"
                       title="ลบ"
                     >
 
@@ -2273,41 +3857,63 @@
       function renderSummary() {
         const data = getMonthRecords();
 
-        let income = 0;
+        const total = sumByType(data);
 
-        let expense = 0;
+        setText("summaryIncome", money(total.income));
 
-        let debt = 0;
+        setText("summaryExpense", money(total.expense));
 
-        let reuse = 0;
+        setText("summaryDebt", money(total.debt));
 
-        data.forEach(function (r) {
-          const amount = Number(r.amount) || 0;
+        setText("summaryReuse", money(total.reuse));
 
-          if (r.type === "income") {
-            income += amount;
-          } else if (r.type === "expense") {
-            expense += amount;
-          } else if (r.type === "debt") {
-            debt += amount;
-          } else if (r.type === "reuse") {
-            reuse += amount;
-          }
-        });
+        setText("summarySave", money(total.save - total.unsave));
 
-        setText("summaryIncome", money(income));
-
-        setText("summaryExpense", money(expense));
-
-        setText("summaryDebt", money(debt));
-
-        setText("summaryReuse", money(reuse));
+        renderSavingRate(total);
 
         renderExpenseChart(data);
 
         renderDailyChart(data);
 
         renderAnalysis(data);
+      }
+
+      /* =====================================================
+   SAVING RATE
+====================================================== */
+
+      function renderSavingRate(total) {
+        const net = total.save - total.unsave;
+
+        const rate = total.income > 0 ? (net / total.income) * 100 : 0;
+
+        const shown = Math.max(Math.min(rate, 100), 0);
+
+        setText("summarySaveRate", "");
+
+        setText("savingRate", Math.round(rate) + "%");
+
+        const bar = document.getElementById("savingRateBar");
+
+        if (bar) {
+          bar.style.width = shown + "%";
+        }
+
+        let text = "-";
+
+        if (total.income <= 0) {
+          text = "เดือนนี้ยังไม่มีรายรับให้คิดสัดส่วน";
+        } else if (net <= 0) {
+          text = "เดือนนี้ยังไม่ได้ออม ลองเริ่มจาก 20 บาทก็ได้";
+        } else if (rate < 10) {
+          text = "เริ่มแล้วก็ดีกว่าไม่เริ่ม ค่อย ๆ ขยับขึ้นไป";
+        } else if (rate < 20) {
+          text = "กำลังดี เก็บได้สม่ำเสมอแบบนี้ไปเรื่อย ๆ";
+        } else {
+          text = "เก่งมาก ออมได้เกินหนึ่งในห้าของรายรับ 🎉";
+        }
+
+        setText("savingRateText", text);
       }
 
       /* =====================================================
@@ -2353,7 +3959,15 @@
               {
                 data: values.length ? values : [1],
 
-                borderWidth: 0,
+                backgroundColor: values.length
+                  ? labels.map(function (_, i) {
+                      return palette.cycle[i % palette.cycle.length];
+                    })
+                  : ["#232733"],
+
+                borderColor: "#0A0B10",
+
+                borderWidth: 2,
               },
             ],
           },
@@ -2397,6 +4011,8 @@
               income: 0,
 
               outflow: 0,
+
+              saved: 0,
             };
           }
 
@@ -2404,6 +4020,10 @@
 
           if (r.type === "income") {
             map[date].income += amount;
+          } else if (r.type === "save") {
+            map[date].saved += amount;
+          } else if (r.type === "unsave") {
+            map[date].saved -= amount;
           } else {
             map[date].outflow += amount;
           }
@@ -2417,6 +4037,10 @@
 
         const outflow = dates.map(function (date) {
           return map[date].outflow;
+        });
+
+        const saved = dates.map(function (date) {
+          return map[date].saved;
         });
 
         const canvas = document.getElementById("dailyChart");
@@ -2439,6 +4063,12 @@
 
                 data: income,
 
+                borderColor: palette.income,
+
+                backgroundColor: palette.income,
+
+                pointBackgroundColor: palette.income,
+
                 tension: 0.35,
 
                 fill: false,
@@ -2448,6 +4078,30 @@
                 label: "เงินออก",
 
                 data: outflow,
+
+                borderColor: palette.gold,
+
+                backgroundColor: palette.gold,
+
+                pointBackgroundColor: palette.gold,
+
+                tension: 0.35,
+
+                fill: false,
+              },
+
+              {
+                label: "เข้ากระปุก",
+
+                data: saved,
+
+                borderColor: palette.save,
+
+                backgroundColor: palette.save,
+
+                pointBackgroundColor: palette.save,
+
+                borderDash: [5, 4],
 
                 tension: 0.35,
 
@@ -2499,10 +4153,14 @@
           return r.type === "expense";
         });
 
+        const total = sumByType(data);
+
+        const netSave = total.save - total.unsave;
+
         if (!expenses.length) {
           box.innerHTML = `
 
-      <div class="rounded-2xl bg-slate-50 p-4 text-sm text-slate-500">
+      <div class="rounded-2xl bg-[#171A22] p-4 text-sm text-[#79765F]">
         เดือนนี้ยังมีข้อมูลไม่พอสำหรับวิเคราะห์
       </div>
 
@@ -2524,17 +4182,44 @@
           return b[1] - a[1];
         })[0];
 
-        const total = expenses.reduce(function (sum, r) {
+        const expenseTotal = expenses.reduce(function (sum, r) {
           return sum + Number(r.amount || 0);
         }, 0);
 
-        const average = total / Math.max(expenses.length, 1);
+        const average = expenseTotal / Math.max(expenses.length, 1);
+
+        const saveBlock =
+          netSave > 0
+            ? `
+
+      <div class="rounded-2xl bg-[rgba(111,212,217,0.10)] p-4">
+
+        <p class="text-xs text-[#8FE0E4]">
+          เดือนนี้ออมเข้ากระปุก
+        </p>
+
+        <p class="money font-bold text-[#CFEFF0] mt-1">
+          ${money(netSave)}
+        </p>
+
+        <p class="text-xs text-[#7D9BA0] mt-1">
+          คิดเป็น ${
+            expenseTotal > 0
+              ? Math.round((netSave / expenseTotal) * 100) + "% ของค่าใช้จ่าย"
+              : "-"
+          }
+        </p>
+
+      </div>
+
+    `
+            : "";
 
         box.innerHTML = `
 
-    <div class="rounded-2xl bg-orange-50 p-4">
+    <div class="rounded-2xl bg-[rgba(224,153,90,0.10)] p-4">
 
-      <p class="text-xs text-orange-500">
+      <p class="text-xs text-[#E0995A]">
         หมวดที่ใช้เงินมากที่สุด
       </p>
 
@@ -2542,29 +4227,32 @@
         ${escapeHtml(top[0])}
       </p>
 
-      <p class="money text-sm text-orange-600 mt-1">
+      <p class="money text-sm text-[#E6A868] mt-1">
         ${money(top[1])}
       </p>
 
     </div>
 
 
-    <div class="rounded-2xl bg-indigo-50 p-4">
+    <div class="rounded-2xl bg-[rgba(203,163,92,0.10)] p-4">
 
-      <p class="text-xs text-indigo-500">
+      <p class="text-xs text-[#D8B876]">
         ค่าใช้จ่ายเฉลี่ยต่อรายการ
       </p>
 
-      <p class="money font-bold text-indigo-700 mt-1">
+      <p class="money font-bold text-[#E4C98A] mt-1">
         ${money(average)}
       </p>
 
     </div>
 
 
-    <div class="rounded-2xl bg-slate-50 p-4">
+    ${saveBlock}
 
-      <p class="text-xs text-slate-500">
+
+    <div class="rounded-2xl bg-[#171A22] p-4">
+
+      <p class="text-xs text-[#79765F]">
         จำนวนรายการค่าใช้จ่าย
       </p>
 
@@ -2655,7 +4343,7 @@
         if (!entries.length) {
           box.innerHTML = `
 
-      <div class="text-center py-12 text-slate-400">
+      <div class="text-center py-12 text-[#8B8778]">
 
         <div class="empty-icon">
 
@@ -2663,7 +4351,7 @@
 
         </div>
 
-        <p class="font-semibold mt-4 text-slate-600">
+        <p class="font-semibold mt-4 text-[#B9B4A4]">
           เดือนนี้ยังไม่มีหนี้หมุน
         </p>
 
@@ -2692,7 +4380,7 @@
             if (difference > 0) {
               status = `
 
-          <span class="text-xs text-violet-600">
+          <span class="text-xs text-[#B79EEA]">
             ใช้กลับมากกว่าที่จ่าย
             ${money(difference)}
           </span>
@@ -2701,7 +4389,7 @@
             } else if (difference < 0) {
               status = `
 
-          <span class="text-xs text-emerald-600">
+          <span class="text-xs text-[#5FC9AE]">
             จ่ายมากกว่าที่ใช้กลับ
             ${money(Math.abs(difference))}
           </span>
@@ -2710,7 +4398,7 @@
             } else {
               status = `
 
-          <span class="text-xs text-slate-400">
+          <span class="text-xs text-[#8B8778]">
             จ่ายและหมุนเท่ากัน
           </span>
 
@@ -2719,11 +4407,11 @@
 
             return `
 
-        <div class="provider-card rounded-2xl border border-slate-100 bg-white p-4">
+        <div class="provider-card rounded-2xl border border-[rgba(214,178,110,0.14)] bg-[#12141C] p-4">
 
           <div class="flex items-center gap-3">
 
-            <div class="w-11 h-11 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-500 shrink-0">
+            <div class="w-11 h-11 rounded-2xl bg-[#1B1E28] flex items-center justify-center text-[#79765F] shrink-0">
 
               <i class="fa-solid fa-credit-card"></i>
 
@@ -2748,26 +4436,26 @@
           <div class="grid grid-cols-2 gap-2 mt-4">
 
 
-            <div class="rounded-xl bg-rose-50 p-3">
+            <div class="rounded-xl bg-[rgba(193,92,107,0.10)] p-3">
 
-              <p class="text-xs text-rose-500">
+              <p class="text-xs text-[#D98C8C]">
                 จ่ายหนี้
               </p>
 
-              <p class="money font-bold text-rose-600 mt-1">
+              <p class="money font-bold text-[#E08999] mt-1">
                 ${money(d.paid)}
               </p>
 
             </div>
 
 
-            <div class="rounded-xl bg-violet-50 p-3">
+            <div class="rounded-xl bg-[rgba(155,127,209,0.10)] p-3">
 
-              <p class="text-xs text-violet-500">
+              <p class="text-xs text-[#C7AEDD]">
                 หมุนกลับมาใช้
               </p>
 
-              <p class="money font-bold text-violet-600 mt-1">
+              <p class="money font-bold text-[#B79EEA] mt-1">
                 ${money(d.reused)}
               </p>
 
@@ -2806,6 +4494,8 @@
                 label: "จำนวนเงิน",
 
                 data: [paid, reused],
+
+                backgroundColor: [palette.debt, palette.reuse],
 
                 borderRadius: 12,
 
@@ -2913,6 +4603,31 @@
         }
       }
 
+      let toastTimer = null;
+
+      function toast(message, icon) {
+        const box = document.getElementById("toast");
+
+        if (!box) return;
+
+        setText("toastText", message);
+
+        const iconEl = document.getElementById("toastIcon");
+
+        if (iconEl) {
+          iconEl.className =
+            "fa-solid " + (icon || "fa-piggy-bank") + " text-[#8FE0E4]";
+        }
+
+        box.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function () {
+          box.classList.remove("show");
+        }, 2600);
+      }
+
       function formatDateInput(date) {
         const year = date.getFullYear();
 
@@ -2955,6 +4670,20 @@
         return parts[2] + "/" + parts[1];
       }
 
+      function formatMonthLabel(value) {
+        const parts = String(value || "").split("-");
+
+        if (parts.length !== 2) {
+          return value;
+        }
+
+        const monthIndex = Number(parts[1]) - 1;
+
+        const shortName = (thaiMonths[monthIndex] || "").slice(0, 3);
+
+        return shortName + " " + String(Number(parts[0]) + 543).slice(2);
+      }
+
       function getTypeIcon(type) {
         const icons = {
           income: "fa-solid fa-arrow-down",
@@ -2964,6 +4693,10 @@
           debt: "fa-solid fa-credit-card",
 
           reuse: "fa-solid fa-rotate",
+
+          save: "fa-solid fa-piggy-bank",
+
+          unsave: "fa-solid fa-arrow-up-from-bracket",
         };
 
         return icons[type] || icons.expense;
@@ -2972,27 +4705,39 @@
       function getTypeColor(type) {
         const colors = {
           income: {
-            bg: "bg-emerald-100",
+            bg: "bg-[rgba(47,169,139,0.16)]",
 
-            text: "text-emerald-600",
+            text: "text-[#5FC9AE]",
           },
 
           expense: {
-            bg: "bg-orange-100",
+            bg: "bg-[rgba(224,153,90,0.16)]",
 
-            text: "text-orange-600",
+            text: "text-[#E6A868]",
           },
 
           debt: {
-            bg: "bg-rose-100",
+            bg: "bg-[rgba(193,92,107,0.16)]",
 
-            text: "text-rose-600",
+            text: "text-[#E08999]",
           },
 
           reuse: {
-            bg: "bg-violet-100",
+            bg: "bg-[rgba(155,127,209,0.16)]",
 
-            text: "text-violet-600",
+            text: "text-[#B79EEA]",
+          },
+
+          save: {
+            bg: "bg-[rgba(111,212,217,0.16)]",
+
+            text: "text-[#8FE0E4]",
+          },
+
+          unsave: {
+            bg: "bg-[#232733]",
+
+            text: "text-[#9AA8B8]",
           },
         };
 
